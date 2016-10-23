@@ -2,15 +2,15 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="@color/two">
 
-    <james.monochrome.views.SceneryImageView
+    <james.monochrome.views.SceneryView
         android:id="@+id/scenery"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"/>
 
-    <james.monochrome.views.CharacterImageView
+    <james.monochrome.views.CharacterView
         android:id="@+id/character"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

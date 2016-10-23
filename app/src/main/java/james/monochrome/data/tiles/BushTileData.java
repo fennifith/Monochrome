@@ -1,13 +1,17 @@
-package james.monochrome.data;
+package james.monochrome.data.tiles;
 
-import java.util.List;
+import android.content.Context;
 
 import james.monochrome.utils.TileUtils;
 
-public class TreeTileData extends TileData {
+public class BushTileData extends TileData {
 
-    public TreeTileData() {
-        super(TileUtils.getTile(TileUtils.TILE_TREE));
+    public BushTileData(Context context, int x, int y) {
+        super(context, TileUtils.getTile(TileUtils.TILE_BUSH), x, y);
+    }
+
+    @Override
+    public void onTouch() {
     }
 
     @Override

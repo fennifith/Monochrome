@@ -9,44 +9,44 @@ import android.view.ViewGroup;
 
 import james.monochrome.R;
 import james.monochrome.data.SceneryData;
-import james.monochrome.views.CharacterImageView;
-import james.monochrome.views.SceneryImageView;
+import james.monochrome.views.CharacterView;
+import james.monochrome.views.SceneryView;
 
 public class SceneryFragment extends Fragment {
 
     private static final String ARG_SCENERY_DATA = "scenery";
 
-    private CharacterImageView character;
-    private SceneryImageView imageView;
+    private CharacterView character;
+    private SceneryView scenery;
     private SceneryData data;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_scenery, container, false);
-        character = (CharacterImageView) v.findViewById(R.id.character);
-        imageView = (SceneryImageView) v.findViewById(R.id.scenery);
+        character = (CharacterView) v.findViewById(R.id.character);
+        scenery = (SceneryView) v.findViewById(R.id.scenery);
         data = (SceneryData) getArguments().getSerializable(ARG_SCENERY_DATA);
 
         character.setScenery(data);
-        imageView.setScenery(data);
+        scenery.setScenery(data);
         return v;
     }
 
     public void moveLeft() {
-        if (imageView != null) character.moveLeft();
+        if (scenery != null) character.moveLeft();
     }
 
     public void moveRight() {
-        if (imageView != null) character.moveRight();
+        if (scenery != null) character.moveRight();
     }
 
     public void moveUp() {
-        if (imageView != null) character.moveUp();
+        if (scenery != null) character.moveUp();
     }
 
     public void moveDown() {
-        if (imageView != null) character.moveDown();
+        if (scenery != null) character.moveDown();
     }
 
     public int getCharacterX() {
@@ -55,6 +55,10 @@ public class SceneryFragment extends Fragment {
 
     public int getCharacterY() {
         return character.getCharacterY();
+    }
+
+    public void setCharacterPosition(int x, int y) {
+        character.setCharacterPosition(x, y);
     }
 
     public static SceneryFragment getInstance(SceneryData data) {

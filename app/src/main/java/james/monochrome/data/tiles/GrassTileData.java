@@ -1,11 +1,17 @@
-package james.monochrome.data;
+package james.monochrome.data.tiles;
+
+import android.content.Context;
 
 import james.monochrome.utils.TileUtils;
 
 public class GrassTileData extends TileData {
 
-    public GrassTileData() {
-        super(TileUtils.getRandomGrass());
+    public GrassTileData(Context context, int x, int y) {
+        super(context, TileUtils.getRandomGrass(), x, y);
+    }
+
+    @Override
+    public void onTouch() {
     }
 
     @Override

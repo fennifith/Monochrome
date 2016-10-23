@@ -7,12 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 import james.monochrome.R;
 import james.monochrome.adapters.SceneryAdapter;
 import james.monochrome.data.RowData;
-import james.monochrome.data.SceneryData;
 import james.monochrome.views.HorizontalViewPager;
 
 public class RowFragment extends Fragment {
@@ -66,15 +63,19 @@ public class RowFragment extends Fragment {
     public void moveLeft() {
         if (viewPager == null || adapter == null) return;
         SceneryFragment fragment = adapter.getItem(getCurrentItem());
-        if (fragment.getCharacterX() == 0 && getCurrentItem() > 0) setCurrentItem(getCurrentItem() - 1);
-        else fragment.moveLeft();
+        if (fragment.getCharacterX() == 0 && getCurrentItem() > 0) {
+            setCurrentItem(getCurrentItem() - 1);
+            setCharacterPosition(9, fragment.getCharacterY());
+        } else fragment.moveLeft();
     }
 
     public void moveRight() {
         if (viewPager == null || adapter == null) return;
         SceneryFragment fragment = adapter.getItem(getCurrentItem());
-        if (fragment.getCharacterX() == 9 && getCurrentItem() < getCount()) setCurrentItem(getCurrentItem() + 1);
-        else fragment.moveRight();
+        if (fragment.getCharacterX() == 9 && getCurrentItem() < getCount()) {
+            setCurrentItem(getCurrentItem() + 1);
+            setCharacterPosition(0, fragment.getCharacterY());
+        } else fragment.moveRight();
     }
 
     public int getCharacterX() {
@@ -85,6 +86,11 @@ public class RowFragment extends Fragment {
     public int getCharacterY() {
         if (viewPager == null || adapter == null) return 0;
         return adapter.getItem(getCurrentItem()).getCharacterY();
+    }
+
+    public void setCharacterPosition(int x, int y) {
+        if (viewPager != null && adapter != null)
+            adapter.getItem(getCurrentItem()).setCharacterPosition(x, y);
     }
 
     public static RowFragment getInstance(RowData data) {

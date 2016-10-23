@@ -1,18 +1,26 @@
-package james.monochrome.data;
+package james.monochrome.data.tiles;
 
+import android.content.Context;
+
+import james.monochrome.utils.StaticUtils;
 import james.monochrome.utils.TileUtils;
 
 public class HouseTileData extends TileData {
 
     private boolean isHouseOpen;
 
-    public HouseTileData(boolean isHouseOpen) {
-        super(TileUtils.getTile(TileUtils.TILE_HOUSE));
+    public HouseTileData(Context context, boolean isHouseOpen, int x, int y) {
+        super(context, TileUtils.getTile(TileUtils.TILE_HOUSE), x, y);
         this.isHouseOpen = isHouseOpen;
     }
 
     public void setOpen(boolean isHouseOpen) {
         this.isHouseOpen = isHouseOpen;
+    }
+
+    @Override
+    public void onTouch() {
+        if (!isHouseOpen) StaticUtils.makeToast(getContext(), "The house is locked.").show();
     }
 
     @Override

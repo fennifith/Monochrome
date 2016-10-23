@@ -1,14 +1,25 @@
-package james.monochrome.data;
+package james.monochrome.data.tiles;
+
+import android.content.Context;
 
 import java.util.List;
 
 public abstract class TileData {
 
+    private Context context;
     private List<List<Integer>> tile;
+    private int x, y;
     private OnTileChangeListener listener;
 
-    public TileData(List<List<Integer>> tile) {
+    public TileData(Context context, List<List<Integer>> tile, int x, int y) {
+        this.context = context;
         this.tile = tile;
+        this.x = x;
+        this.y = y;
+    }
+
+    public Context getContext() {
+        return context;
     }
 
     public List<List<Integer>> getTile() {
@@ -19,6 +30,16 @@ public abstract class TileData {
         this.tile = tile;
         if (listener != null) listener.onTileChange(this);
     }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public abstract void onTouch();
 
     public abstract void onEnter();
 

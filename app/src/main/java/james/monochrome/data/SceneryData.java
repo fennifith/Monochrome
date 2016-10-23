@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import java.io.Serializable;
 import java.util.List;
 
+import james.monochrome.data.tiles.TileData;
+
 public class SceneryData implements Serializable {
 
     private int x, y;

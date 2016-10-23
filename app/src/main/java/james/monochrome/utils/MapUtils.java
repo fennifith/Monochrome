@@ -7,46 +7,50 @@ import android.preference.PreferenceManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import james.monochrome.data.BushTileData;
-import james.monochrome.data.GrassTileData;
-import james.monochrome.data.HouseTileData;
 import james.monochrome.data.RowData;
 import james.monochrome.data.SceneryData;
-import james.monochrome.data.TileData;
-import james.monochrome.data.TreeTileData;
+import james.monochrome.data.tiles.BushTileData;
+import james.monochrome.data.tiles.GrassTileData;
+import james.monochrome.data.tiles.HouseTileData;
+import james.monochrome.data.tiles.SignTileData;
+import james.monochrome.data.tiles.TileData;
+import james.monochrome.data.tiles.TreeTileData;
 
 public class MapUtils {
 
-    private static final String KEY_MAP = "map";
+    private static final String
+            KEY_MAP = "map",
+            KEY_MESSAGE = "message";
 
     public static final int
             TILE_GRASS = 0,
             TILE_BUSH = 1,
             TILE_TREE = 2,
             TILE_HOUSE = 3,
-            TILE_HOUSE_OPEN = 4;
+            TILE_HOUSE_OPEN = 4,
+            TILE_SIGN = 5;
 
     private static final int[][][][] MAP = new int[][][][]{
             new int[][][]{
                     new int[][]{
+                            new int[]{0, 0, 5, 5, 5, 5, 0, 0, 0, 0},
                             new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                            new int[]{2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
                             new int[]{0, 0, 0, 3, 0, 0, 0, 0, 0, 0},
                             new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                             new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+                            new int[]{0, 0, 0, 0, 1, 1, 1, 1, 0, 0},
                             new int[]{0, 0, 4, 0, 0, 0, 0, 0, 0, 0},
                             new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+                            new int[]{0, 2, 0, 0, 0, 0, 0, 0, 0, 0}
                     },
                     new int[][]{
                             new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
-                            new int[]{1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                             new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                            new int[]{2, 2, 2, 2, 0, 0, 0, 0, 0, 0},
+                            new int[]{0, 0, 0, 0, 0, 0, 0, 4, 0, 0},
                             new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                            new int[]{0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
                             new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                             new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                             new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -151,9 +155,9 @@ public class MapUtils {
             },
             new int[][][]{
                     new int[][]{
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                            new int[]{0, 2, 0, 0, 0, 0, 0, 0, 0, 0},
+                            new int[]{3, 2, 0, 0, 0, 0, 0, 0, 0, 0},
+                            new int[]{2, 2, 0, 0, 0, 0, 0, 0, 0, 0},
                             new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                             new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                             new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -1297,19 +1301,22 @@ public class MapUtils {
                     for (int i4 = 0; i4 < 10; i4++) {
                         switch(map[i][i2][i3][i4]) {
                             case TILE_GRASS:
-                                tileRow.add(new GrassTileData());
+                                tileRow.add(new GrassTileData(context, (i2 * 10) + i4, (i * 10) + i3));
                                 break;
                             case TILE_BUSH:
-                                tileRow.add(new BushTileData());
+                                tileRow.add(new BushTileData(context, (i2 * 10) + i4, (i * 10) + i3));
                                 break;
                             case TILE_TREE:
-                                tileRow.add(new TreeTileData());
+                                tileRow.add(new TreeTileData(context, (i2 * 10) + i4, (i * 10) + i3));
                                 break;
                             case TILE_HOUSE:
-                                tileRow.add(new HouseTileData(false));
+                                tileRow.add(new HouseTileData(context, false, (i2 * 10) + i4, (i * 10) + i3));
                                  break;
                             case TILE_HOUSE_OPEN:
-                                tileRow.add(new HouseTileData(true));
+                                tileRow.add(new HouseTileData(context, true, (i2 * 10) + i4, (i * 10) + i3));
+                                break;
+                            case TILE_SIGN:
+                                tileRow.add(new SignTileData(context, (i2 * 10) + i4, (i * 10) + i3));
                                 break;
                         }
                     }
@@ -1321,5 +1328,44 @@ public class MapUtils {
         }
 
         return rows;
+    }
+
+    public static String getMessage(Context context, int sceneRow, int sceneColumn, int tileRow, int tileColumn) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if (prefs.contains(KEY_MESSAGE + ((sceneRow * 10) + tileRow) + "," + ((sceneColumn * 10) + tileColumn)))
+            return prefs.getString(KEY_MESSAGE + ((sceneRow * 10) + tileRow) + "," + ((sceneColumn * 10) + tileColumn), "");
+        else {
+            switch (sceneRow) {
+                case 0:
+                    switch (sceneColumn) {
+                        case 0:
+                            switch (tileRow) {
+                                case 0:
+                                    switch (tileColumn) {
+                                        case 2:
+                                            return "This is a thing.";
+                                        case 3:
+                                            return "This is another thing.";
+                                        case 4:
+                                            return "This is yet another thing.";
+                                        case 5:
+                                            return "Cabbages.";
+                                    }
+                                    break;
+                            }
+                            break;
+                    }
+                    break;
+            }
+
+            return "";
+        }
+    }
+
+    public static void saveMessage(Context context, int sceneRow, int sceneColumn, int tileRow, int tileColumn, String message) {
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putString(KEY_MESSAGE + ((sceneRow * 10) + tileRow) + "," + ((sceneColumn * 10) + tileColumn), message)
+                .apply();
     }
 }

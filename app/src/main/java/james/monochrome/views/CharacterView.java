@@ -3,36 +3,33 @@ package james.monochrome.views;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
 import java.util.List;
 
-import james.monochrome.R;
 import james.monochrome.data.SceneryData;
-import james.monochrome.data.TileData;
+import james.monochrome.data.tiles.TileData;
 import james.monochrome.utils.TileUtils;
 
-public class CharacterImageView extends SquareImageView {
+public class CharacterView extends SquareImageView {
 
     private SceneryData scenery;
     private Paint paint;
 
-    private int pixelSize, characterX, characterY;
+    private int characterX, characterY;
     private boolean isHidden;
 
-    public CharacterImageView(Context context) {
+    public CharacterView(Context context) {
         super(context);
         init();
     }
 
-    public CharacterImageView(Context context, AttributeSet attrs) {
+    public CharacterView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public CharacterImageView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CharacterView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -40,8 +37,6 @@ public class CharacterImageView extends SquareImageView {
     private void init() {
         paint = new Paint();
         paint.setAntiAlias(true);
-        paint.setStyle(Paint.Style.FILL_AND_STROKE);
-        paint.setStrokeWidth(1);
     }
 
     public void setScenery(SceneryData scenery) {
@@ -84,7 +79,7 @@ public class CharacterImageView extends SquareImageView {
 
         if (tile.canEnter()) {
             tile.onEnter();
-        }
+        } else tile.onTouch();
 
         isHidden = tile.canEnter() && !tile.canWalkOver();
         invalidate();
@@ -103,7 +98,7 @@ public class CharacterImageView extends SquareImageView {
 
         if (tile.canEnter()) {
             tile.onEnter();
-        }
+        } else tile.onTouch();
 
         isHidden = tile.canEnter() && !tile.canWalkOver();
         invalidate();
@@ -122,7 +117,7 @@ public class CharacterImageView extends SquareImageView {
 
         if (tile.canEnter()) {
             tile.onEnter();
-        }
+        } else tile.onTouch();
 
         isHidden = tile.canEnter() && !tile.canWalkOver();
         invalidate();
@@ -141,19 +136,57 @@ public class CharacterImageView extends SquareImageView {
 
         if (tile.canEnter()) {
             tile.onEnter();
-        }
+        } else tile.onTouch();
 
         isHidden = tile.canEnter() && !tile.canWalkOver();
         invalidate();
     }
 
+    public void setCharacterPosition(int x, int y) {
+        characterX = x;
+        characterY = y;
+
+        TileData tile = scenery.getTile(characterX, characterY);
+        for (int scale = 0; (tile == null || !tile.canWalkOver()) && scale < 10; scale++) {
+            if (characterX - scale >= 0) {
+                characterX -= scale;
+                tile = scenery.getTile(characterX, characterY);
+                if (tile != null && tile.canWalkOver()) break;
+                else characterX += scale;
+            }
+
+            if (characterX + scale < 10) {
+                characterX += scale;
+                tile = scenery.getTile(characterX, characterY);
+                if (tile != null && tile.canWalkOver()) break;
+                else characterX -= scale;
+            }
+
+            if (characterY - scale >= 0) {
+                characterY -= scale;
+                tile = scenery.getTile(characterX, characterY);
+                if (tile != null && tile.canWalkOver()) break;
+                else characterY += scale;
+            }
+
+            if (characterY + scale < 10) {
+                characterY += scale;
+                tile = scenery.getTile(characterX, characterY);
+                if (tile != null && tile.canWalkOver()) break;
+                else characterY -= scale;
+            }
+        }
+
+        invalidate();
+    }
+
     @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
         if (scenery == null || isHidden) return;
 
         int tileSize = Math.min(canvas.getWidth(), canvas.getHeight()) / 10;
-        pixelSize = tileSize / 10;
+        int pixelSize = tileSize / 10;
 
         TileUtils.drawTile(getContext(), canvas, paint, tileSize * characterX, tileSize * characterY, pixelSize, TileUtils.getTransparentTile(TileUtils.TILE_CHARACTER));
     }
