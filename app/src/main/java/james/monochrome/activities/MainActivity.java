@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 
 import java.util.List;
@@ -153,8 +152,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
             @Override
             public void onRequestShake() {
-                scenery.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                scenery.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.shake));
+                scenery.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
             }
 
             @Override

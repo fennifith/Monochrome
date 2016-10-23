@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.view.HapticFeedbackConstants;
 
 import james.monochrome.data.PositionData;
 import james.monochrome.data.SceneryData;
@@ -94,6 +95,9 @@ public class CharacterView extends SquareImageView {
         this.tile = TileUtils.TILE_CHARACTER_BACK;
         invalidate();
 
+        if (!tile.canEnter() && !tile.canWalkOver())
+            performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+
         handler.removeCallbacks(runnable);
         handler.postDelayed(runnable, 3000);
     }
@@ -117,6 +121,9 @@ public class CharacterView extends SquareImageView {
         this.tile = TileUtils.TILE_CHARACTER;
         invalidate();
 
+        if (!tile.canEnter() && !tile.canWalkOver())
+            performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+
         handler.removeCallbacks(runnable);
         handler.postDelayed(runnable, 3000);
     }
@@ -135,6 +142,9 @@ public class CharacterView extends SquareImageView {
         if (tile.canEnter()) {
             tile.onEnter();
         } else tile.onTouch();
+
+        if (!tile.canEnter() && !tile.canWalkOver())
+            performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
 
         isHidden = tile.canEnter() && !tile.canWalkOver();
         this.tile = TileUtils.TILE_CHARACTER_LEFT;
@@ -158,6 +168,9 @@ public class CharacterView extends SquareImageView {
         if (tile.canEnter()) {
             tile.onEnter();
         } else tile.onTouch();
+
+        if (!tile.canEnter() && !tile.canWalkOver())
+            performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
 
         isHidden = tile.canEnter() && !tile.canWalkOver();
         this.tile = TileUtils.TILE_CHARACTER_RIGHT;

@@ -13,7 +13,6 @@ public class BushTileData extends TileData {
 
     @Override
     public void onTouch() {
-        shake();
     }
 
     @Override
