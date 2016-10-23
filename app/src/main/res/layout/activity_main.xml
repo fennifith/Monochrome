@@ -1,0 +1,52 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <james.monochrome.views.VerticalViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    
+    <FrameLayout
+        android:id="@+id/buttonLayout"
+        android:layout_width="126dp"
+        android:layout_height="126dp"
+        android:layout_gravity="bottom|end"
+        android:background="#42FFFFFF">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/up"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_gravity="center_horizontal|top"
+            android:scaleType="center"
+            app:srcCompat="@drawable/ic_up"/>
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/down"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:scaleType="center"
+            app:srcCompat="@drawable/ic_down"/>
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/left"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_gravity="center_vertical|left"
+            android:scaleType="center"
+            app:srcCompat="@drawable/ic_left"/>
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/right"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_gravity="center_vertical|right"
+            android:scaleType="center"
+            app:srcCompat="@drawable/ic_right"/>
+
+    </FrameLayout>
+
+</FrameLayout>
