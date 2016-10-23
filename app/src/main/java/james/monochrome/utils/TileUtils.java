@@ -15,17 +15,17 @@ public class TileUtils {
 
     public static final int[][]
             TILE_CHARACTER = new int[][]{
-                    new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    new int[]{0, 0, 0, 8, 9, 9, 8, 0, 0, 0},
-                    new int[]{0, 0, 8, 9, 7, 7, 9, 8, 0, 0},
+            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            new int[]{0, 0, 0, 8, 9, 9, 8, 0, 0, 0},
+            new int[]{0, 0, 8, 9, 7, 7, 9, 8, 0, 0},
             new int[]{0, 8, 9, 7, 7, 7, 7, 9, 8, 0},
             new int[]{0, 9, 7, 4, 7, 7, 4, 7, 9, 0},
             new int[]{0, 9, 7, 7, 7, 7, 7, 7, 9, 0},
             new int[]{0, 8, 9, 7, 7, 7, 7, 9, 8, 0},
-                    new int[]{0, 0, 8, 9, 7, 7, 9, 8, 0, 0},
-                    new int[]{0, 0, 0, 8, 9, 9, 8, 0, 0, 0},
-                    new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-            },
+            new int[]{0, 0, 8, 9, 7, 7, 9, 8, 0, 0},
+            new int[]{0, 0, 0, 8, 9, 9, 8, 0, 0, 0},
+            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    },
             TILE_CHARACTER_BACK = new int[][]{
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 8, 9, 9, 8, 0, 0, 0},
@@ -277,6 +277,54 @@ public class TileUtils {
                     new int[]{0, 0, 0, 0, 0, 0, 0, 9, 9, 9},
                     new int[]{0, 0, 0, 0, 0, 0, 0, 9, 9, 9},
                     new int[]{0, 0, 0, 0, 0, 0, 9, 9, 9, 9}
+            },
+            TILE_CHEST = new int[][]{
+                    new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    new int[]{0, 0, 9, 9, 9, 9, 9, 9, 0, 0},
+                    new int[]{0, 9, 6, 6, 7, 6, 7, 8, 9, 0},
+                    new int[]{0, 9, 6, 7, 7, 7, 7, 8, 9, 0},
+                    new int[]{0, 9, 9, 9, 2, 2, 9, 9, 9, 0},
+                    new int[]{0, 9, 6, 7, 8, 8, 7, 8, 9, 0},
+                    new int[]{0, 9, 6, 7, 7, 7, 7, 8, 9, 0},
+                    new int[]{0, 9, 7, 7, 8, 8, 8, 8, 9, 0},
+                    new int[]{0, 9, 9, 9, 9, 9, 9, 9, 9, 0}
+            },
+            TILE_CHEST_OPEN = new int[][]{
+                    new int[]{0, 0, 0, 0, 2, 2, 0, 0, 0, 0},
+                    new int[]{0, 0, 8, 8, 8, 8, 8, 8, 0, 0},
+                    new int[]{0, 8, 9, 9, 9, 9, 9, 9, 8, 0},
+                    new int[]{0, 8, 9, 9, 9, 9, 9, 9, 8, 0},
+                    new int[]{0, 8, 9, 9, 9, 9, 9, 9, 8, 0},
+                    new int[]{0, 9, 7, 7, 7, 7, 7, 7, 9, 0},
+                    new int[]{0, 9, 6, 7, 8, 8, 7, 8, 9, 0},
+                    new int[]{0, 9, 6, 7, 7, 7, 7, 8, 9, 0},
+                    new int[]{0, 9, 7, 7, 8, 8, 8, 8, 9, 0},
+                    new int[]{0, 9, 9, 9, 9, 9, 9, 9, 9, 0}
+            },
+            TILE_PERSON = new int[][]{
+                    new int[]{0, 0, 0, 8, 6, 7, 8, 0, 0, 0},
+                    new int[]{0, 0, 0, 3, 6, 6, 3, 0, 0, 0},
+                    new int[]{0, 0, 0, 7, 5, 5, 7, 0, 0, 0},
+                    new int[]{0, 0, 0, 8, 6, 6, 8, 0, 0, 0},
+                    new int[]{0, 0, 7, 8, 7, 7, 8, 7, 0, 0},
+                    new int[]{0, 0, 8, 7, 6, 6, 7, 8, 0, 0},
+                    new int[]{0, 0, 9, 6, 5, 5, 6, 9, 0, 0},
+                    new int[]{0, 0, 0, 7, 6, 6, 7, 0, 0, 0},
+                    new int[]{0, 0, 0, 9, 0, 0, 9, 0, 0, 0},
+                    new int[]{0, 0, 0, 9, 0, 0, 9, 0, 0, 0}
+            },
+            TILE_PERSON_2 = new int[][]{
+                    new int[]{0, 0, 7, 7, 7, 7, 7, 7, 0, 0},
+                    new int[]{0, 0, 7, 1, 7, 7, 1, 7, 0, 0},
+                    new int[]{0, 0, 7, 9, 7, 7, 9, 7, 0, 0},
+                    new int[]{0, 0, 7, 7, 7, 7, 7, 7, 0, 0},
+                    new int[]{0, 9, 8, 8, 8, 8, 8, 8, 9, 0},
+                    new int[]{0, 9, 8, 8, 8, 8, 8, 8, 9, 0},
+                    new int[]{0, 7, 8, 8, 8, 8, 8, 8, 7, 0},
+                    new int[]{0, 0, 8, 8, 8, 8, 8, 8, 0, 0},
+                    new int[]{0, 0, 9, 9, 9, 9, 9, 9, 0, 0},
+                    new int[]{0, 0, 9, 9, 0, 0, 9, 9, 0, 0}
             };
 
     public static List<List<Integer>> getRandomGrass(int min, int max) {
@@ -327,7 +375,7 @@ public class TileUtils {
             for (int column = 0; column < pixelRow.size(); column++) {
                 int x = pixelSize * column, y = pixelSize * row;
 
-                switch(pixelRow.get(column)) {
+                switch (pixelRow.get(column)) {
                     case 1:
                         paint.setColor(ContextCompat.getColor(context, R.color.one));
                         break;
