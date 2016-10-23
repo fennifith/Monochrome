@@ -3,10 +3,10 @@ package james.monochrome.views;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Handler;
 import android.util.AttributeSet;
 
-import java.util.List;
-
+import james.monochrome.data.PositionData;
 import james.monochrome.data.SceneryData;
 import james.monochrome.data.tiles.TileData;
 import james.monochrome.utils.TileUtils;
@@ -16,8 +16,12 @@ public class CharacterView extends SquareImageView {
     private SceneryData scenery;
     private Paint paint;
 
-    private int characterX, characterY;
+    private int[][] tile = TileUtils.TILE_CHARACTER;
+    private int characterX, characterY, offsetY;
     private boolean isHidden;
+
+    private Handler handler;
+    private Runnable runnable;
 
     public CharacterView(Context context) {
         super(context);
@@ -37,24 +41,25 @@ public class CharacterView extends SquareImageView {
     private void init() {
         paint = new Paint();
         paint.setAntiAlias(true);
+
+        handler = new Handler();
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                if (offsetY < 1) offsetY = 1;
+                else offsetY = 0;
+                invalidate();
+
+                handler.postDelayed(this, 500);
+            }
+        };
+
+        handler.postDelayed(runnable, 500);
     }
 
     public void setScenery(SceneryData scenery) {
         this.scenery = scenery;
-
-        TileData.OnTileChangeListener listener = new TileData.OnTileChangeListener() {
-            @Override
-            public void onTileChange(TileData tile) {
-                invalidate();
-            }
-        };
-
-        for (List<TileData> row : scenery.getTiles()) {
-            for (TileData tile : row) {
-                tile.setOnTileChangeListener(listener);
-            }
-        }
-
+        isHidden = false;
         invalidate();
     }
 
@@ -64,6 +69,10 @@ public class CharacterView extends SquareImageView {
 
     public int getCharacterY() {
         return characterY;
+    }
+
+    public PositionData getPosition() {
+        return new PositionData((scenery.getX() * 10) + characterX, (scenery.getY() * 10) + characterY);
     }
 
     public void moveUp() {
@@ -82,7 +91,11 @@ public class CharacterView extends SquareImageView {
         } else tile.onTouch();
 
         isHidden = tile.canEnter() && !tile.canWalkOver();
+        this.tile = TileUtils.TILE_CHARACTER_BACK;
         invalidate();
+
+        handler.removeCallbacks(runnable);
+        handler.postDelayed(runnable, 3000);
     }
 
     public void moveDown() {
@@ -101,7 +114,11 @@ public class CharacterView extends SquareImageView {
         } else tile.onTouch();
 
         isHidden = tile.canEnter() && !tile.canWalkOver();
+        this.tile = TileUtils.TILE_CHARACTER;
         invalidate();
+
+        handler.removeCallbacks(runnable);
+        handler.postDelayed(runnable, 3000);
     }
 
     public void moveLeft() {
@@ -120,7 +137,11 @@ public class CharacterView extends SquareImageView {
         } else tile.onTouch();
 
         isHidden = tile.canEnter() && !tile.canWalkOver();
+        this.tile = TileUtils.TILE_CHARACTER_LEFT;
         invalidate();
+
+        handler.removeCallbacks(runnable);
+        handler.postDelayed(runnable, 3000);
     }
 
     public void moveRight() {
@@ -139,7 +160,11 @@ public class CharacterView extends SquareImageView {
         } else tile.onTouch();
 
         isHidden = tile.canEnter() && !tile.canWalkOver();
+        this.tile = TileUtils.TILE_CHARACTER_RIGHT;
         invalidate();
+
+        handler.removeCallbacks(runnable);
+        handler.postDelayed(runnable, 3000);
     }
 
     public void setCharacterPosition(int x, int y) {
@@ -175,6 +200,50 @@ public class CharacterView extends SquareImageView {
                 if (tile != null && tile.canWalkOver()) break;
                 else characterY -= scale;
             }
+
+            if (characterX + scale < 10 && characterY + scale < 10) {
+                characterX += scale;
+                characterY += scale;
+                tile = scenery.getTile(characterX, characterY);
+                if (tile != null && tile.canWalkOver()) break;
+                else {
+                    characterX -= scale;
+                    characterY -= scale;
+                }
+            }
+
+            if (characterX - scale >= 0 && characterY - scale >= 0) {
+                characterX -= scale;
+                characterY -= scale;
+                tile = scenery.getTile(characterX, characterY);
+                if (tile != null && tile.canWalkOver()) break;
+                else {
+                    characterX += scale;
+                    characterY += scale;
+                }
+            }
+
+            if (characterX + scale < 10 && characterY - scale >= 0) {
+                characterX += scale;
+                characterY -= scale;
+                tile = scenery.getTile(characterX, characterY);
+                if (tile != null && tile.canWalkOver()) break;
+                else {
+                    characterX -= scale;
+                    characterY += scale;
+                }
+            }
+
+            if (characterX - scale >= 0 && characterY + scale < 10) {
+                characterX -= scale;
+                characterY += scale;
+                tile = scenery.getTile(characterX, characterY);
+                if (tile != null && tile.canWalkOver()) break;
+                else {
+                    characterX += scale;
+                    characterY -= scale;
+                }
+            }
         }
 
         invalidate();
@@ -188,6 +257,6 @@ public class CharacterView extends SquareImageView {
         int tileSize = Math.min(canvas.getWidth(), canvas.getHeight()) / 10;
         int pixelSize = tileSize / 10;
 
-        TileUtils.drawTile(getContext(), canvas, paint, tileSize * characterX, tileSize * characterY, pixelSize, TileUtils.getTransparentTile(TileUtils.TILE_CHARACTER));
+        TileUtils.drawTile(getContext(), canvas, paint, tileSize * characterX, (tileSize * characterY) + (pixelSize * offsetY), pixelSize, TileUtils.getTransparentTile(tile));
     }
 }

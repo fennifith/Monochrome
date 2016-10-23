@@ -20,7 +20,7 @@
     <style name="AppTheme.Dialog.FullScreen" parent="AppTheme">
         <item name="android:windowAnimationStyle">@style/SlideAnimation</item>
         <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowBackground">@color/colorDialogFullscreen</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
 

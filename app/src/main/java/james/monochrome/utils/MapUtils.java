@@ -7,46 +7,70 @@ import android.preference.PreferenceManager;
 import java.util.ArrayList;
 import java.util.List;
 
+import james.monochrome.data.PositionData;
 import james.monochrome.data.RowData;
 import james.monochrome.data.SceneryData;
 import james.monochrome.data.tiles.BushTileData;
+import james.monochrome.data.tiles.CheckpointTileData;
+import james.monochrome.data.tiles.DoorTileData;
 import james.monochrome.data.tiles.GrassTileData;
 import james.monochrome.data.tiles.HouseTileData;
 import james.monochrome.data.tiles.SignTileData;
 import james.monochrome.data.tiles.TileData;
 import james.monochrome.data.tiles.TreeTileData;
+import james.monochrome.data.tiles.WallTileData;
 
 public class MapUtils {
 
-    private static final String
-            KEY_MAP = "map",
-            KEY_MESSAGE = "message";
+    public static final String KEY_SCENE_X = "posX";
+    public static final String KEY_SCENE_Y = "posY";
+    public static final String KEY_CHARACTER_X = "charX";
+    public static final String KEY_CHARACTER_Y = "charY";
+    public static final String KEY_MAP = "map";
+    public static final String KEY_MAP_DEFAULT = "default";
+    public static final String KEY_MAP_HOUSE = "house";
+    private static final String KEY_MESSAGE = "message";
 
     public static final int
             TILE_GRASS = 0,
+            TILE_GRASS_MOWN = 6,
+            TILE_GRASS_THICK = 7,
             TILE_BUSH = 1,
             TILE_TREE = 2,
             TILE_HOUSE = 3,
             TILE_HOUSE_OPEN = 4,
-            TILE_SIGN = 5;
+            TILE_SIGN = 5,
+            TILE_CHECKPOINT = 8,
+            TILE_WALL_TOP = 9,
+            TILE_WALL_BOTTOM = 10,
+            TILE_WALL_LEFT = 11,
+            TILE_WALL_RIGHT = 12,
+            TILE_WALL_CORNER_TOP_RIGHT = 13,
+            TILE_WALL_CORNER_BOTTOM_RIGHT = 14,
+            TILE_WALL_CORNER_TOP_LEFT = 15,
+            TILE_WALL_CORNER_BOTTOM_LEFT = 16,
+            TILE_WALL_DOOR_TOP = 17,
+            TILE_WALL_DOOR_BOTTOM = 18,
+            TILE_WALL_DOOR_LEFT = 19,
+            TILE_WALL_DOOR_RIGHT = 20;
 
-    private static final int[][][][] MAP = new int[][][][]{
+    private static final int[][][][] MAP_DEFAULT = new int[][][][]{
             new int[][][]{
                     new int[][]{
-                            new int[]{0, 0, 5, 5, 5, 5, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                            new int[]{6, 6, 5, 5, 5, 5, 6, 6, 6, 6},
+                            new int[]{6, 6, 6, 6, 6, 6, 6, 6, 6, 6},
                             new int[]{2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
                             new int[]{0, 0, 0, 3, 0, 0, 0, 0, 0, 0},
                             new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                             new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                             new int[]{0, 0, 0, 0, 1, 1, 1, 1, 0, 0},
                             new int[]{0, 0, 4, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 2, 0, 0, 0, 0, 0, 0, 0, 0}
+                            new int[]{0, 0, 0, 0, 0, 7, 7, 7, 0, 0},
+                            new int[]{0, 2, 0, 0, 0, 0, 7, 7, 0, 0}
                     },
                     new int[][]{
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                            new int[]{6, 6, 6, 6, 6, 0, 0, 0, 0, 0},
+                            new int[]{6, 6, 6, 6, 0, 0, 0, 0, 0, 0},
                             new int[]{2, 2, 2, 2, 0, 0, 0, 0, 0, 0},
                             new int[]{0, 0, 0, 0, 0, 0, 0, 4, 0, 0},
                             new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -1253,6 +1277,23 @@ public class MapUtils {
             }
     };
 
+    private static final int[][][][] MAP_HOUSE = new int[][][][]{
+            new int[][][]{
+                    new int[][]{
+                            new int[]{15, 9, 9, 9, 9, 9, 9, 9, 9, 13},
+                            new int[]{11, 6, 6, 6, 6, 6, 6, 6, 6, 12},
+                            new int[]{11, 6, 8, 6, 6, 6, 6, 6, 6, 12},
+                            new int[]{11, 6, 6, 6, 6, 6, 6, 6, 6, 12},
+                            new int[]{11, 6, 6, 6, 6, 6, 6, 6, 6, 12},
+                            new int[]{11, 6, 6, 6, 6, 6, 6, 6, 6, 12},
+                            new int[]{11, 6, 6, 6, 6, 6, 6, 6, 6, 12},
+                            new int[]{11, 6, 6, 6, 6, 6, 6, 6, 6, 12},
+                            new int[]{11, 6, 6, 6, 6, 6, 6, 6, 6, 12},
+                            new int[]{16, 10, 10, 10, 18, 10, 10, 10, 10, 14}
+                    }
+            }
+    };
+
     public static void saveMap(Context context, String key, int[][][][] map) {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putBoolean(KEY_MAP + key, true);
@@ -1285,38 +1326,90 @@ public class MapUtils {
                 }
             }
             return map;
-        } else return MAP;
+        } else {
+            switch (key) {
+                case KEY_MAP_HOUSE:
+                    return MAP_HOUSE;
+                default:
+                    return MAP_DEFAULT;
+            }
+        }
     }
 
     public static List<RowData> getMapList(Context context, String key) {
         int[][][][] map = getMap(context, key);
 
         List<RowData> rows = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < map.length; i++) {
             List<SceneryData> row = new ArrayList<>();
-            for (int i2 = 0; i2 < 10; i2++) {
+            for (int i2 = 0; i2 < map[i].length; i2++) {
                 List<List<TileData>> tileRows = new ArrayList<>();
-                for (int i3 = 0; i3 < 10; i3++) {
+                for (int i3 = 0; i3 < map[i][i2].length; i3++) {
                     List<TileData> tileRow = new ArrayList<>();
-                    for (int i4 = 0; i4 < 10; i4++) {
+                    for (int i4 = 0; i4 < map[i][i2][i3].length; i4++) {
                         switch(map[i][i2][i3][i4]) {
                             case TILE_GRASS:
-                                tileRow.add(new GrassTileData(context, (i2 * 10) + i4, (i * 10) + i3));
+                                tileRow.add(new GrassTileData(context, 3, new PositionData(i2, i, i4, i3)));
+                                break;
+                            case TILE_GRASS_MOWN:
+                                tileRow.add(new GrassTileData(context, 2, new PositionData(i2, i, i4, i3)));
+                                break;
+                            case TILE_GRASS_THICK:
+                                tileRow.add(new GrassTileData(context, 4, new PositionData(i2, i, i4, i3)));
                                 break;
                             case TILE_BUSH:
-                                tileRow.add(new BushTileData(context, (i2 * 10) + i4, (i * 10) + i3));
+                                tileRow.add(new BushTileData(context, new PositionData(i2, i, i4, i3)));
                                 break;
                             case TILE_TREE:
-                                tileRow.add(new TreeTileData(context, (i2 * 10) + i4, (i * 10) + i3));
+                                tileRow.add(new TreeTileData(context, new PositionData(i2, i, i4, i3)));
                                 break;
                             case TILE_HOUSE:
-                                tileRow.add(new HouseTileData(context, false, (i2 * 10) + i4, (i * 10) + i3));
+                                tileRow.add(new HouseTileData(context, false, new PositionData(i2, i, i4, i3)));
                                  break;
                             case TILE_HOUSE_OPEN:
-                                tileRow.add(new HouseTileData(context, true, (i2 * 10) + i4, (i * 10) + i3));
+                                tileRow.add(new HouseTileData(context, true, new PositionData(i2, i, i4, i3)));
                                 break;
                             case TILE_SIGN:
-                                tileRow.add(new SignTileData(context, (i2 * 10) + i4, (i * 10) + i3));
+                                tileRow.add(new SignTileData(context, new PositionData(i2, i, i4, i3)));
+                                break;
+                            case TILE_CHECKPOINT:
+                                tileRow.add(new CheckpointTileData(context, new PositionData(i2, i, i4, i3)));
+                                break;
+                            case TILE_WALL_TOP:
+                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_TOP, new PositionData(i2, i, i4, i3)));
+                                break;
+                            case TILE_WALL_BOTTOM:
+                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_BOTTOM, new PositionData(i2, i, i4, i3)));
+                                break;
+                            case TILE_WALL_LEFT:
+                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_LEFT, new PositionData(i2, i, i4, i3)));
+                                break;
+                            case TILE_WALL_RIGHT:
+                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_RIGHT, new PositionData(i2, i, i4, i3)));
+                                break;
+                            case TILE_WALL_CORNER_BOTTOM_LEFT:
+                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_CORNER_BOTTOM_LEFT, new PositionData(i2, i, i4, i3)));
+                                break;
+                            case TILE_WALL_CORNER_BOTTOM_RIGHT:
+                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_CORNER_BOTTOM_RIGHT, new PositionData(i2, i, i4, i3)));
+                                break;
+                            case TILE_WALL_CORNER_TOP_LEFT:
+                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_CORNER_TOP_LEFT, new PositionData(i2, i, i4, i3)));
+                                break;
+                            case TILE_WALL_CORNER_TOP_RIGHT:
+                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_CORNER_TOP_RIGHT, new PositionData(i2, i, i4, i3)));
+                                break;
+                            case TILE_WALL_DOOR_TOP:
+                                tileRow.add(new DoorTileData(context, TileUtils.TILE_WALL_DOOR_TOP, new PositionData(i2, i, i4, i3)));
+                                break;
+                            case TILE_WALL_DOOR_BOTTOM:
+                                tileRow.add(new DoorTileData(context, TileUtils.TILE_WALL_DOOR_BOTTOM, new PositionData(i2, i, i4, i3)));
+                                break;
+                            case TILE_WALL_DOOR_LEFT:
+                                tileRow.add(new DoorTileData(context, TileUtils.TILE_WALL_DOOR_LEFT, new PositionData(i2, i, i4, i3)));
+                                break;
+                            case TILE_WALL_DOOR_RIGHT:
+                                tileRow.add(new DoorTileData(context, TileUtils.TILE_WALL_DOOR_RIGHT, new PositionData(i2, i, i4, i3)));
                                 break;
                         }
                     }

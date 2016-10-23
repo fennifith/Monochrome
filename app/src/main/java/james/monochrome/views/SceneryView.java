@@ -38,20 +38,6 @@ public class SceneryView extends SquareImageView {
 
     public void setScenery(SceneryData scenery) {
         this.scenery = scenery;
-
-        TileData.OnTileChangeListener listener = new TileData.OnTileChangeListener() {
-            @Override
-            public void onTileChange(TileData tile) {
-                invalidate();
-            }
-        };
-
-        for (List<TileData> row : scenery.getTiles()) {
-            for (TileData tile : row) {
-                tile.setOnTileChangeListener(listener);
-            }
-        }
-
         invalidate();
     }
 

@@ -2,12 +2,13 @@ package james.monochrome.data.tiles;
 
 import android.content.Context;
 
+import james.monochrome.data.PositionData;
 import james.monochrome.utils.TileUtils;
 
 public class TreeTileData extends TileData {
 
-    public TreeTileData(Context context, int x, int y) {
-        super(context, TileUtils.getTile(TileUtils.TILE_TREE), x, y);
+    public TreeTileData(Context context, PositionData position) {
+        super(context, TileUtils.getTile(TileUtils.TILE_TREE), position);
     }
 
     @Override

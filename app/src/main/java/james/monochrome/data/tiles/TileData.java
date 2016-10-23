@@ -1,21 +1,23 @@
 package james.monochrome.data.tiles;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import java.util.List;
+
+import james.monochrome.data.PositionData;
 
 public abstract class TileData {
 
     private Context context;
     private List<List<Integer>> tile;
-    private int x, y;
+    private PositionData position;
     private OnTileChangeListener listener;
 
-    public TileData(Context context, List<List<Integer>> tile, int x, int y) {
+    public TileData(Context context, List<List<Integer>> tile, PositionData position) {
         this.context = context;
         this.tile = tile;
-        this.x = x;
-        this.y = y;
+        this.position = position;
     }
 
     public Context getContext() {
@@ -26,17 +28,31 @@ public abstract class TileData {
         return tile;
     }
 
-    public void setTile(List<List<Integer>> tile) {
+    void setTile(List<List<Integer>> tile) {
         this.tile = tile;
         if (listener != null) listener.onTileChange(this);
     }
 
-    public int getX() {
-        return x;
+    void setTileKey(int tileKey) {
+        if (listener != null) listener.onRequestTileKeyChange(this, tileKey);
     }
 
-    public int getY() {
-        return y;
+    void setMap(String mapKey) {
+        if (listener != null) listener.onRequestMapChange(mapKey);
+    }
+
+    @Nullable
+    String getMapKey() {
+        if (listener != null) return listener.getMapKey();
+        else return null;
+    }
+
+    void shake() {
+        if (listener != null) listener.onRequestShake();
+    }
+
+    public PositionData getPosition() {
+        return position;
     }
 
     public abstract void onTouch();
@@ -55,5 +71,13 @@ public abstract class TileData {
 
     public interface OnTileChangeListener {
         void onTileChange(TileData tile);
+
+        void onRequestTileKeyChange(TileData tile, int tileKey);
+
+        void onRequestMapChange(String mapKey);
+
+        void onRequestShake();
+
+        String getMapKey();
     }
 }

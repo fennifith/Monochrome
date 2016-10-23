@@ -1,7 +1,11 @@
 package james.monochrome.data.tiles;
 
 import android.content.Context;
+import android.content.DialogInterface;
 
+import james.monochrome.R;
+import james.monochrome.data.PositionData;
+import james.monochrome.utils.MapUtils;
 import james.monochrome.utils.StaticUtils;
 import james.monochrome.utils.TileUtils;
 
@@ -9,8 +13,8 @@ public class HouseTileData extends TileData {
 
     private boolean isHouseOpen;
 
-    public HouseTileData(Context context, boolean isHouseOpen, int x, int y) {
-        super(context, TileUtils.getTile(TileUtils.TILE_HOUSE), x, y);
+    public HouseTileData(Context context, boolean isHouseOpen, PositionData position) {
+        super(context, TileUtils.getTile(TileUtils.TILE_HOUSE), position);
         this.isHouseOpen = isHouseOpen;
     }
 
@@ -25,7 +29,29 @@ public class HouseTileData extends TileData {
 
     @Override
     public void onEnter() {
-        if (isHouseOpen) setTile(TileUtils.getTile(TileUtils.TILE_HOUSE_OPEN));
+        if (isHouseOpen) {
+            setTile(TileUtils.getTile(TileUtils.TILE_HOUSE_OPEN));
+            StaticUtils.makeDialog(
+                    getContext(),
+                    getContext().getString(R.string.action_house),
+                    getContext().getString(R.string.msg_enter_house),
+                    getContext().getString(R.string.action_yes),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            setMap(MapUtils.KEY_MAP_HOUSE);
+                            dialog.dismiss();
+                        }
+                    },
+                    getContext().getString(R.string.action_no),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }
+            ).show();
+        }
     }
 
     @Override

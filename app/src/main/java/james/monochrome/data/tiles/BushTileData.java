@@ -2,16 +2,18 @@ package james.monochrome.data.tiles;
 
 import android.content.Context;
 
+import james.monochrome.data.PositionData;
 import james.monochrome.utils.TileUtils;
 
 public class BushTileData extends TileData {
 
-    public BushTileData(Context context, int x, int y) {
-        super(context, TileUtils.getTile(TileUtils.TILE_BUSH), x, y);
+    public BushTileData(Context context, PositionData position) {
+        super(context, TileUtils.getTile(TileUtils.TILE_BUSH), position);
     }
 
     @Override
     public void onTouch() {
+        shake();
     }
 
     @Override

@@ -2,18 +2,20 @@ package james.monochrome.data.tiles;
 
 import android.content.Context;
 
+import james.monochrome.data.PositionData;
 import james.monochrome.utils.MapUtils;
 import james.monochrome.utils.StaticUtils;
 import james.monochrome.utils.TileUtils;
 
 public class SignTileData extends TileData {
 
-    public SignTileData(Context context, int x, int y) {
-        super(context, TileUtils.getTile(TileUtils.TILE_SIGN), x, y);
+    public SignTileData(Context context, PositionData position) {
+        super(context, TileUtils.getTile(TileUtils.TILE_SIGN), position);
     }
 
     public String getMessage() {
-        return MapUtils.getMessage(getContext(), getY() / 10, getX() / 10, getY() % 10, getX() % 10);
+        PositionData position = getPosition();
+        return MapUtils.getMessage(getContext(), position.getSceneY(), position.getSceneX(), position.getTileY(), position.getTileX());
     }
 
     @Override

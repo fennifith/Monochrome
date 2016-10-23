@@ -5,10 +5,10 @@ import android.content.Context;
 import james.monochrome.data.PositionData;
 import james.monochrome.utils.TileUtils;
 
-public class GrassTileData extends TileData {
+public class WallTileData extends TileData {
 
-    public GrassTileData(Context context, int thickness, PositionData position) {
-        super(context, TileUtils.getRandomGrass(1, thickness), position);
+    public WallTileData(Context context, int[][] tile, PositionData position) {
+        super(context, TileUtils.getTile(tile), position);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class GrassTileData extends TileData {
 
     @Override
     public boolean canWalkOver() {
-        return true;
+        return false;
     }
 
     @Override

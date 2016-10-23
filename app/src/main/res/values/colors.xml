@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#424242</color>
     <color name="colorAccent">#000000</color>
 
+    <color name="colorDialogFullscreen">#8AFFFFFF</color>
+
     <color name="zero">#FAFAFA</color>
     <color name="one">#F5F5F5</color>
     <color name="two">#EEEEEE</color>
