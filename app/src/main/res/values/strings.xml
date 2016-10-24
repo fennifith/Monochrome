@@ -2,6 +2,7 @@
     <string name="app_name">Monochrome</string>
 
     <string name="action_start">Start</string>
+    <string name="action_resume">Continue</string>
     <string name="action_settings">Settings</string>
     <string name="action_save">Save</string>
     <string name="action_cancel">Cancel</string>

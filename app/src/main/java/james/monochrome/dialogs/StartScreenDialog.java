@@ -2,11 +2,15 @@ package james.monochrome.dialogs;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatDialog;
+import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 
 import james.monochrome.R;
+
+import static james.monochrome.activities.MainActivity.KEY_READ_SIGN;
 
 public class StartScreenDialog extends AppCompatDialog {
 
@@ -20,7 +24,10 @@ public class StartScreenDialog extends AppCompatDialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_start);
 
-        findViewById(R.id.start).setOnClickListener(new View.OnClickListener() {
+        AppCompatButton start = (AppCompatButton) findViewById(R.id.start);
+        if (PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(KEY_READ_SIGN, false))
+            start.setText(R.string.action_resume);
+        start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();

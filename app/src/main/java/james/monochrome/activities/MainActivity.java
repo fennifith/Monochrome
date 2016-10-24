@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AppCompatActivity;
 import android.view.HapticFeedbackConstants;
@@ -26,6 +27,7 @@ import james.monochrome.utils.StaticUtils;
 import james.monochrome.views.BackgroundView;
 import james.monochrome.views.CharacterView;
 import james.monochrome.views.SceneryView;
+import james.monochrome.views.SquareImageView;
 
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
 
@@ -36,6 +38,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private BackgroundView background;
     private SceneryView scenery;
     private CharacterView character;
+
+    private SquareImageView pauseView, soundView, personView, mapView;
+    private boolean isMuted;
 
     private List<RowData> map;
     private String mapKey;
@@ -57,9 +62,48 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         scenery = (SceneryView) findViewById(R.id.scenery);
         character = (CharacterView) findViewById(R.id.character);
 
+        pauseView = (SquareImageView) findViewById(R.id.pause);
+        soundView = (SquareImageView) findViewById(R.id.sound);
+        personView = (SquareImageView) findViewById(R.id.person);
+        mapView = (SquareImageView) findViewById(R.id.map);
+
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         mapPositions = new ArrayMap<>();
         setMap(prefs.getString(MapUtils.KEY_MAP, MapUtils.KEY_MAP_DEFAULT));
+
+        pauseView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new StartScreenDialog(MainActivity.this).show();
+            }
+        });
+
+        soundView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isMuted) {
+                    isMuted = false;
+                    soundView.setImageDrawable(VectorDrawableCompat.create(getResources(), R.drawable.ic_sound_on, getTheme()));
+                } else {
+                    isMuted = true;
+                    soundView.setImageDrawable(VectorDrawableCompat.create(getResources(), R.drawable.ic_sound_off, getTheme()));
+                }
+            }
+        });
+
+        personView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: implement google games stuff, add items view, etc
+            }
+        });
+
+        mapView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: make a large map dialog thing
+            }
+        });
 
         findViewById(R.id.up).setOnClickListener(new View.OnClickListener() {
             @Override
