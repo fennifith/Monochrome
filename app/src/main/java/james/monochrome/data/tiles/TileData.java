@@ -3,18 +3,16 @@ package james.monochrome.data.tiles;
 import android.content.Context;
 import android.support.annotation.Nullable;
 
-import java.util.List;
-
 import james.monochrome.data.PositionData;
 
 public abstract class TileData {
 
     private Context context;
-    private List<List<Integer>> tile;
+    private int[][] tile;
     private PositionData position;
     private OnTileChangeListener listener;
 
-    public TileData(Context context, List<List<Integer>> tile, PositionData position) {
+    public TileData(Context context, int[][] tile, PositionData position) {
         this.context = context;
         this.tile = tile;
         this.position = position;
@@ -24,11 +22,11 @@ public abstract class TileData {
         return context;
     }
 
-    public List<List<Integer>> getTile() {
+    public int[][] getTile() {
         return tile;
     }
 
-    void setTile(List<List<Integer>> tile) {
+    void setTile(int[][] tile) {
         this.tile = tile;
         if (listener != null) listener.onTileChange(this);
     }

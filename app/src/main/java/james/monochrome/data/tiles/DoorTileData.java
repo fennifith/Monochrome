@@ -5,14 +5,15 @@ import android.content.DialogInterface;
 
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
-import james.monochrome.utils.MapUtils;
 import james.monochrome.utils.StaticUtils;
-import james.monochrome.utils.TileUtils;
 
 public class DoorTileData extends TileData {
 
-    public DoorTileData(Context context, int[][] tile, PositionData position) {
-        super(context, TileUtils.getTransparentTile(tile), position);
+    private String mapKey;
+
+    public DoorTileData(Context context, int[][] tile, String mapKey, PositionData position) {
+        super(context, tile, position);
+        this.mapKey = mapKey;
     }
 
     @Override
@@ -29,7 +30,7 @@ public class DoorTileData extends TileData {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        setMap(MapUtils.KEY_MAP_DEFAULT);
+                        setMap(mapKey);
                         dialog.dismiss();
                     }
                 },

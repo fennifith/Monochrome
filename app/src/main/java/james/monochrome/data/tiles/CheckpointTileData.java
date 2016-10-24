@@ -11,7 +11,7 @@ import james.monochrome.utils.TileUtils;
 public class CheckpointTileData extends TileData {
 
     public CheckpointTileData(Context context, PositionData position) {
-        super(context, TileUtils.getTransparentTile(TileUtils.TILE_CHECKPOINT), position);
+        super(context, TileUtils.TILE_CHECKPOINT, position);
     }
 
     @Override

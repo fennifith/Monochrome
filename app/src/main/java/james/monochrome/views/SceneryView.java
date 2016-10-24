@@ -7,14 +7,16 @@ import android.util.AttributeSet;
 
 import java.util.List;
 
+import james.monochrome.Monochrome;
 import james.monochrome.data.SceneryData;
 import james.monochrome.data.tiles.TileData;
-import james.monochrome.utils.TileUtils;
 
 public class SceneryView extends SquareImageView {
 
     private SceneryData scenery;
     private Paint paint;
+
+    private Monochrome monochrome;
 
     public SceneryView(Context context) {
         super(context);
@@ -32,6 +34,8 @@ public class SceneryView extends SquareImageView {
     }
 
     private void init() {
+        monochrome = (Monochrome) getContext().getApplicationContext();
+
         paint = new Paint();
         paint.setAntiAlias(true);
     }
@@ -54,7 +58,7 @@ public class SceneryView extends SquareImageView {
             List<TileData> tileRow = tiles.get(row);
             for (int column = 0; column < tileRow.size(); column++) {
                 int x = tileSize * column, y = tileSize * row;
-                TileUtils.drawTile(getContext(), canvas, paint, x, y, pixelSize, tileRow.get(column).getTile());
+                canvas.drawBitmap(monochrome.getBitmap(tileRow.get(column).getTile(), tileSize, paint), x, y, paint);
             }
         }
     }

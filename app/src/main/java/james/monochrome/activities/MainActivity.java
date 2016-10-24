@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
         setScenery(map.get(sceneY).getScenery(sceneX));
         character.setCharacterPosition(characterX, characterY);
-        background.setTile(MapUtils.getBackground(mapKey));
+        background.setMap(mapKey);
     }
 
     public void setScenery(SceneryData data) {

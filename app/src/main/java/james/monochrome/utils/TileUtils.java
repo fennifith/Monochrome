@@ -135,13 +135,13 @@ public class TileUtils {
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
             },
             TILE_CHECKPOINT = new int[][]{
-                    new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    new int[]{0, 0, 9, 0, 0, 6, 6, 0, 6, 0},
-                    new int[]{0, 0, 9, 6, 6, 6, 4, 6, 6, 0},
+                    new int[]{0, 0, 9, 0, 0, 0, 0, 0, 0, 0},
+                    new int[]{0, 0, 9, 6, 6, 0, 6, 6, 6, 0},
+                    new int[]{0, 0, 9, 4, 6, 6, 6, 4, 6, 0},
                     new int[]{0, 0, 9, 4, 4, 4, 4, 4, 6, 0},
                     new int[]{0, 0, 9, 4, 4, 4, 4, 4, 6, 0},
-                    new int[]{0, 0, 9, 4, 6, 6, 6, 6, 6, 0},
-                    new int[]{0, 0, 9, 6, 6, 0, 0, 6, 0, 0},
+                    new int[]{0, 0, 9, 6, 6, 4, 6, 6, 6, 0},
+                    new int[]{0, 0, 9, 0, 6, 6, 6, 0, 0, 0},
                     new int[]{0, 0, 9, 0, 0, 0, 0, 0, 0, 0},
                     new int[]{0, 0, 9, 0, 0, 0, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -339,61 +339,45 @@ public class TileUtils {
                     new int[]{0, 0, 9, 9, 0, 0, 9, 9, 0, 0}
             },
             TILE_WOOD = new int[][]{
-                    new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                    new int[]{2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
-                    new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                    new int[]{2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
-                    new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                    new int[]{2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
-                    new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                    new int[]{2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
-                    new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                    new int[]{2, 2, 2, 2, 2, 2, 2, 2, 2, 2}
+                    new int[]{3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+                    new int[]{4, 4, 4, 4, 4, 4, 4, 4, 4, 4},
+                    new int[]{3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+                    new int[]{4, 4, 4, 4, 4, 4, 4, 4, 4, 4},
+                    new int[]{3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+                    new int[]{4, 4, 4, 4, 4, 4, 4, 4, 4, 4},
+                    new int[]{3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+                    new int[]{4, 4, 4, 4, 4, 4, 4, 4, 4, 4},
+                    new int[]{3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+                    new int[]{4, 4, 4, 4, 4, 4, 4, 4, 4, 4},
             };
 
-    public static List<List<Integer>> getRandomGrass(int min, int max) {
+    public static int[][] getRandomGrass(int min, int max) {
         Random random = new Random();
-        List<List<Integer>> tile = new ArrayList<>();
+        int[][] tile = new int[10][];
 
-        for (int i = 0; i < 10; i++) {
-            List<Integer> row = new ArrayList<>();
-            for (int i2 = 0; i2 < 10; i2++) {
-                row.add(random.nextInt((max + 1) - min) + min);
+        for (int i = 0; i < tile.length; i++) {
+            tile[i] = new int[10];
+            for (int i2 = 0; i2 < tile[i].length; i2++) {
+                tile[i][i2] = random.nextInt((max + 1) - min) + min;
             }
-
-            tile.add(row);
         }
 
         return tile;
     }
 
     public static List<List<Integer>> getTile(int[][] tile) {
-        List<List<Integer>> grass = getRandomGrass(1, 3);
-
         List<List<Integer>> tileList = new ArrayList<>();
-        for (int i = 0; i < tile.length; i++) {
+        for (int[] tileRow : tile) {
             List<Integer> rowList = new ArrayList<>();
-            for (int i2 = 0; i2 < tile[i].length; i2++) {
-                rowList.add(tile[i][i2] != 0 ? tile[i][i2] : grass.get(i).get(i2));
+            for (int tileColumn : tileRow) {
+                rowList.add(tileColumn);
             }
             tileList.add(rowList);
         }
         return tileList;
     }
 
-    public static List<List<Integer>> getTransparentTile(int[][] tile) {
-        List<List<Integer>> tileList = new ArrayList<>();
-        for (int i = 0; i < tile.length; i++) {
-            List<Integer> rowList = new ArrayList<>();
-            for (int i2 = 0; i2 < tile[i].length; i2++) {
-                rowList.add(tile[i][i2]);
-            }
-            tileList.add(rowList);
-        }
-        return tileList;
-    }
-
-    public static void drawTile(Context context, Canvas canvas, Paint paint, int offsetX, int offsetY, int pixelSize, List<List<Integer>> tile) {
+    public static void drawTile(Context context, Canvas canvas, Paint paint, int pixelSize, List<List<Integer>> tile) {
         for (int row = 0; row < tile.size(); row++) {
             List<Integer> pixelRow = tile.get(row);
             for (int column = 0; column < pixelRow.size(); column++) {
@@ -431,7 +415,7 @@ public class TileUtils {
                         continue;
                 }
 
-                canvas.drawRect(x + offsetX, y + offsetY, x + pixelSize + offsetX, y + pixelSize + offsetY, paint);
+                canvas.drawRect(x, y, x + pixelSize, y + pixelSize, paint);
             }
         }
     }

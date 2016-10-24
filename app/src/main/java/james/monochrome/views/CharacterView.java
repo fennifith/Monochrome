@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.HapticFeedbackConstants;
 
+import james.monochrome.Monochrome;
 import james.monochrome.data.PositionData;
 import james.monochrome.data.SceneryData;
 import james.monochrome.data.tiles.TileData;
@@ -18,11 +19,13 @@ public class CharacterView extends SquareImageView {
     private Paint paint;
 
     private int[][] tile = TileUtils.TILE_CHARACTER;
-    private int characterX, characterY, offsetY;
+    private int characterX, characterY, tileSize, pixelSize, offsetY;
     private boolean isHidden;
 
     private Handler handler;
     private Runnable runnable;
+
+    private Monochrome monochrome;
 
     public CharacterView(Context context) {
         super(context);
@@ -40,6 +43,8 @@ public class CharacterView extends SquareImageView {
     }
 
     private void init() {
+        monochrome = (Monochrome) getContext().getApplicationContext();
+
         paint = new Paint();
         paint.setAntiAlias(true);
 
@@ -48,8 +53,8 @@ public class CharacterView extends SquareImageView {
             @Override
             public void run() {
                 if (offsetY < 1) offsetY = 1;
-                else offsetY = 0;
-                invalidate();
+                else offsetY = -1;
+                setY(getY() + (offsetY * pixelSize));
 
                 handler.postDelayed(this, 500);
             }
@@ -267,9 +272,9 @@ public class CharacterView extends SquareImageView {
         super.draw(canvas);
         if (scenery == null || isHidden) return;
 
-        int tileSize = Math.min(canvas.getWidth(), canvas.getHeight()) / 10;
-        int pixelSize = tileSize / 10;
+        tileSize = Math.min(canvas.getWidth(), canvas.getHeight()) / 10;
+        pixelSize = tileSize / 10;
 
-        TileUtils.drawTile(getContext(), canvas, paint, tileSize * characterX, (tileSize * characterY) + (pixelSize * offsetY), pixelSize, TileUtils.getTransparentTile(tile));
+        canvas.drawBitmap(monochrome.getBitmap(tile, tileSize, paint), tileSize * characterX, tileSize * characterY, paint);
     }
 }

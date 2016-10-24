@@ -3,12 +3,11 @@ package james.monochrome.data.tiles;
 import android.content.Context;
 
 import james.monochrome.data.PositionData;
-import james.monochrome.utils.TileUtils;
 
 public class WallTileData extends TileData {
 
     public WallTileData(Context context, int[][] tile, PositionData position) {
-        super(context, TileUtils.getTransparentTile(tile), position);
+        super(context, tile, position);
     }
 
     @Override

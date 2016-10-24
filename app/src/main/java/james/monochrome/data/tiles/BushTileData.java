@@ -8,7 +8,7 @@ import james.monochrome.utils.TileUtils;
 public class BushTileData extends TileData {
 
     public BushTileData(Context context, PositionData position) {
-        super(context, TileUtils.getTransparentTile(TileUtils.TILE_BUSH), position);
+        super(context, TileUtils.TILE_BUSH, position);
     }
 
     @Override

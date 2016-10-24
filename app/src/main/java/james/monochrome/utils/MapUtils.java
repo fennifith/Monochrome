@@ -1299,10 +1299,10 @@ public class MapUtils {
             }
     };
 
-    public static List<List<Integer>> getBackground(String key) {
+    public static int[][] getBackground(String key) {
         switch (key) {
             case KEY_MAP_HOUSE:
-                return TileUtils.getTile(TileUtils.TILE_WOOD);
+                return TileUtils.TILE_WOOD;
             default:
                 return TileUtils.getRandomGrass(1, 3);
         }
@@ -1417,16 +1417,16 @@ public class MapUtils {
                                 tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_CORNER_TOP_RIGHT, new PositionData(i2, i, i4, i3)));
                                 break;
                             case TILE_WALL_DOOR_TOP:
-                                tileRow.add(new DoorTileData(context, TileUtils.TILE_WALL_DOOR_TOP, new PositionData(i2, i, i4, i3)));
+                                tileRow.add(new DoorTileData(context, TileUtils.TILE_WALL_DOOR_TOP, KEY_MAP_DEFAULT, new PositionData(i2, i, i4, i3)));
                                 break;
                             case TILE_WALL_DOOR_BOTTOM:
-                                tileRow.add(new DoorTileData(context, TileUtils.TILE_WALL_DOOR_BOTTOM, new PositionData(i2, i, i4, i3)));
+                                tileRow.add(new DoorTileData(context, TileUtils.TILE_WALL_DOOR_BOTTOM, KEY_MAP_DEFAULT, new PositionData(i2, i, i4, i3)));
                                 break;
                             case TILE_WALL_DOOR_LEFT:
-                                tileRow.add(new DoorTileData(context, TileUtils.TILE_WALL_DOOR_LEFT, new PositionData(i2, i, i4, i3)));
+                                tileRow.add(new DoorTileData(context, TileUtils.TILE_WALL_DOOR_LEFT, KEY_MAP_DEFAULT, new PositionData(i2, i, i4, i3)));
                                 break;
                             case TILE_WALL_DOOR_RIGHT:
-                                tileRow.add(new DoorTileData(context, TileUtils.TILE_WALL_DOOR_RIGHT, new PositionData(i2, i, i4, i3)));
+                                tileRow.add(new DoorTileData(context, TileUtils.TILE_WALL_DOOR_RIGHT, KEY_MAP_DEFAULT, new PositionData(i2, i, i4, i3)));
                                 break;
                             case TILE_CHEST:
                                 tileRow.add(new ChestTileData(context, new PositionData(i2, i, i4, i3)));
