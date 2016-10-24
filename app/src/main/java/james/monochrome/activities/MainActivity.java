@@ -21,11 +21,13 @@ import james.monochrome.data.SceneryData;
 import james.monochrome.data.tiles.TileData;
 import james.monochrome.dialogs.StartScreenDialog;
 import james.monochrome.utils.MapUtils;
+import james.monochrome.views.BackgroundView;
 import james.monochrome.views.CharacterView;
 import james.monochrome.views.SceneryView;
 
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
 
+    private BackgroundView background;
     private SceneryView scenery;
     private CharacterView character;
 
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        background = (BackgroundView) findViewById(R.id.background);
         scenery = (SceneryView) findViewById(R.id.scenery);
         character = (CharacterView) findViewById(R.id.character);
 
@@ -116,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
         setScenery(map.get(sceneY).getScenery(sceneX));
         character.setCharacterPosition(characterX, characterY);
+        background.setTile(MapUtils.getBackground(mapKey));
     }
 
     public void setScenery(SceneryData data) {
@@ -148,6 +152,20 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             @Override
             public void onRequestMapChange(String mapKey) {
                 setMap(mapKey);
+            }
+
+            @Override
+            public void onRequestPositionSave() {
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString(MapUtils.KEY_MAP, mapKey);
+                for (String mapKey : mapPositions.keySet()) {
+                    PositionData position = mapPositions.get(mapKey);
+                    editor.putInt(MapUtils.KEY_SCENE_X + mapKey, position.getSceneX());
+                    editor.putInt(MapUtils.KEY_SCENE_Y + mapKey, position.getSceneY());
+                    editor.putInt(MapUtils.KEY_CHARACTER_X + mapKey, position.getTileX());
+                    editor.putInt(MapUtils.KEY_CHARACTER_Y + mapKey, position.getTileY());
+                }
+                editor.apply();
             }
 
             @Override

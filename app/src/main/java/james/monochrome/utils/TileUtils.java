@@ -291,9 +291,9 @@ public class TileUtils {
                     new int[]{0, 9, 9, 9, 9, 9, 9, 9, 9, 0}
             },
             TILE_CHEST_OPEN = new int[][]{
+                    new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 2, 2, 0, 0, 0, 0},
                     new int[]{0, 0, 8, 8, 8, 8, 8, 8, 0, 0},
-                    new int[]{0, 8, 9, 9, 9, 9, 9, 9, 8, 0},
                     new int[]{0, 8, 9, 9, 9, 9, 9, 9, 8, 0},
                     new int[]{0, 8, 9, 9, 9, 9, 9, 9, 8, 0},
                     new int[]{0, 9, 7, 7, 7, 7, 7, 7, 9, 0},
@@ -325,6 +325,18 @@ public class TileUtils {
                     new int[]{0, 0, 8, 8, 8, 8, 8, 8, 0, 0},
                     new int[]{0, 0, 9, 9, 9, 9, 9, 9, 0, 0},
                     new int[]{0, 0, 9, 9, 0, 0, 9, 9, 0, 0}
+            },
+            TILE_WOOD = new int[][]{
+                    new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                    new int[]{2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+                    new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                    new int[]{2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+                    new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                    new int[]{2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+                    new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                    new int[]{2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+                    new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                    new int[]{2, 2, 2, 2, 2, 2, 2, 2, 2, 2}
             };
 
     public static List<List<Integer>> getRandomGrass(int min, int max) {

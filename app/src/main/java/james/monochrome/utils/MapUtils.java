@@ -1294,6 +1294,15 @@ public class MapUtils {
             }
     };
 
+    public static List<List<Integer>> getBackground(String key) {
+        switch (key) {
+            case KEY_MAP_HOUSE:
+                return TileUtils.getTile(TileUtils.TILE_WOOD);
+            default:
+                return TileUtils.getRandomGrass(1, 3);
+        }
+    }
+
     public static void saveMap(Context context, String key, int[][][][] map) {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putBoolean(KEY_MAP + key, true);

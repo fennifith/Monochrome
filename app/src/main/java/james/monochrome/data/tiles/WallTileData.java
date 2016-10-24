@@ -8,7 +8,7 @@ import james.monochrome.utils.TileUtils;
 public class WallTileData extends TileData {
 
     public WallTileData(Context context, int[][] tile, PositionData position) {
-        super(context, TileUtils.getTile(tile), position);
+        super(context, TileUtils.getTransparentTile(tile), position);
     }
 
     @Override

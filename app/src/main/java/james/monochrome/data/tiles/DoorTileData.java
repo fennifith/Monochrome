@@ -12,7 +12,7 @@ import james.monochrome.utils.TileUtils;
 public class DoorTileData extends TileData {
 
     public DoorTileData(Context context, int[][] tile, PositionData position) {
-        super(context, TileUtils.getTile(tile), position);
+        super(context, TileUtils.getTransparentTile(tile), position);
     }
 
     @Override

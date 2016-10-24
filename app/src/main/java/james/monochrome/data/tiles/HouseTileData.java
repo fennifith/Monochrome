@@ -14,7 +14,7 @@ public class HouseTileData extends TileData {
     private boolean isHouseOpen;
 
     public HouseTileData(Context context, boolean isHouseOpen, PositionData position) {
-        super(context, TileUtils.getTile(TileUtils.TILE_HOUSE), position);
+        super(context, TileUtils.getTransparentTile(TileUtils.TILE_HOUSE), position);
         this.isHouseOpen = isHouseOpen;
     }
 
@@ -30,7 +30,7 @@ public class HouseTileData extends TileData {
     @Override
     public void onEnter() {
         if (isHouseOpen) {
-            setTile(TileUtils.getTile(TileUtils.TILE_HOUSE_OPEN));
+            setTile(TileUtils.getTransparentTile(TileUtils.TILE_HOUSE_OPEN));
             StaticUtils.makeDialog(
                     getContext(),
                     getContext().getString(R.string.action_house),
@@ -56,7 +56,7 @@ public class HouseTileData extends TileData {
 
     @Override
     public void onExit() {
-        setTile(TileUtils.getTile(TileUtils.TILE_HOUSE));
+        setTile(TileUtils.getTransparentTile(TileUtils.TILE_HOUSE));
     }
 
     @Override

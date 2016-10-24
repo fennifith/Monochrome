@@ -10,7 +10,7 @@ import james.monochrome.utils.TileUtils;
 public class SignTileData extends TileData {
 
     public SignTileData(Context context, PositionData position) {
-        super(context, TileUtils.getTile(TileUtils.TILE_SIGN), position);
+        super(context, TileUtils.getTransparentTile(TileUtils.TILE_SIGN), position);
     }
 
     public String getMessage() {

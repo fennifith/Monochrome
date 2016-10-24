@@ -5,6 +5,12 @@
     android:background="@color/two"
     android:id="@+id/root">
 
+    <james.monochrome.views.BackgroundView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center" />
+
     <james.monochrome.views.SceneryView
         android:id="@+id/scenery"
         android:layout_width="match_parent"

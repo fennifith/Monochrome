@@ -47,6 +47,10 @@ public abstract class TileData {
         else return null;
     }
 
+    void savePosition() {
+        if (listener != null) listener.onRequestPositionSave();
+    }
+
     void shake() {
         if (listener != null) listener.onRequestShake();
     }
@@ -75,6 +79,8 @@ public abstract class TileData {
         void onRequestTileKeyChange(TileData tile, int tileKey);
 
         void onRequestMapChange(String mapKey);
+
+        void onRequestPositionSave();
 
         void onRequestShake();
 
