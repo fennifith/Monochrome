@@ -11,6 +11,8 @@
     <string name="action_no">No</string>
     <string name="action_house">House</string>
     <string name="action_door">Door</string>
+    <string name="action_quest">Quest</string>
+    <string name="action_ok">OK</string>
 
     <string name="msg_tutorial">Well look at you, fluffy puff ball. Or is it puffy fluff ball? I can\'t remember. Anyway, this is your mind speaking to you. Your mind thinks you should go and read some of those signs.</string>
     <string name="msg_tutorial_move">You can move by swiping left, right, up, or down. Swipe towards an object to interact with it.</string>
