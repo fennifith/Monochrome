@@ -12,7 +12,9 @@ import james.monochrome.data.RowData;
 import james.monochrome.data.SceneryData;
 import james.monochrome.data.tiles.BushTileData;
 import james.monochrome.data.tiles.CheckpointTileData;
+import james.monochrome.data.tiles.ChestTileData;
 import james.monochrome.data.tiles.DoorTileData;
+import james.monochrome.data.tiles.EmptyTileData;
 import james.monochrome.data.tiles.GrassTileData;
 import james.monochrome.data.tiles.HouseTileData;
 import james.monochrome.data.tiles.SignTileData;
@@ -32,8 +34,8 @@ public class MapUtils {
     private static final String KEY_MESSAGE = "message";
 
     public static final int
-            TILE_GRASS = 0,
-            TILE_GRASS_MOWN = 6,
+            TILE_EMPTY = 0,
+            TILE_GRASS = 6,
             TILE_GRASS_THICK = 7,
             TILE_BUSH = 1,
             TILE_TREE = 2,
@@ -52,7 +54,8 @@ public class MapUtils {
             TILE_WALL_DOOR_TOP = 17,
             TILE_WALL_DOOR_BOTTOM = 18,
             TILE_WALL_DOOR_LEFT = 19,
-            TILE_WALL_DOOR_RIGHT = 20;
+            TILE_WALL_DOOR_RIGHT = 20,
+            TILE_CHEST = 21;
 
     private static final int[][][][] MAP_DEFAULT = new int[][][][]{
             new int[][][]{
@@ -1285,7 +1288,7 @@ public class MapUtils {
                             new int[]{11, 6, 8, 6, 6, 6, 6, 6, 6, 12},
                             new int[]{11, 6, 6, 6, 6, 6, 6, 6, 6, 12},
                             new int[]{11, 6, 6, 6, 6, 6, 6, 6, 6, 12},
-                            new int[]{11, 6, 6, 6, 6, 6, 6, 6, 6, 12},
+                            new int[]{11, 6, 6, 6, 6, 6, 21, 6, 6, 12},
                             new int[]{11, 6, 6, 6, 6, 6, 6, 6, 6, 12},
                             new int[]{11, 6, 6, 6, 6, 6, 6, 6, 6, 12},
                             new int[]{11, 6, 6, 6, 6, 6, 6, 6, 6, 12},
@@ -1357,11 +1360,11 @@ public class MapUtils {
                     List<TileData> tileRow = new ArrayList<>();
                     for (int i4 = 0; i4 < map[i][i2][i3].length; i4++) {
                         switch(map[i][i2][i3][i4]) {
+                            case TILE_EMPTY:
+                                tileRow.add(new EmptyTileData(context, new PositionData(i2, i, i4, i3)));
+                                break;
                             case TILE_GRASS:
                                 tileRow.add(new GrassTileData(context, 3, new PositionData(i2, i, i4, i3)));
-                                break;
-                            case TILE_GRASS_MOWN:
-                                tileRow.add(new GrassTileData(context, 2, new PositionData(i2, i, i4, i3)));
                                 break;
                             case TILE_GRASS_THICK:
                                 tileRow.add(new GrassTileData(context, 4, new PositionData(i2, i, i4, i3)));
@@ -1419,6 +1422,9 @@ public class MapUtils {
                                 break;
                             case TILE_WALL_DOOR_RIGHT:
                                 tileRow.add(new DoorTileData(context, TileUtils.TILE_WALL_DOOR_RIGHT, new PositionData(i2, i, i4, i3)));
+                                break;
+                            case TILE_CHEST:
+                                tileRow.add(new ChestTileData(context, new PositionData(i2, i, i4, i3)));
                                 break;
                         }
                     }
