@@ -15,6 +15,7 @@ import james.monochrome.data.tiles.CheckpointTileData;
 import james.monochrome.data.tiles.ChestTileData;
 import james.monochrome.data.tiles.DoorTileData;
 import james.monochrome.data.tiles.EmptyTileData;
+import james.monochrome.data.tiles.FloorTileData;
 import james.monochrome.data.tiles.GrassTileData;
 import james.monochrome.data.tiles.HouseTileData;
 import james.monochrome.data.tiles.SignTileData;
@@ -37,6 +38,7 @@ public class MapUtils {
             TILE_EMPTY = 0,
             TILE_GRASS = 6,
             TILE_GRASS_THICK = 7,
+            TILE_WOOD = 22,
             TILE_BUSH = 1,
             TILE_TREE = 2,
             TILE_HOUSE = 3,
@@ -1284,14 +1286,14 @@ public class MapUtils {
             new int[][][]{
                     new int[][]{
                             new int[]{15, 9, 9, 9, 9, 9, 9, 9, 9, 13},
-                            new int[]{11, 6, 6, 6, 6, 6, 6, 6, 6, 12},
-                            new int[]{11, 6, 8, 6, 6, 6, 6, 6, 6, 12},
-                            new int[]{11, 6, 6, 6, 6, 6, 6, 6, 6, 12},
-                            new int[]{11, 6, 6, 6, 6, 6, 6, 6, 6, 12},
-                            new int[]{11, 6, 6, 6, 6, 6, 21, 6, 6, 12},
-                            new int[]{11, 6, 6, 6, 6, 6, 6, 6, 6, 12},
-                            new int[]{11, 6, 6, 6, 6, 6, 6, 6, 6, 12},
-                            new int[]{11, 6, 6, 6, 6, 6, 6, 6, 6, 12},
+                            new int[]{11, 0, 0, 0, 0, 0, 0, 0, 0, 12},
+                            new int[]{11, 0, 8, 0, 0, 0, 0, 0, 0, 12},
+                            new int[]{11, 0, 0, 0, 0, 0, 0, 0, 0, 12},
+                            new int[]{11, 0, 0, 0, 0, 0, 0, 0, 0, 12},
+                            new int[]{11, 0, 0, 0, 0, 0, 21, 0, 0, 12},
+                            new int[]{11, 0, 0, 0, 0, 0, 0, 0, 0, 12},
+                            new int[]{11, 0, 0, 0, 0, 0, 0, 0, 0, 12},
+                            new int[]{11, 0, 0, 0, 0, 0, 0, 0, 0, 12},
                             new int[]{16, 10, 10, 10, 18, 10, 10, 10, 10, 14}
                     }
             }
@@ -1368,6 +1370,9 @@ public class MapUtils {
                                 break;
                             case TILE_GRASS_THICK:
                                 tileRow.add(new GrassTileData(context, 4, new PositionData(i2, i, i4, i3)));
+                                break;
+                            case TILE_WOOD:
+                                tileRow.add(new FloorTileData(context, TileUtils.TILE_WOOD, new PositionData(i2, i, i4, i3)));
                                 break;
                             case TILE_BUSH:
                                 tileRow.add(new BushTileData(context, new PositionData(i2, i, i4, i3)));
