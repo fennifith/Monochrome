@@ -25,7 +25,7 @@ public class DoorTileData extends TileData {
         StaticUtils.makeDialog(
                 getContext(),
                 getContext().getString(R.string.action_door),
-                getContext().getString(R.string.msg_exit_room),
+                getContext().getString(R.string.msg_door),
                 getContext().getString(R.string.action_yes),
                 new DialogInterface.OnClickListener() {
                     @Override

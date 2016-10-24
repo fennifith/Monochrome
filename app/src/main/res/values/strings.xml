@@ -11,9 +11,15 @@
     <string name="action_house">House</string>
     <string name="action_door">Door</string>
 
-    <string name="msg_tutorial">Well look at you, fluffy puff ball. Or is it puffy fluff ball? I can\'t remember. Anyway, this is your mind speaking to you. How weird is that. You can move by swiping left, right, up, or down. Swipe in the direction of an object to interact with it. Try reading some of those signs over there.</string>
+    <string name="msg_tutorial">Well look at you, fluffy puff ball. Or is it puffy fluff ball? I can\'t remember. Anyway, this is your mind speaking to you. Your mind thinks you should go and read some of those signs.</string>
+    <string name="msg_tutorial_move">You can move by swiping left, right, up, or down. Swipe towards an object to interact with it.</string>
+
+    <string name="msg_sign_tutorial1">Yay. You can read signs. Good job.</string>
+    <string name="msg_sign_tutorial2">Yes, keep reading the signs. READ ALL THE SIGNS. THE SIGNS CONTROL YOUR LIFE.</string>
+    <string name="msg_sign_tutorial3">I get distracted a lot.</string>
+    <string name="msg_sign_tutorial4">You should probably go to the right before I get distracted any more.</string>
 
     <string name="msg_save">Would you like to save the game?</string>
     <string name="msg_enter_house">Enter the house?</string>
-    <string name="msg_exit_room">Exit the room?</string>
+    <string name="msg_door">Go through the door?</string>
 </resources>

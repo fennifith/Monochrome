@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.text.Html;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +39,6 @@ public class StaticUtils {
 
     public static AlertDialog makeDialog(Context context, @Nullable String title, @Nullable String message, String primaryText, DialogInterface.OnClickListener primaryListener, @Nullable String secondaryText, @Nullable DialogInterface.OnClickListener secondaryListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        if (title != null) builder.setTitle(title);
         if (message != null) builder.setMessage(message);
         builder.setPositiveButton(primaryText, primaryListener);
         if (secondaryText != null && secondaryListener != null)
@@ -47,16 +47,21 @@ public class StaticUtils {
         AlertDialog dialog = builder.show();
 
         Typeface typeface = Typeface.createFromAsset(context.getAssets(), "VT323-Regular.ttf");
-        TextView titleView = null, messageView = null;
+        TextView messageView = null;
         try {
-            titleView = (TextView) dialog.findViewById(android.R.id.title);
             messageView = (TextView) dialog.findViewById(android.R.id.message);
         } catch (ClassCastException e) {
             e.printStackTrace();
         }
 
-        if (titleView != null) titleView.setTypeface(typeface);
-        if (messageView != null) messageView.setTypeface(typeface);
+        if (messageView != null) {
+            messageView.setTypeface(typeface);
+            if (title != null) {
+                String string = "<h1>" + title + "</h1>";
+                if (message != null) string += message;
+                messageView.setText(Html.fromHtml(string));
+            }
+        }
 
         TextView button1 = null, button2 = null, button3 = null;
         try {

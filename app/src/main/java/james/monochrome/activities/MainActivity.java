@@ -1,5 +1,6 @@
 package james.monochrome.activities;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -21,11 +22,16 @@ import james.monochrome.data.SceneryData;
 import james.monochrome.data.tiles.TileData;
 import james.monochrome.dialogs.StartScreenDialog;
 import james.monochrome.utils.MapUtils;
+import james.monochrome.utils.StaticUtils;
 import james.monochrome.views.BackgroundView;
 import james.monochrome.views.CharacterView;
 import james.monochrome.views.SceneryView;
 
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
+
+    public static final String
+            KEY_READ_SIGN = "tutorialSign",
+            KEY_SWIPED = "tutorialSwiped";
 
     private BackgroundView background;
     private SceneryView scenery;
@@ -95,7 +101,15 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
         findViewById(R.id.root).setOnTouchListener(this);
 
-        new StartScreenDialog(this).show();
+        StartScreenDialog dialog = new StartScreenDialog(this);
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                if (!prefs.getBoolean(KEY_READ_SIGN, false))
+                    StaticUtils.makeToast(MainActivity.this, getString(R.string.msg_tutorial)).show();
+            }
+        });
+        dialog.show();
     }
 
     public void setMap(String mapKey) {
@@ -244,10 +258,13 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 100) {
                     if (dx < 0) moveRight();
                     else moveLeft();
+                    prefs.edit().putBoolean(KEY_SWIPED, true).apply();
                 } else if (Math.abs(dy) > 100) {
                     if (dy < 0) moveDown();
                     else moveUp();
-                }
+                    prefs.edit().putBoolean(KEY_SWIPED, true).apply();
+                } else if (!prefs.getBoolean(KEY_SWIPED, false))
+                    StaticUtils.makeToast(this, getString(R.string.msg_tutorial_move)).show();
                 break;
         }
         return false;

@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import java.util.ArrayList;
 import java.util.List;
 
+import james.monochrome.R;
 import james.monochrome.data.PositionData;
 import james.monochrome.data.RowData;
 import james.monochrome.data.SceneryData;
@@ -32,9 +33,8 @@ public class MapUtils {
     public static final String KEY_MAP = "map";
     public static final String KEY_MAP_DEFAULT = "default";
     public static final String KEY_MAP_HOUSE = "house";
-    private static final String KEY_MESSAGE = "message";
 
-    public static final int
+    private static final int
             TILE_EMPTY = 0,
             TILE_GRASS = 6,
             TILE_GRASS_THICK = 7,
@@ -1444,41 +1444,29 @@ public class MapUtils {
     }
 
     public static String getMessage(Context context, int sceneRow, int sceneColumn, int tileRow, int tileColumn) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        if (prefs.contains(KEY_MESSAGE + ((sceneRow * 10) + tileRow) + "," + ((sceneColumn * 10) + tileColumn)))
-            return prefs.getString(KEY_MESSAGE + ((sceneRow * 10) + tileRow) + "," + ((sceneColumn * 10) + tileColumn), "");
-        else {
-            switch (sceneRow) {
-                case 0:
-                    switch (sceneColumn) {
-                        case 0:
-                            switch (tileRow) {
-                                case 0:
-                                    switch (tileColumn) {
-                                        case 2:
-                                            return "This is a thing.";
-                                        case 3:
-                                            return "This is another thing.";
-                                        case 4:
-                                            return "This is yet another thing.";
-                                        case 5:
-                                            return "Cabbages.";
-                                    }
-                                    break;
-                            }
-                            break;
-                    }
-                    break;
-            }
-
-            return "";
+        switch (sceneRow) {
+            case 0:
+                switch (sceneColumn) {
+                    case 0:
+                        switch (tileRow) {
+                            case 0:
+                                switch (tileColumn) {
+                                    case 2:
+                                        return context.getString(R.string.msg_sign_tutorial1);
+                                    case 3:
+                                        return context.getString(R.string.msg_sign_tutorial2);
+                                    case 4:
+                                        return context.getString(R.string.msg_sign_tutorial3);
+                                    case 5:
+                                        return context.getString(R.string.msg_sign_tutorial4);
+                                }
+                                break;
+                        }
+                        break;
+                }
+                break;
         }
-    }
 
-    public static void saveMessage(Context context, int sceneRow, int sceneColumn, int tileRow, int tileColumn, String message) {
-        PreferenceManager.getDefaultSharedPreferences(context)
-                .edit()
-                .putString(KEY_MESSAGE + ((sceneRow * 10) + tileRow) + "," + ((sceneColumn * 10) + tileColumn), message)
-                .apply();
+        return "";
     }
 }
