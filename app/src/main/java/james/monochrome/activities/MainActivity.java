@@ -21,6 +21,7 @@ import james.monochrome.data.PositionData;
 import james.monochrome.data.RowData;
 import james.monochrome.data.SceneryData;
 import james.monochrome.data.tiles.TileData;
+import james.monochrome.dialogs.MapDialog;
 import james.monochrome.dialogs.StartScreenDialog;
 import james.monochrome.utils.MapUtils;
 import james.monochrome.utils.StaticUtils;
@@ -101,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         mapView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: make a large map dialog thing
+                new MapDialog(MainActivity.this, mapKey, character.getPosition()).show();
             }
         });
 
