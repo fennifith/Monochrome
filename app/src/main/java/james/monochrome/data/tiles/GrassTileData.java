@@ -25,6 +25,6 @@ public class GrassTileData extends TileData {
 
     @Override
     public boolean canEnter() {
-        return false;
+        return true;
     }
 }

@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.HapticFeedbackConstants;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import james.monochrome.Monochrome;
@@ -88,7 +89,7 @@ public class CharacterView extends SquareImageView {
     }
 
     public void moveUp() {
-        TileData tile = scenery.getTile(characterX, characterY - 1);
+        List<TileData> tiles = getTilesAt(characterX, characterY - 1);
         if (tile == null) return;
 
         if (isValidPosition(characterX, characterY - 1)) {
@@ -96,10 +97,14 @@ public class CharacterView extends SquareImageView {
             if (prevTile != null && prevTile.canEnter()) prevTile.onExit();
 
             characterY--;
-            tile.onEnter();
+            for (TileData tile : tiles) {
+                tile.onEnter();
+            }
         } else {
-            tile.onTouch();
             performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+            for (TileData tile : tiles) {
+                tile.onTouch();
+            }
         }
 
         this.tile = TileUtils.TILE_CHARACTER_BACK;
@@ -110,7 +115,7 @@ public class CharacterView extends SquareImageView {
     }
 
     public void moveDown() {
-        TileData tile = scenery.getTile(characterX, characterY + 1);
+        List<TileData> tiles = getTilesAt(characterX, characterY + 1);
         if (tile == null) return;
 
         if (isValidPosition(characterX, characterY + 1)) {
@@ -118,10 +123,14 @@ public class CharacterView extends SquareImageView {
             if (prevTile != null && prevTile.canEnter()) prevTile.onExit();
 
             characterY++;
-            tile.onEnter();
+            for (TileData tile : tiles) {
+                tile.onEnter();
+            }
         } else {
-            tile.onTouch();
             performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+            for (TileData tile : tiles) {
+                tile.onTouch();
+            }
         }
 
         this.tile = TileUtils.TILE_CHARACTER;
@@ -132,18 +141,21 @@ public class CharacterView extends SquareImageView {
     }
 
     public void moveLeft() {
-        TileData tile = scenery.getTile(characterX - 1, characterY);
-        if (tile == null) return;
+        List<TileData> tiles = getTilesAt(characterX - 1, characterY);
 
         if (isValidPosition(characterX - 1, characterY)) {
             TileData prevTile = scenery.getTile(characterX, characterY);
             if (prevTile != null && prevTile.canEnter()) prevTile.onExit();
 
             characterX--;
-            tile.onEnter();
+            for (TileData tile : tiles) {
+                tile.onEnter();
+            }
         } else {
-            tile.onTouch();
             performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+            for (TileData tile : tiles) {
+                tile.onTouch();
+            }
         }
 
         this.tile = TileUtils.TILE_CHARACTER_LEFT;
@@ -154,18 +166,21 @@ public class CharacterView extends SquareImageView {
     }
 
     public void moveRight() {
-        TileData tile = scenery.getTile(characterX + 1, characterY);
-        if (tile == null) return;
+        List<TileData> tiles = getTilesAt(characterX + 1, characterY);
 
         if (isValidPosition(characterX + 1, characterY)) {
             TileData prevTile = scenery.getTile(characterX, characterY);
             if (prevTile != null && prevTile.canEnter()) prevTile.onExit();
 
             characterX++;
-            tile.onEnter();
+            for (TileData tile : tiles) {
+                tile.onEnter();
+            }
         } else {
-            tile.onTouch();
             performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+            for (TileData tile : tiles) {
+                tile.onTouch();
+            }
         }
 
         this.tile = TileUtils.TILE_CHARACTER_RIGHT;
@@ -258,13 +273,29 @@ public class CharacterView extends SquareImageView {
 
     private boolean isValidPosition(int x, int y) {
         if (scenery == null || characters == null) return false;
-        for (CharacterData character : characters) {
-            PositionData position = character.getPosition();
-            if (position.getTileX() == x && position.getTileY() == y) return false;
+
+        for (TileData tile : getTilesAt(x, y)) {
+            if (!tile.canEnter()) return false;
         }
 
-        TileData tile = scenery.getTile(x, y);
-        return tile != null && tile.canEnter();
+        return true;
+    }
+
+    private List<TileData> getTilesAt(int x, int y) {
+        List<TileData> tiles = new ArrayList<>();
+
+        TileData tile = null;
+        if (scenery != null) tile = scenery.getTile(x, y);
+        if (tile != null) tiles.add(tile);
+
+        if (characters != null) {
+            for (CharacterData character : characters) {
+                PositionData position = character.getPosition();
+                if (position.getTileX() == x && position.getTileY() == y) tiles.add(character);
+            }
+        }
+
+        return tiles;
     }
 
     @Override
