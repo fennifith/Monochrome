@@ -35,6 +35,7 @@ public class MapUtils {
     public static final String KEY_MAP = "map";
     public static final String KEY_MAP_DEFAULT = "default";
     public static final String KEY_MAP_HOUSE = "house";
+    public static final String KEY_ITEM_KEY = "key";
 
     private static final int
             TILE_EMPTY = 0,
