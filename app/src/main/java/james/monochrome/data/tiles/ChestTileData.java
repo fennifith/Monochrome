@@ -13,7 +13,7 @@ public class ChestTileData extends TileData {
 
     @Override
     public void onTouch() {
-
+        //TODO: add item stuff
     }
 
     @Override
@@ -22,11 +22,6 @@ public class ChestTileData extends TileData {
 
     @Override
     public void onExit() {
-    }
-
-    @Override
-    public boolean canWalkOver() {
-        return false;
     }
 
     @Override

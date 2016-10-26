@@ -18,10 +18,6 @@ public class DoorTileData extends TileData {
 
     @Override
     public void onTouch() {
-    }
-
-    @Override
-    public void onEnter() {
         StaticUtils.makeDialog(
                 getContext(),
                 getContext().getString(R.string.action_door),
@@ -45,16 +41,15 @@ public class DoorTileData extends TileData {
     }
 
     @Override
+    public void onEnter() {
+    }
+
+    @Override
     public void onExit() {
     }
 
     @Override
-    public boolean canWalkOver() {
-        return false;
-    }
-
-    @Override
     public boolean canEnter() {
-        return true;
+        return false;
     }
 }

@@ -23,11 +23,6 @@ public class FloorTileData extends TileData {
     }
 
     @Override
-    public boolean canWalkOver() {
-        return true;
-    }
-
-    @Override
     public boolean canEnter() {
         return false;
     }

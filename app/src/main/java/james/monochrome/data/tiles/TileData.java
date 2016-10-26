@@ -63,8 +63,6 @@ public abstract class TileData {
 
     public abstract  void onExit();
 
-    public abstract boolean canWalkOver();
-
     public abstract boolean canEnter();
 
     public void setOnTileChangeListener(OnTileChangeListener listener) {

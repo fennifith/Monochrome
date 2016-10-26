@@ -7,10 +7,14 @@ import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.HapticFeedbackConstants;
 
+import java.util.List;
+
 import james.monochrome.Monochrome;
 import james.monochrome.data.PositionData;
 import james.monochrome.data.SceneryData;
+import james.monochrome.data.characters.CharacterData;
 import james.monochrome.data.tiles.TileData;
+import james.monochrome.utils.MapUtils;
 import james.monochrome.utils.TileUtils;
 
 public class CharacterView extends SquareImageView {
@@ -20,7 +24,8 @@ public class CharacterView extends SquareImageView {
 
     private int[][] tile = TileUtils.TILE_CHARACTER;
     private int characterX, characterY, tileSize, pixelSize, offsetY;
-    private boolean isHidden;
+
+    private List<CharacterData> characters;
 
     private Handler handler;
     private Runnable runnable;
@@ -63,9 +68,10 @@ public class CharacterView extends SquareImageView {
         handler.postDelayed(runnable, 500);
     }
 
-    public void setScenery(SceneryData scenery) {
+    public void setScenery(String mapKey, SceneryData scenery) {
+        characters = MapUtils.getCharacters(getContext(), mapKey);
+
         this.scenery = scenery;
-        isHidden = false;
         invalidate();
     }
 
@@ -85,23 +91,19 @@ public class CharacterView extends SquareImageView {
         TileData tile = scenery.getTile(characterX, characterY - 1);
         if (tile == null) return;
 
-        if (tile.canEnter() || tile.canWalkOver()) {
+        if (isValidPosition(characterX, characterY - 1)) {
             TileData prevTile = scenery.getTile(characterX, characterY);
             if (prevTile != null && prevTile.canEnter()) prevTile.onExit();
 
             characterY--;
+            tile.onEnter();
+        } else {
+            tile.onTouch();
+            performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
         }
 
-        if (tile.canEnter()) {
-            tile.onEnter();
-        } else tile.onTouch();
-
-        isHidden = tile.canEnter() && !tile.canWalkOver();
         this.tile = TileUtils.TILE_CHARACTER_BACK;
         invalidate();
-
-        if (!tile.canEnter() && !tile.canWalkOver())
-            performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
 
         handler.removeCallbacks(runnable);
         handler.postDelayed(runnable, 3000);
@@ -111,23 +113,19 @@ public class CharacterView extends SquareImageView {
         TileData tile = scenery.getTile(characterX, characterY + 1);
         if (tile == null) return;
 
-        if (tile.canEnter() || tile.canWalkOver()) {
+        if (isValidPosition(characterX, characterY + 1)) {
             TileData prevTile = scenery.getTile(characterX, characterY);
             if (prevTile != null && prevTile.canEnter()) prevTile.onExit();
 
             characterY++;
+            tile.onEnter();
+        } else {
+            tile.onTouch();
+            performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
         }
 
-        if (tile.canEnter()) {
-            tile.onEnter();
-        } else tile.onTouch();
-
-        isHidden = tile.canEnter() && !tile.canWalkOver();
         this.tile = TileUtils.TILE_CHARACTER;
         invalidate();
-
-        if (!tile.canEnter() && !tile.canWalkOver())
-            performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
 
         handler.removeCallbacks(runnable);
         handler.postDelayed(runnable, 3000);
@@ -137,21 +135,17 @@ public class CharacterView extends SquareImageView {
         TileData tile = scenery.getTile(characterX - 1, characterY);
         if (tile == null) return;
 
-        if (tile.canEnter() || tile.canWalkOver()) {
+        if (isValidPosition(characterX - 1, characterY)) {
             TileData prevTile = scenery.getTile(characterX, characterY);
             if (prevTile != null && prevTile.canEnter()) prevTile.onExit();
 
             characterX--;
+            tile.onEnter();
+        } else {
+            tile.onTouch();
+            performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
         }
 
-        if (tile.canEnter()) {
-            tile.onEnter();
-        } else tile.onTouch();
-
-        if (!tile.canEnter() && !tile.canWalkOver())
-            performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
-
-        isHidden = tile.canEnter() && !tile.canWalkOver();
         this.tile = TileUtils.TILE_CHARACTER_LEFT;
         invalidate();
 
@@ -163,21 +157,17 @@ public class CharacterView extends SquareImageView {
         TileData tile = scenery.getTile(characterX + 1, characterY);
         if (tile == null) return;
 
-        if (tile.canEnter() || tile.canWalkOver()) {
+        if (isValidPosition(characterX + 1, characterY)) {
             TileData prevTile = scenery.getTile(characterX, characterY);
             if (prevTile != null && prevTile.canEnter()) prevTile.onExit();
 
             characterX++;
+            tile.onEnter();
+        } else {
+            tile.onTouch();
+            performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
         }
 
-        if (tile.canEnter()) {
-            tile.onEnter();
-        } else tile.onTouch();
-
-        if (!tile.canEnter() && !tile.canWalkOver())
-            performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
-
-        isHidden = tile.canEnter() && !tile.canWalkOver();
         this.tile = TileUtils.TILE_CHARACTER_RIGHT;
         invalidate();
 
@@ -189,41 +179,40 @@ public class CharacterView extends SquareImageView {
         characterX = x;
         characterY = y;
 
-        TileData tile = scenery.getTile(characterX, characterY);
-        for (int scale = 0; (tile == null || !tile.canWalkOver()) && scale < 10; scale++) {
+        for (int scale = 0; !isValidPosition(characterX, characterY) && scale < 10; scale++) {
             if (characterX - scale >= 0) {
                 characterX -= scale;
-                tile = scenery.getTile(characterX, characterY);
-                if (tile != null && tile.canWalkOver()) break;
+
+                if (isValidPosition(characterX, characterY)) break;
                 else characterX += scale;
             }
 
             if (characterX + scale < 10) {
                 characterX += scale;
-                tile = scenery.getTile(characterX, characterY);
-                if (tile != null && tile.canWalkOver()) break;
+
+                if (isValidPosition(characterX, characterY)) break;
                 else characterX -= scale;
             }
 
             if (characterY - scale >= 0) {
                 characterY -= scale;
-                tile = scenery.getTile(characterX, characterY);
-                if (tile != null && tile.canWalkOver()) break;
+
+                if (isValidPosition(characterX, characterY)) break;
                 else characterY += scale;
             }
 
             if (characterY + scale < 10) {
                 characterY += scale;
-                tile = scenery.getTile(characterX, characterY);
-                if (tile != null && tile.canWalkOver()) break;
+
+                if (isValidPosition(characterX, characterY)) break;
                 else characterY -= scale;
             }
 
             if (characterX + scale < 10 && characterY + scale < 10) {
                 characterX += scale;
                 characterY += scale;
-                tile = scenery.getTile(characterX, characterY);
-                if (tile != null && tile.canWalkOver()) break;
+
+                if (isValidPosition(characterX, characterY)) break;
                 else {
                     characterX -= scale;
                     characterY -= scale;
@@ -233,8 +222,8 @@ public class CharacterView extends SquareImageView {
             if (characterX - scale >= 0 && characterY - scale >= 0) {
                 characterX -= scale;
                 characterY -= scale;
-                tile = scenery.getTile(characterX, characterY);
-                if (tile != null && tile.canWalkOver()) break;
+
+                if (isValidPosition(characterX, characterY)) break;
                 else {
                     characterX += scale;
                     characterY += scale;
@@ -244,8 +233,8 @@ public class CharacterView extends SquareImageView {
             if (characterX + scale < 10 && characterY - scale >= 0) {
                 characterX += scale;
                 characterY -= scale;
-                tile = scenery.getTile(characterX, characterY);
-                if (tile != null && tile.canWalkOver()) break;
+
+                if (isValidPosition(characterX, characterY)) break;
                 else {
                     characterX -= scale;
                     characterY += scale;
@@ -255,8 +244,8 @@ public class CharacterView extends SquareImageView {
             if (characterX - scale >= 0 && characterY + scale < 10) {
                 characterX -= scale;
                 characterY += scale;
-                tile = scenery.getTile(characterX, characterY);
-                if (tile != null && tile.canWalkOver()) break;
+
+                if (isValidPosition(characterX, characterY)) break;
                 else {
                     characterX += scale;
                     characterY -= scale;
@@ -267,13 +256,29 @@ public class CharacterView extends SquareImageView {
         invalidate();
     }
 
+    private boolean isValidPosition(int x, int y) {
+        if (scenery == null || characters == null) return false;
+        for (CharacterData character : characters) {
+            PositionData position = character.getPosition();
+            if (position.getTileX() == x && position.getTileY() == y) return false;
+        }
+
+        TileData tile = scenery.getTile(x, y);
+        return tile != null && tile.canEnter();
+    }
+
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        if (scenery == null || isHidden) return;
+        if (scenery == null || characters == null) return;
 
         tileSize = Math.min(canvas.getWidth(), canvas.getHeight()) / 10;
         pixelSize = tileSize / 10;
+
+        for (CharacterData character : characters) {
+            PositionData position = character.getPosition();
+            canvas.drawBitmap(monochrome.getBitmap(character.getTile(), tileSize, paint), tileSize * position.getTileX(), tileSize * position.getTileY(), paint);
+        }
 
         canvas.drawBitmap(monochrome.getBitmap(tile, tileSize, paint), tileSize * characterX, tileSize * characterY, paint);
     }

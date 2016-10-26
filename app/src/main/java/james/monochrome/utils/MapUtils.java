@@ -11,6 +11,8 @@ import james.monochrome.R;
 import james.monochrome.data.PositionData;
 import james.monochrome.data.RowData;
 import james.monochrome.data.SceneryData;
+import james.monochrome.data.characters.CharacterData;
+import james.monochrome.data.characters.QuestGiverCharacterData;
 import james.monochrome.data.tiles.BushTileData;
 import james.monochrome.data.tiles.CheckpointTileData;
 import james.monochrome.data.tiles.ChestTileData;
@@ -1309,48 +1311,6 @@ public class MapUtils {
         }
     }
 
-    public static void saveMap(Context context, String key, int[][][][] map) {
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-        editor.putBoolean(KEY_MAP + key, true);
-        for (int i = 0; i < 10; i++) {
-            for (int i2 = 0; i2 < 10; i2++) {
-                for (int i3 = 0; i3 < 10; i3++) {
-                    for (int i4 = 0; i4 < 10; i4++) {
-                        editor.putInt(KEY_MAP + key + i + i2 + i3 + i4, map[i][i2][i3][i4]);
-                    }
-                }
-            }
-        }
-        editor.apply();
-    }
-
-    public static int[][][][] getMap(Context context, String key) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        if (prefs.contains(KEY_MAP + key)) {
-            int[][][][] map = new int[10][][][];
-            for (int i = 0; i < 10; i++) {
-                map[i] = new int[10][][];
-                for (int i2 = 0; i2 < 10; i2++) {
-                    map[i][i2] = new int[10][];
-                    for (int i3 = 0; i3 < 10; i3++) {
-                        map[i][i2][i3] = new int[10];
-                        for (int i4 = 0; i4 < 10; i4++) {
-                            map[i][i2][i3][i4] = prefs.getInt(KEY_MAP + key + i + i2 + i3 + i4, 0);
-                        }
-                    }
-                }
-            }
-            return map;
-        } else {
-            switch (key) {
-                case KEY_MAP_HOUSE:
-                    return MAP_HOUSE;
-                default:
-                    return MAP_DEFAULT;
-            }
-        }
-    }
-
     public static List<RowData> getMapList(Context context, String key) {
         int[][][][] map = getMap(context, key);
 
@@ -1447,22 +1407,36 @@ public class MapUtils {
         return rows;
     }
 
-    public static String getMessage(Context context, int sceneRow, int sceneColumn, int tileRow, int tileColumn) {
-        switch (sceneRow) {
-            case 0:
-                switch (sceneColumn) {
+    public static List<CharacterData> getCharacters(Context context, String mapKey) {
+        List<CharacterData> characters = new ArrayList<>();
+        switch (mapKey) {
+            case KEY_MAP_HOUSE:
+                characters.add(new QuestGiverCharacterData(context, new PositionData(0, 0, 4, 3)));
+                break;
+        }
+        return characters;
+    }
+
+    public static String getMessage(Context context, String mapKey, int sceneRow, int sceneColumn, int tileRow, int tileColumn) {
+        switch (mapKey) {
+            case KEY_MAP_DEFAULT:
+                switch (sceneRow) {
                     case 0:
-                        switch (tileRow) {
+                        switch (sceneColumn) {
                             case 0:
-                                switch (tileColumn) {
-                                    case 2:
-                                        return context.getString(R.string.msg_sign_tutorial1);
-                                    case 3:
-                                        return context.getString(R.string.msg_sign_tutorial2);
-                                    case 4:
-                                        return context.getString(R.string.msg_sign_tutorial3);
-                                    case 5:
-                                        return context.getString(R.string.msg_sign_tutorial4);
+                                switch (tileRow) {
+                                    case 0:
+                                        switch (tileColumn) {
+                                            case 2:
+                                                return context.getString(R.string.msg_sign_tutorial1);
+                                            case 3:
+                                                return context.getString(R.string.msg_sign_tutorial2);
+                                            case 4:
+                                                return context.getString(R.string.msg_sign_tutorial3);
+                                            case 5:
+                                                return context.getString(R.string.msg_sign_tutorial4);
+                                        }
+                                        break;
                                 }
                                 break;
                         }
@@ -1472,5 +1446,47 @@ public class MapUtils {
         }
 
         return "";
+    }
+
+    public static void saveMap(Context context, String key, int[][][][] map) {
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putBoolean(KEY_MAP + key, true);
+        for (int i = 0; i < 10; i++) {
+            for (int i2 = 0; i2 < 10; i2++) {
+                for (int i3 = 0; i3 < 10; i3++) {
+                    for (int i4 = 0; i4 < 10; i4++) {
+                        editor.putInt(KEY_MAP + key + i + i2 + i3 + i4, map[i][i2][i3][i4]);
+                    }
+                }
+            }
+        }
+        editor.apply();
+    }
+
+    public static int[][][][] getMap(Context context, String key) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if (prefs.contains(KEY_MAP + key)) {
+            int[][][][] map = new int[10][][][];
+            for (int i = 0; i < 10; i++) {
+                map[i] = new int[10][][];
+                for (int i2 = 0; i2 < 10; i2++) {
+                    map[i][i2] = new int[10][];
+                    for (int i3 = 0; i3 < 10; i3++) {
+                        map[i][i2][i3] = new int[10];
+                        for (int i4 = 0; i4 < 10; i4++) {
+                            map[i][i2][i3][i4] = prefs.getInt(KEY_MAP + key + i + i2 + i3 + i4, 0);
+                        }
+                    }
+                }
+            }
+            return map;
+        } else {
+            switch (key) {
+                case KEY_MAP_HOUSE:
+                    return MAP_HOUSE;
+                default:
+                    return MAP_DEFAULT;
+            }
+        }
     }
 }

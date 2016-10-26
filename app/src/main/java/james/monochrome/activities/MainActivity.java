@@ -244,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             }
         }
 
-        character.setScenery(data);
+        character.setScenery(mapKey, data);
         scenery.setScenery(data);
     }
 

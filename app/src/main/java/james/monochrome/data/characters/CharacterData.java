@@ -74,8 +74,4 @@ public abstract class CharacterData extends TileData {
         return false;
     }
 
-    @Override
-    public boolean canWalkOver() {
-        return false;
-    }
 }

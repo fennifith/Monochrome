@@ -13,26 +13,18 @@ public class EmptyTileData extends TileData {
 
     @Override
     public void onTouch() {
-
     }
 
     @Override
     public void onEnter() {
-
     }
 
     @Override
     public void onExit() {
-
-    }
-
-    @Override
-    public boolean canWalkOver() {
-        return true;
     }
 
     @Override
     public boolean canEnter() {
-        return false;
+        return true;
     }
 }

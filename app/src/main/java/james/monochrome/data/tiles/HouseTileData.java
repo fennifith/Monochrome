@@ -24,11 +24,6 @@ public class HouseTileData extends TileData {
 
     @Override
     public void onTouch() {
-        if (!isHouseOpen) StaticUtils.makeToast(getContext(), "The house is locked.").show();
-    }
-
-    @Override
-    public void onEnter() {
         if (isHouseOpen) {
             setTile(TileUtils.TILE_HOUSE_OPEN);
             StaticUtils.makeDialog(
@@ -47,11 +42,16 @@ public class HouseTileData extends TileData {
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            setTile(TileUtils.TILE_HOUSE);
                             dialog.dismiss();
                         }
                     }
             ).show();
-        }
+        } else StaticUtils.makeToast(getContext(), "The house is locked.").show();
+    }
+
+    @Override
+    public void onEnter() {
     }
 
     @Override
@@ -60,12 +60,7 @@ public class HouseTileData extends TileData {
     }
 
     @Override
-    public boolean canWalkOver() {
-        return false;
-    }
-
-    @Override
     public boolean canEnter() {
-        return isHouseOpen;
+        return false;
     }
 }

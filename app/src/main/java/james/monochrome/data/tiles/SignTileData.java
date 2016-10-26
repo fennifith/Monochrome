@@ -17,7 +17,7 @@ public class SignTileData extends TileData {
 
     public String getMessage() {
         PositionData position = getPosition();
-        return MapUtils.getMessage(getContext(), position.getSceneY(), position.getSceneX(), position.getTileY(), position.getTileX());
+        return MapUtils.getMessage(getContext(), getMapKey(), position.getSceneY(), position.getSceneX(), position.getTileY(), position.getTileX());
     }
 
     @Override
@@ -32,11 +32,6 @@ public class SignTileData extends TileData {
 
     @Override
     public void onExit() {
-    }
-
-    @Override
-    public boolean canWalkOver() {
-        return false;
     }
 
     @Override
