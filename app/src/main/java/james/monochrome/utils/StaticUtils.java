@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import james.monochrome.R;
+import james.monochrome.data.items.ItemData;
 
 public class StaticUtils {
 
@@ -76,5 +77,14 @@ public class StaticUtils {
         if (button2 != null) button2.setTypeface(typeface);
         if (button3 != null) button3.setTypeface(typeface);
         return dialog;
+    }
+
+    public static AlertDialog makeItemConfirmationDialog(Context context, ItemData item, String message, DialogInterface.OnClickListener confirmationListener) {
+        return makeDialog(context, String.format(context.getString(R.string.action_use_item), item.getName()), message, context.getString(R.string.action_ok), confirmationListener, context.getString(R.string.action_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
     }
 }

@@ -2,14 +2,15 @@ package james.monochrome.data.items;
 
 import android.content.Context;
 
+import james.monochrome.R;
 import james.monochrome.data.PositionData;
 import james.monochrome.utils.MapUtils;
 import james.monochrome.utils.TileUtils;
 
 public class AppleItemData extends ItemData {
 
-    public AppleItemData(Context context, boolean hasPickedUp, boolean isHolding) {
-        super(context, TileUtils.TILE_APPLE, hasPickedUp, isHolding);
+    public AppleItemData(Context context, boolean hasPickedUp, boolean isHolding, boolean isUseless) {
+        super(context, TileUtils.TILE_APPLE, hasPickedUp, isHolding, isUseless);
     }
 
     public AppleItemData(Context context, PositionData position) {
@@ -17,8 +18,8 @@ public class AppleItemData extends ItemData {
     }
 
     @Override
-    String getName() {
-        return "Apple";
+    public String getName() {
+        return getContext().getString(R.string.item_apple);
     }
 
     @Override

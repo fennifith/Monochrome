@@ -2,6 +2,7 @@ package james.monochrome.data.items;
 
 import android.content.Context;
 
+import james.monochrome.R;
 import james.monochrome.data.PositionData;
 import james.monochrome.utils.MapUtils;
 import james.monochrome.utils.TileUtils;
@@ -13,8 +14,8 @@ public class KeyItemData extends ItemData {
     }
 
     @Override
-    String getName() {
-        return "Key";
+    public String getName() {
+        return getContext().getString(R.string.item_key);
     }
 
     @Override

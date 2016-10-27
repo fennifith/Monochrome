@@ -23,7 +23,7 @@ public class Monochrome extends Application {
     public Bitmap getBitmap(int[][] tile, int tileSize, Paint paint) {
         if (bitmaps.containsKey(tile)) {
             Bitmap bitmap = bitmaps.get(tile);
-            if (!bitmap.isRecycled()) return bitmap;
+            if (!bitmap.isRecycled() && bitmap.getWidth() == tileSize) return bitmap;
         }
 
         Bitmap bitmap = Bitmap.createBitmap(tileSize, tileSize, Bitmap.Config.ARGB_4444);

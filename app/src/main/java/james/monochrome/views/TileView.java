@@ -2,25 +2,17 @@ package james.monochrome.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
-public class TileView extends AppCompatImageView {
+import james.monochrome.Monochrome;
 
-    private static final int[][] IMAGE_TITLE = new int[][]{
-            new int[]{0},
-            new int[]{0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0},
-            new int[]{0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0},
-            new int[]{0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0},
-            new int[]{0},
-            new int[]{1},
-            new int[]{0},
-    };
+public class TileView extends SquareImageView {
 
     private Paint paint;
-    private int[][] tile = IMAGE_TITLE;
+    private int[][] tile;
+
+    private Monochrome monochrome;
 
     public TileView(Context context) {
         super(context);
@@ -38,9 +30,10 @@ public class TileView extends AppCompatImageView {
     }
 
     private void init() {
+        monochrome = (Monochrome) getContext().getApplicationContext();
+
         paint = new Paint();
         paint.setAntiAlias(true);
-        paint.setColor(Color.BLACK);
     }
 
     public void setTile(int[][] tile) {
@@ -52,15 +45,8 @@ public class TileView extends AppCompatImageView {
     public void draw(Canvas canvas) {
         super.draw(canvas);
 
-        int pixelHeight = canvas.getHeight() / tile.length;
-        for (int i = 0; i < tile.length; i++) {
-            int[] row = tile[i];
-            int pixelWidth = canvas.getWidth() / row.length;
-            for (int i2 = 0; i2 < row.length; i2++) {
-                int x = i2 * pixelWidth, y = i * pixelHeight;
-                if (tile[i][i2] > 0)
-                    canvas.drawRect(x, y, x + pixelWidth, y + pixelHeight, paint);
-            }
-        }
+        int tileSize = Math.min(canvas.getWidth(), canvas.getHeight());
+        if (tile != null)
+            canvas.drawBitmap(monochrome.getBitmap(tile, tileSize, paint), 0, 0, paint);
     }
 }

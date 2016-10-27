@@ -3,7 +3,11 @@ package james.monochrome.data.tiles;
 import android.content.Context;
 import android.support.annotation.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import james.monochrome.data.PositionData;
+import james.monochrome.data.items.ItemData;
 
 public abstract class TileData {
 
@@ -45,6 +49,11 @@ public abstract class TileData {
         else return null;
     }
 
+    List<ItemData> getItems() {
+        if (listener != null) return listener.getItems();
+        else return new ArrayList<>();
+    }
+
     void savePosition() {
         if (listener != null) listener.onRequestPositionSave();
     }
@@ -81,5 +90,7 @@ public abstract class TileData {
         void onRequestShake();
 
         String getMapKey();
+
+        List<ItemData> getItems();
     }
 }

@@ -93,7 +93,6 @@ public class CharacterView extends SquareImageView {
 
     public void moveUp() {
         List<TileData> tiles = MapUtils.getTilesAt(mapKey, scenery, characters, items, characterX, characterY - 1);
-        if (tile == null) return;
 
         if (MapUtils.isValidPosition(mapKey, scenery, characters, items, characterX, characterY - 1)) {
             TileData prevTile = scenery.getTile(characterX, characterY);
@@ -119,7 +118,6 @@ public class CharacterView extends SquareImageView {
 
     public void moveDown() {
         List<TileData> tiles = MapUtils.getTilesAt(mapKey, scenery, characters, items, characterX, characterY + 1);
-        if (tile == null) return;
 
         if (MapUtils.isValidPosition(mapKey, scenery, characters, items, characterX, characterY + 1)) {
             TileData prevTile = scenery.getTile(characterX, characterY);

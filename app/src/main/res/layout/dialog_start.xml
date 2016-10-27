@@ -9,7 +9,7 @@
         android:layout_gravity="center"
         android:orientation="vertical">
 
-        <james.monochrome.views.TileView
+        <james.monochrome.views.TitleView
             android:layout_width="288dp"
             android:layout_height="64dp"
             android:layout_margin="16dp" />

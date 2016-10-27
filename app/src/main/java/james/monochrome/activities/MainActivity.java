@@ -342,4 +342,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     public String getMapKey() {
         return mapKey;
     }
+
+    @Override
+    public List<ItemData> getItems() {
+        return items;
+    }
 }

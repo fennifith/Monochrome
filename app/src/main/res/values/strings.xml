@@ -13,8 +13,12 @@
     <string name="action_door">Door</string>
     <string name="action_quest">Quest</string>
     <string name="action_ok">OK</string>
+    <string name="action_use_item">Use the %1$s?</string>
 
-    <string name="msg_tutorial">Well look at you, fluffy puff ball. Or is it puffy fluff ball? I can\'t remember. Anyway, this is your mind speaking to you. Your mind thinks you should go and read some of those signs.</string>
+    <string name="item_apple">Apple</string>
+    <string name="item_key">Key</string>
+
+    <string name="msg_tutorial">Well look at you, fluffy puff ball. Or is it puffy fluff ball? I can\'t remember. You should probably go and read some of those signs.</string>
     <string name="msg_tutorial_move">You can move by swiping left, right, up, or down. Swipe towards an object to interact with it.</string>
 
     <string name="msg_sign_tutorial1">Yay. You can read signs. Good job.</string>
@@ -25,6 +29,7 @@
     <string name="msg_save">Would you like to save the game?</string>
     <string name="msg_enter_house">Enter the house?</string>
     <string name="msg_door">Go through the door?</string>
+    <string name="msg_unlock_house">Do you want to use the key to unlock this house? This action cannot be undone.</string>
 
     <string name="msg_picked_up">You picked up a %1$s</string>
 </resources>

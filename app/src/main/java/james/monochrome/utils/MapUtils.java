@@ -50,7 +50,6 @@ public class MapUtils {
             TILE_BUSH = 1,
             TILE_TREE = 2,
             TILE_HOUSE = 3,
-            TILE_HOUSE_OPEN = 4,
             TILE_SIGN = 5,
             TILE_CHECKPOINT = 8,
             TILE_WALL = 23,
@@ -73,26 +72,26 @@ public class MapUtils {
                     new int[][]{
                             new int[]{2, 2, 5, 5, 5, 5, 2, 2, 2, 2},
                             new int[]{2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                            new int[]{2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                             new int[]{2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
                             new int[]{2, 0, 0, 3, 0, 0, 0, 0, 0, 0},
                             new int[]{2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                             new int[]{2, 0, 0, 0, 1, 1, 1, 1, 0, 0},
-                            new int[]{2, 0, 4, 0, 0, 0, 0, 0, 0, 0},
+                            new int[]{2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                             new int[]{2, 0, 0, 0, 0, 7, 7, 7, 0, 0},
                             new int[]{2, 0, 0, 0, 0, 0, 7, 7, 0, 0}
                     },
                     new int[][]{
                             new int[]{2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{2, 2, 2, 2, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 4, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+                            new int[]{2, 2, 2, 2, 0, 0, 0, 0, 0, 2},
+                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+                            new int[]{0, 0, 0, 1, 1, 1, 0, 0, 0, 2},
+                            new int[]{0, 0, 0, 1, 0, 0, 0, 2, 2, 2},
+                            new int[]{0, 0, 0, 0, 0, 2, 2, 2, 2, 2},
+                            new int[]{0, 0, 2, 2, 2, 2, 2, 2, 2, 2},
+                            new int[]{2, 2, 2, 2, 2, 2, 2, 2, 2, 2}
                     },
                     new int[][]{
                             new int[]{2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
@@ -1349,10 +1348,7 @@ public class MapUtils {
                                 tileRow.add(new TreeTileData(context, position));
                                 break;
                             case TILE_HOUSE:
-                                tileRow.add(new HouseTileData(context, false, position));
-                                 break;
-                            case TILE_HOUSE_OPEN:
-                                tileRow.add(new HouseTileData(context, true, position));
+                                tileRow.add(new HouseTileData(context, position));
                                 break;
                             case TILE_SIGN:
                                 tileRow.add(new SignTileData(context, position));
@@ -1432,13 +1428,13 @@ public class MapUtils {
         switch (mapKey) {
             case KEY_MAP_DEFAULT:
                 switch (tileId) {
-                    case "0,0,0,2":
+                    case "0,0,2,0":
                         return context.getString(R.string.msg_sign_tutorial1);
-                    case "0,0,0,3":
+                    case "0,0,3,0":
                         return context.getString(R.string.msg_sign_tutorial2);
-                    case "0,0,0,4":
+                    case "0,0,4,0":
                         return context.getString(R.string.msg_sign_tutorial3);
-                    case "0,0,0,5":
+                    case "0,0,5,0":
                         return context.getString(R.string.msg_sign_tutorial4);
                 }
                 break;
@@ -1452,12 +1448,7 @@ public class MapUtils {
 
         items.add(new KeyItemData(context, new PositionData(KEY_MAP_DEFAULT, 0, 0, 2, 5)));
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
-        int pickedUpApples = prefs.getInt(ItemData.KEY_PICKED_UP + KEY_ITEM_APPLE, 0), holdingApples = prefs.getInt(ItemData.KEY_HOLDING + KEY_ITEM_APPLE, 0);
-        for (int i = 0; i < pickedUpApples; i++) {
-            items.add(new AppleItemData(context, true, i < holdingApples));
-        }
+        items.addAll(getItemsOf(context, KEY_ITEM_APPLE));
 
         Random random = new Random();
 
@@ -1475,12 +1466,28 @@ public class MapUtils {
                     for (int i4 = 0; i4 < scene[i3].length; i4++) {
                         PositionData position = getEmptyPosition(scenery, characters, items, new PositionData(mapKey, i2, i, i4, i3));
 
-                        if (appleCount < 1 && map[i][i2][i3][i4] == TILE_TREE && random.nextInt(2) == 0) {
+                        if (appleCount < 2 && map[i][i2][i3][i4] == TILE_TREE && random.nextInt(4) == 0) {
                             items.add(new AppleItemData(context, position));
                             appleCount++;
                         }
                     }
                 }
+            }
+        }
+
+        return items;
+    }
+
+    private static List<ItemData> getItemsOf(Context context, String itemKey) {
+        List<ItemData> items = new ArrayList<>();
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        int pickedUp = prefs.getInt(ItemData.KEY_PICKED_UP + itemKey, 0), holding = prefs.getInt(ItemData.KEY_HOLDING + itemKey, 0), useless = prefs.getInt(ItemData.KEY_USELESS + itemKey, 0);
+        for (int i = 0; i < pickedUp; i++) {
+            switch (itemKey) {
+                case KEY_ITEM_APPLE:
+                    items.add(new AppleItemData(context, true, i < holding, i < useless));
+                    break;
             }
         }
 
@@ -1503,9 +1510,14 @@ public class MapUtils {
         prefs.edit().putInt(ItemData.KEY_HOLDING + itemKey, prefs.getInt(ItemData.KEY_HOLDING + itemKey, 0) + 1).apply();
     }
 
+    public static void setUseless(Context context, String itemKey) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs.edit().putInt(ItemData.KEY_USELESS + itemKey, prefs.getInt(ItemData.KEY_USELESS + itemKey, 0) + 1).apply();
+    }
+
     public static PositionData getEmptyPosition(SceneryData scenery, List<CharacterData> characters, List<ItemData> items, PositionData startPosition) {
         String mapKey = startPosition.getMapKey();
-        int x = startPosition.getX(), y = startPosition.getY();
+        int x = startPosition.getTileX(), y = startPosition.getTileY();
 
         for (int scale = 0; !isValidPosition(mapKey, scenery, characters, items, x, y) && scale < 10; scale++) {
             if (x - scale >= 0) {
@@ -1598,7 +1610,8 @@ public class MapUtils {
 
         for (CharacterData character : characters) {
             PositionData position = character.getPosition();
-            if (position.getTileX() == x && position.getTileY() == y) tiles.add(character);
+            if (position.getMapKey().equals(mapKey) && position.getSceneX() == scenery.getX() && position.getSceneY() == scenery.getY() && position.getTileX() == x && position.getTileY() == y)
+                tiles.add(character);
         }
 
         for (ItemData item : items) {

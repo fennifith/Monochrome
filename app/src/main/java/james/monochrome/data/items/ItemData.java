@@ -14,15 +14,18 @@ public abstract class ItemData extends TileData {
 
     public static final String KEY_PICKED_UP = "pickedUp";
     public static final String KEY_HOLDING = "holding";
+    public static final String KEY_USELESS = "useless";
 
     private PositionData position;
     private boolean hasPickedUp;
     private boolean isHolding;
+    private boolean isUseless;
 
-    public ItemData(Context context, int[][] tile, boolean hasPickedUp, boolean isHolding) {
+    public ItemData(Context context, int[][] tile, boolean hasPickedUp, boolean isHolding, boolean isUseless) {
         super(context, tile, null);
         this.hasPickedUp = hasPickedUp;
         this.isHolding = isHolding;
+        this.isUseless = isUseless;
     }
 
     public ItemData(Context context, int[][] tile, PositionData position) {
@@ -33,6 +36,7 @@ public abstract class ItemData extends TileData {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
             hasPickedUp = prefs.getBoolean(KEY_PICKED_UP + getKey() + getId(), false);
             isHolding = prefs.getBoolean(KEY_HOLDING + getKey() + getId(), false);
+            isUseless = prefs.getBoolean(KEY_USELESS + getKey() + getId(), false);
         }
     }
 
@@ -45,7 +49,7 @@ public abstract class ItemData extends TileData {
         return position;
     }
 
-    abstract String getName();
+    public abstract String getName();
 
     abstract String getId();
 
@@ -61,14 +65,8 @@ public abstract class ItemData extends TileData {
         return isHolding;
     }
 
-    public void addToHolding() {
-        hasPickedUp = true;
-        isHolding = true;
-    }
-
-    public void addToChest() {
-        hasPickedUp = true;
-        isHolding = false;
+    public boolean isUseless() {
+        return isUseless;
     }
 
     @Override
@@ -102,6 +100,13 @@ public abstract class ItemData extends TileData {
         else MapUtils.moveToHolding(getContext(), getKey());
 
         isHolding = true;
+    }
+
+    public void setUseless() {
+        if (hasConstantPosition())
+            PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean(KEY_USELESS + getKey() + getId(), true).apply();
+
+        isUseless = true;
     }
 
     @Override

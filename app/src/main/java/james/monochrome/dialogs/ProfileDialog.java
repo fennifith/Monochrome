@@ -31,7 +31,7 @@ public class ProfileDialog extends AppCompatDialog {
         List<ItemData> holdingItems = new ArrayList<>();
         List<ItemData> items = MapUtils.getItems(getContext(), MapUtils.KEY_MAP_DEFAULT);
         for (ItemData item : items) {
-            if (item.isHolding()) holdingItems.add(item);
+            if (item.isHolding() && !item.isUseless()) holdingItems.add(item);
         }
 
         recycler.setAdapter(new ItemAdapter(getContext(), holdingItems));
