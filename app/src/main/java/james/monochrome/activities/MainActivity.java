@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         }
 
         setScenery(map.get(sceneY).getScenery(sceneX));
-        character.setCharacterPosition(new PositionData(mapKey, sceneX, sceneY, characterX, characterY));
+        character.setCharacterPosition(characterX, characterY);
         background.setMap(mapKey);
     }
 
@@ -234,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             sceneY -= 1;
 
             setScenery(map.get(sceneY).getScenery(sceneX));
-            character.setCharacterPosition(new PositionData(mapKey, sceneX, sceneY, character.getCharacterX(), 9));
+            character.setCharacterPosition(character.getCharacterX(), 9);
         } else character.moveUp();
         mapPositions.put(mapKey, character.getPosition());
     }
@@ -244,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             sceneY += 1;
 
             setScenery(map.get(sceneY).getScenery(sceneX));
-            character.setCharacterPosition(new PositionData(mapKey, sceneX, sceneY, character.getCharacterX(), 0));
+            character.setCharacterPosition(character.getCharacterX(), 0);
         } else character.moveDown();
         mapPositions.put(mapKey, character.getPosition());
     }
@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             sceneX -= 1;
 
             setScenery(map.get(sceneY).getScenery(sceneX));
-            character.setCharacterPosition(new PositionData(mapKey, sceneX, sceneY, 9, character.getCharacterY()));
+            character.setCharacterPosition(9, character.getCharacterY());
         } else character.moveLeft();
         mapPositions.put(mapKey, character.getPosition());
     }
@@ -264,7 +264,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             sceneX += 1;
 
             setScenery(map.get(sceneY).getScenery(sceneX));
-            character.setCharacterPosition(new PositionData(mapKey, sceneX, sceneY, 0, character.getCharacterY()));
+            character.setCharacterPosition(0, character.getCharacterY());
         } else character.moveRight();
         mapPositions.put(mapKey, character.getPosition());
     }

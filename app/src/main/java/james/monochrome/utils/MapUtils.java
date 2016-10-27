@@ -1573,7 +1573,7 @@ public class MapUtils {
 
     public static boolean isValidPosition(SceneryData scenery, List<CharacterData> characters, List<ItemData> items, int x, int y) {
         for (TileData tile : getTilesAt(scenery, characters, items, x, y)) {
-            if (tile == null || !tile.canEnter()) return false;
+            if (tile != null && !tile.canEnter()) return false;
         }
 
         return true;

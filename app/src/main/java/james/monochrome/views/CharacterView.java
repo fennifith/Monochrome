@@ -193,8 +193,8 @@ public class CharacterView extends SquareImageView {
         handler.postDelayed(runnable, 3000);
     }
 
-    public void setCharacterPosition(PositionData position) {
-        position = MapUtils.getEmptyPosition(scenery, characters, items, position);
+    public void setCharacterPosition(int x, int y) {
+        PositionData position = MapUtils.getEmptyPosition(scenery, characters, items, new PositionData(mapKey, scenery.getX(), scenery.getY(), x, y));
         characterX = position.getTileX();
         characterY = position.getTileY();
 
