@@ -7,7 +7,7 @@ import android.graphics.Paint;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
-public class TitleView extends AppCompatImageView {
+public class TileView extends AppCompatImageView {
 
     private static final int[][] IMAGE_TITLE = new int[][]{
             new int[]{0},
@@ -20,18 +20,19 @@ public class TitleView extends AppCompatImageView {
     };
 
     private Paint paint;
+    private int[][] tile = IMAGE_TITLE;
 
-    public TitleView(Context context) {
+    public TileView(Context context) {
         super(context);
         init();
     }
 
-    public TitleView(Context context, AttributeSet attrs) {
+    public TileView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public TitleView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TileView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -42,17 +43,22 @@ public class TitleView extends AppCompatImageView {
         paint.setColor(Color.BLACK);
     }
 
+    public void setTile(int[][] tile) {
+        this.tile = tile;
+        invalidate();
+    }
+
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
 
-        int pixelHeight = canvas.getHeight() / IMAGE_TITLE.length;
-        for (int i = 0; i < IMAGE_TITLE.length; i++) {
-            int[] row = IMAGE_TITLE[i];
+        int pixelHeight = canvas.getHeight() / tile.length;
+        for (int i = 0; i < tile.length; i++) {
+            int[] row = tile[i];
             int pixelWidth = canvas.getWidth() / row.length;
             for (int i2 = 0; i2 < row.length; i2++) {
                 int x = i2 * pixelWidth, y = i * pixelHeight;
-                if (IMAGE_TITLE[i][i2] > 0)
+                if (tile[i][i2] > 0)
                     canvas.drawRect(x, y, x + pixelWidth, y + pixelHeight, paint);
             }
         }

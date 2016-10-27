@@ -24,6 +24,7 @@ import james.monochrome.data.characters.CharacterData;
 import james.monochrome.data.items.ItemData;
 import james.monochrome.data.tiles.TileData;
 import james.monochrome.dialogs.MapDialog;
+import james.monochrome.dialogs.ProfileDialog;
 import james.monochrome.dialogs.StartScreenDialog;
 import james.monochrome.utils.MapUtils;
 import james.monochrome.utils.StaticUtils;
@@ -100,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             @Override
             public void onClick(View v) {
                 //TODO: implement google games stuff, add items view, etc
+                new ProfileDialog(MainActivity.this).show();
             }
         });
 
@@ -226,7 +228,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         }
 
         character.setScenery(mapKey, data, characters, items);
-        scenery.setScenery(data, items);
+        scenery.setScenery(mapKey, data, items);
     }
 
     public void moveUp() {

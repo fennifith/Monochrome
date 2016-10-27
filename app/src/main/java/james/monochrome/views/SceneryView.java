@@ -15,6 +15,7 @@ import james.monochrome.data.tiles.TileData;
 
 public class SceneryView extends SquareImageView {
 
+    private String mapKey;
     private SceneryData scenery;
     private List<ItemData> items;
 
@@ -44,7 +45,8 @@ public class SceneryView extends SquareImageView {
         paint.setAntiAlias(true);
     }
 
-    public void setScenery(SceneryData scenery, List<ItemData> items) {
+    public void setScenery(String mapKey, SceneryData scenery, List<ItemData> items) {
+        this.mapKey = mapKey;
         this.scenery = scenery;
         this.items = items;
         invalidate();
@@ -67,8 +69,7 @@ public class SceneryView extends SquareImageView {
 
         for (ItemData item : items) {
             PositionData position = item.getPosition();
-
-            if (position != null && position.getSceneX() == scenery.getX() && position.getSceneY() == scenery.getY() && !item.hasPickedUp())
+            if (position != null && position.getMapKey().equals(mapKey) && position.getSceneX() == scenery.getX() && position.getSceneY() == scenery.getY() && !item.hasPickedUp())
                 canvas.drawBitmap(monochrome.getBitmap(item.getTile(), tileSize, paint), tileSize * position.getTileX(), tileSize * position.getTileY(), paint);
         }
     }

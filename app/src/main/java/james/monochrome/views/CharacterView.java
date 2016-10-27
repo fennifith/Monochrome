@@ -92,10 +92,10 @@ public class CharacterView extends SquareImageView {
     }
 
     public void moveUp() {
-        List<TileData> tiles = MapUtils.getTilesAt(scenery, characters, items, characterX, characterY - 1);
+        List<TileData> tiles = MapUtils.getTilesAt(mapKey, scenery, characters, items, characterX, characterY - 1);
         if (tile == null) return;
 
-        if (MapUtils.isValidPosition(scenery, characters, items, characterX, characterY - 1)) {
+        if (MapUtils.isValidPosition(mapKey, scenery, characters, items, characterX, characterY - 1)) {
             TileData prevTile = scenery.getTile(characterX, characterY);
             if (prevTile != null && prevTile.canEnter()) prevTile.onExit();
 
@@ -118,10 +118,10 @@ public class CharacterView extends SquareImageView {
     }
 
     public void moveDown() {
-        List<TileData> tiles = MapUtils.getTilesAt(scenery, characters, items, characterX, characterY + 1);
+        List<TileData> tiles = MapUtils.getTilesAt(mapKey, scenery, characters, items, characterX, characterY + 1);
         if (tile == null) return;
 
-        if (MapUtils.isValidPosition(scenery, characters, items, characterX, characterY + 1)) {
+        if (MapUtils.isValidPosition(mapKey, scenery, characters, items, characterX, characterY + 1)) {
             TileData prevTile = scenery.getTile(characterX, characterY);
             if (prevTile != null && prevTile.canEnter()) prevTile.onExit();
 
@@ -144,9 +144,9 @@ public class CharacterView extends SquareImageView {
     }
 
     public void moveLeft() {
-        List<TileData> tiles = MapUtils.getTilesAt(scenery, characters, items, characterX - 1, characterY);
+        List<TileData> tiles = MapUtils.getTilesAt(mapKey, scenery, characters, items, characterX - 1, characterY);
 
-        if (MapUtils.isValidPosition(scenery, characters, items, characterX - 1, characterY)) {
+        if (MapUtils.isValidPosition(mapKey, scenery, characters, items, characterX - 1, characterY)) {
             TileData prevTile = scenery.getTile(characterX, characterY);
             if (prevTile != null && prevTile.canEnter()) prevTile.onExit();
 
@@ -169,9 +169,9 @@ public class CharacterView extends SquareImageView {
     }
 
     public void moveRight() {
-        List<TileData> tiles = MapUtils.getTilesAt(scenery, characters, items, characterX + 1, characterY);
+        List<TileData> tiles = MapUtils.getTilesAt(mapKey, scenery, characters, items, characterX + 1, characterY);
 
-        if (MapUtils.isValidPosition(scenery, characters, items, characterX + 1, characterY)) {
+        if (MapUtils.isValidPosition(mapKey, scenery, characters, items, characterX + 1, characterY)) {
             TileData prevTile = scenery.getTile(characterX, characterY);
             if (prevTile != null && prevTile.canEnter()) prevTile.onExit();
 

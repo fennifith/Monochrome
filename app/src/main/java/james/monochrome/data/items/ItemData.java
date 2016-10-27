@@ -31,8 +31,8 @@ public abstract class ItemData extends TileData {
 
         if (hasConstantPosition()) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-            hasPickedUp = prefs.getBoolean(KEY_PICKED_UP, false);
-            isHolding = prefs.getBoolean(KEY_HOLDING, false);
+            hasPickedUp = prefs.getBoolean(KEY_PICKED_UP + getKey() + getId(), false);
+            isHolding = prefs.getBoolean(KEY_HOLDING + getKey() + getId(), false);
         }
     }
 
@@ -83,8 +83,25 @@ public abstract class ItemData extends TileData {
 
         hasPickedUp = true;
         isHolding = true;
+
         StaticUtils.makeToast(getContext(), String.format(getContext().getString(R.string.msg_picked_up), getName())).show();
         setTile(getTile());
+    }
+
+    public void moveToChest() {
+        if (hasConstantPosition())
+            PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean(KEY_HOLDING + getKey() + getId(), false).apply();
+        else MapUtils.moveToChest(getContext(), getKey());
+
+        isHolding = false;
+    }
+
+    public void moveToHolding() {
+        if (hasConstantPosition())
+            PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean(KEY_HOLDING + getKey() + getId(), true).apply();
+        else MapUtils.moveToHolding(getContext(), getKey());
+
+        isHolding = true;
     }
 
     @Override

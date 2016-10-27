@@ -1450,11 +1450,7 @@ public class MapUtils {
     public static List<ItemData> getItems(Context context, String mapKey) {
         List<ItemData> items = new ArrayList<>();
 
-        switch (mapKey) {
-            case KEY_MAP_DEFAULT:
-                items.add(new KeyItemData(context, new PositionData(mapKey, 0, 0, 2, 5)));
-                break;
-        }
+        items.add(new KeyItemData(context, new PositionData(KEY_MAP_DEFAULT, 0, 0, 2, 5)));
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
@@ -1491,35 +1487,52 @@ public class MapUtils {
         return items;
     }
 
+    public static void addToHolding(Context context, String itemKey) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs.edit().putInt(ItemData.KEY_PICKED_UP + itemKey, prefs.getInt(ItemData.KEY_PICKED_UP + itemKey, 0) + 1).apply();
+        prefs.edit().putInt(ItemData.KEY_HOLDING + itemKey, prefs.getInt(ItemData.KEY_HOLDING + itemKey, 0) + 1).apply();
+    }
+
+    public static void moveToChest(Context context, String itemKey) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs.edit().putInt(ItemData.KEY_HOLDING + itemKey, prefs.getInt(ItemData.KEY_HOLDING + itemKey, 0) - 1).apply();
+    }
+
+    public static void moveToHolding(Context context, String itemKey) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs.edit().putInt(ItemData.KEY_HOLDING + itemKey, prefs.getInt(ItemData.KEY_HOLDING + itemKey, 0) + 1).apply();
+    }
+
     public static PositionData getEmptyPosition(SceneryData scenery, List<CharacterData> characters, List<ItemData> items, PositionData startPosition) {
+        String mapKey = startPosition.getMapKey();
         int x = startPosition.getX(), y = startPosition.getY();
 
-        for (int scale = 0; !isValidPosition(scenery, characters, items, x, y) && scale < 10; scale++) {
+        for (int scale = 0; !isValidPosition(mapKey, scenery, characters, items, x, y) && scale < 10; scale++) {
             if (x - scale >= 0) {
                 x -= scale;
 
-                if (isValidPosition(scenery, characters, items, x, y)) break;
+                if (isValidPosition(mapKey, scenery, characters, items, x, y)) break;
                 else x += scale;
             }
 
             if (x + scale < 10) {
                 x += scale;
 
-                if (isValidPosition(scenery, characters, items, x, y)) break;
+                if (isValidPosition(mapKey, scenery, characters, items, x, y)) break;
                 else x -= scale;
             }
 
             if (y - scale >= 0) {
                 y -= scale;
 
-                if (isValidPosition(scenery, characters, items, x, y)) break;
+                if (isValidPosition(mapKey, scenery, characters, items, x, y)) break;
                 else y += scale;
             }
 
             if (y + scale < 10) {
                 y += scale;
 
-                if (isValidPosition(scenery, characters, items, x, y)) break;
+                if (isValidPosition(mapKey, scenery, characters, items, x, y)) break;
                 else y -= scale;
             }
 
@@ -1527,7 +1540,7 @@ public class MapUtils {
                 x += scale;
                 y += scale;
 
-                if (isValidPosition(scenery, characters, items, x, y)) break;
+                if (isValidPosition(mapKey, scenery, characters, items, x, y)) break;
                 else {
                     x -= scale;
                     y -= scale;
@@ -1538,7 +1551,7 @@ public class MapUtils {
                 x -= scale;
                 y -= scale;
 
-                if (isValidPosition(scenery, characters, items, x, y)) break;
+                if (isValidPosition(mapKey, scenery, characters, items, x, y)) break;
                 else {
                     x += scale;
                     y += scale;
@@ -1549,7 +1562,7 @@ public class MapUtils {
                 x += scale;
                 y -= scale;
 
-                if (isValidPosition(scenery, characters, items, x, y)) break;
+                if (isValidPosition(mapKey, scenery, characters, items, x, y)) break;
                 else {
                     x -= scale;
                     y += scale;
@@ -1560,7 +1573,7 @@ public class MapUtils {
                 x -= scale;
                 y += scale;
 
-                if (isValidPosition(scenery, characters, items, x, y)) break;
+                if (isValidPosition(mapKey, scenery, characters, items, x, y)) break;
                 else {
                     x += scale;
                     y -= scale;
@@ -1568,18 +1581,18 @@ public class MapUtils {
             }
         }
 
-        return new PositionData(startPosition.getMapKey(), startPosition.getSceneX(), startPosition.getSceneY(), x, y);
+        return new PositionData(mapKey, startPosition.getSceneX(), startPosition.getSceneY(), x, y);
     }
 
-    public static boolean isValidPosition(SceneryData scenery, List<CharacterData> characters, List<ItemData> items, int x, int y) {
-        for (TileData tile : getTilesAt(scenery, characters, items, x, y)) {
+    public static boolean isValidPosition(String mapKey, SceneryData scenery, List<CharacterData> characters, List<ItemData> items, int x, int y) {
+        for (TileData tile : getTilesAt(mapKey, scenery, characters, items, x, y)) {
             if (tile != null && !tile.canEnter()) return false;
         }
 
         return true;
     }
 
-    public static List<TileData> getTilesAt(SceneryData scenery, List<CharacterData> characters, List<ItemData> items, int x, int y) {
+    public static List<TileData> getTilesAt(String mapKey, SceneryData scenery, List<CharacterData> characters, List<ItemData> items, int x, int y) {
         List<TileData> tiles = new ArrayList<>();
         tiles.add(scenery.getTile(x, y));
 
@@ -1590,21 +1603,11 @@ public class MapUtils {
 
         for (ItemData item : items) {
             PositionData position = item.getPosition();
-            if (position != null && position.getSceneX() == scenery.getX() && position.getSceneY() == scenery.getY() && position.getTileX() == x && position.getTileY() == y && !item.hasPickedUp())
+            if (position != null && position.getMapKey().equals(mapKey) && position.getSceneX() == scenery.getX() && position.getSceneY() == scenery.getY() && position.getTileX() == x && position.getTileY() == y && !item.hasPickedUp())
                 tiles.add(item);
         }
 
         return tiles;
-    }
-
-    public static void addToHolding(Context context, String itemKey) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        prefs.edit().putInt(ItemData.KEY_HOLDING + itemKey, prefs.getInt(ItemData.KEY_HOLDING + itemKey, 0) + 1).apply();
-    }
-
-    public static void addToChest(Context context, String itemKey) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        prefs.edit().putInt(ItemData.KEY_PICKED_UP + itemKey, prefs.getInt(ItemData.KEY_PICKED_UP + itemKey, 0) + 1).apply();
     }
 
     public static void saveMap(Context context, String key, int[][][][] map) {
