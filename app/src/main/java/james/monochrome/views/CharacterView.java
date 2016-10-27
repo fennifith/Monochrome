@@ -7,26 +7,27 @@ import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.HapticFeedbackConstants;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import james.monochrome.Monochrome;
 import james.monochrome.data.PositionData;
 import james.monochrome.data.SceneryData;
 import james.monochrome.data.characters.CharacterData;
+import james.monochrome.data.items.ItemData;
 import james.monochrome.data.tiles.TileData;
 import james.monochrome.utils.MapUtils;
 import james.monochrome.utils.TileUtils;
 
 public class CharacterView extends SquareImageView {
 
+    private String mapKey;
     private SceneryData scenery;
-    private Paint paint;
+    private List<CharacterData> characters;
+    private List<ItemData> items;
 
+    private Paint paint;
     private int[][] tile = TileUtils.TILE_CHARACTER;
     private int characterX, characterY, tileSize, pixelSize, offsetY;
-
-    private List<CharacterData> characters;
 
     private Handler handler;
     private Runnable runnable;
@@ -69,10 +70,12 @@ public class CharacterView extends SquareImageView {
         handler.postDelayed(runnable, 500);
     }
 
-    public void setScenery(String mapKey, SceneryData scenery) {
-        characters = MapUtils.getCharacters(getContext(), mapKey);
-
+    public void setScenery(String mapKey, SceneryData scenery, List<CharacterData> characters, List<ItemData> items) {
+        this.mapKey = mapKey;
         this.scenery = scenery;
+        this.characters = characters;
+        this.items = items;
+
         invalidate();
     }
 
@@ -85,14 +88,14 @@ public class CharacterView extends SquareImageView {
     }
 
     public PositionData getPosition() {
-        return new PositionData((scenery.getX() * 10) + characterX, (scenery.getY() * 10) + characterY);
+        return new PositionData(mapKey, (scenery.getX() * 10) + characterX, (scenery.getY() * 10) + characterY);
     }
 
     public void moveUp() {
-        List<TileData> tiles = getTilesAt(characterX, characterY - 1);
+        List<TileData> tiles = MapUtils.getTilesAt(scenery, characters, items, characterX, characterY - 1);
         if (tile == null) return;
 
-        if (isValidPosition(characterX, characterY - 1)) {
+        if (MapUtils.isValidPosition(scenery, characters, items, characterX, characterY - 1)) {
             TileData prevTile = scenery.getTile(characterX, characterY);
             if (prevTile != null && prevTile.canEnter()) prevTile.onExit();
 
@@ -115,10 +118,10 @@ public class CharacterView extends SquareImageView {
     }
 
     public void moveDown() {
-        List<TileData> tiles = getTilesAt(characterX, characterY + 1);
+        List<TileData> tiles = MapUtils.getTilesAt(scenery, characters, items, characterX, characterY + 1);
         if (tile == null) return;
 
-        if (isValidPosition(characterX, characterY + 1)) {
+        if (MapUtils.isValidPosition(scenery, characters, items, characterX, characterY + 1)) {
             TileData prevTile = scenery.getTile(characterX, characterY);
             if (prevTile != null && prevTile.canEnter()) prevTile.onExit();
 
@@ -141,9 +144,9 @@ public class CharacterView extends SquareImageView {
     }
 
     public void moveLeft() {
-        List<TileData> tiles = getTilesAt(characterX - 1, characterY);
+        List<TileData> tiles = MapUtils.getTilesAt(scenery, characters, items, characterX - 1, characterY);
 
-        if (isValidPosition(characterX - 1, characterY)) {
+        if (MapUtils.isValidPosition(scenery, characters, items, characterX - 1, characterY)) {
             TileData prevTile = scenery.getTile(characterX, characterY);
             if (prevTile != null && prevTile.canEnter()) prevTile.onExit();
 
@@ -166,9 +169,9 @@ public class CharacterView extends SquareImageView {
     }
 
     public void moveRight() {
-        List<TileData> tiles = getTilesAt(characterX + 1, characterY);
+        List<TileData> tiles = MapUtils.getTilesAt(scenery, characters, items, characterX + 1, characterY);
 
-        if (isValidPosition(characterX + 1, characterY)) {
+        if (MapUtils.isValidPosition(scenery, characters, items, characterX + 1, characterY)) {
             TileData prevTile = scenery.getTile(characterX, characterY);
             if (prevTile != null && prevTile.canEnter()) prevTile.onExit();
 
@@ -190,112 +193,12 @@ public class CharacterView extends SquareImageView {
         handler.postDelayed(runnable, 3000);
     }
 
-    public void setCharacterPosition(int x, int y) {
-        characterX = x;
-        characterY = y;
-
-        for (int scale = 0; !isValidPosition(characterX, characterY) && scale < 10; scale++) {
-            if (characterX - scale >= 0) {
-                characterX -= scale;
-
-                if (isValidPosition(characterX, characterY)) break;
-                else characterX += scale;
-            }
-
-            if (characterX + scale < 10) {
-                characterX += scale;
-
-                if (isValidPosition(characterX, characterY)) break;
-                else characterX -= scale;
-            }
-
-            if (characterY - scale >= 0) {
-                characterY -= scale;
-
-                if (isValidPosition(characterX, characterY)) break;
-                else characterY += scale;
-            }
-
-            if (characterY + scale < 10) {
-                characterY += scale;
-
-                if (isValidPosition(characterX, characterY)) break;
-                else characterY -= scale;
-            }
-
-            if (characterX + scale < 10 && characterY + scale < 10) {
-                characterX += scale;
-                characterY += scale;
-
-                if (isValidPosition(characterX, characterY)) break;
-                else {
-                    characterX -= scale;
-                    characterY -= scale;
-                }
-            }
-
-            if (characterX - scale >= 0 && characterY - scale >= 0) {
-                characterX -= scale;
-                characterY -= scale;
-
-                if (isValidPosition(characterX, characterY)) break;
-                else {
-                    characterX += scale;
-                    characterY += scale;
-                }
-            }
-
-            if (characterX + scale < 10 && characterY - scale >= 0) {
-                characterX += scale;
-                characterY -= scale;
-
-                if (isValidPosition(characterX, characterY)) break;
-                else {
-                    characterX -= scale;
-                    characterY += scale;
-                }
-            }
-
-            if (characterX - scale >= 0 && characterY + scale < 10) {
-                characterX -= scale;
-                characterY += scale;
-
-                if (isValidPosition(characterX, characterY)) break;
-                else {
-                    characterX += scale;
-                    characterY -= scale;
-                }
-            }
-        }
+    public void setCharacterPosition(PositionData position) {
+        position = MapUtils.getEmptyPosition(scenery, characters, items, position);
+        characterX = position.getTileX();
+        characterY = position.getTileY();
 
         invalidate();
-    }
-
-    private boolean isValidPosition(int x, int y) {
-        if (scenery == null || characters == null) return false;
-
-        for (TileData tile : getTilesAt(x, y)) {
-            if (!tile.canEnter()) return false;
-        }
-
-        return true;
-    }
-
-    private List<TileData> getTilesAt(int x, int y) {
-        List<TileData> tiles = new ArrayList<>();
-
-        TileData tile = null;
-        if (scenery != null) tile = scenery.getTile(x, y);
-        if (tile != null) tiles.add(tile);
-
-        if (characters != null) {
-            for (CharacterData character : characters) {
-                PositionData position = character.getPosition();
-                if (position.getTileX() == x && position.getTileY() == y) tiles.add(character);
-            }
-        }
-
-        return tiles;
     }
 
     @Override

@@ -25,4 +25,6 @@
     <string name="msg_save">Would you like to save the game?</string>
     <string name="msg_enter_house">Enter the house?</string>
     <string name="msg_door">Go through the door?</string>
+
+    <string name="msg_picked_up">You picked up a %1$s</string>
 </resources>

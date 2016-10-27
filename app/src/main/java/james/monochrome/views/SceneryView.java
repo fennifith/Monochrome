@@ -8,12 +8,16 @@ import android.util.AttributeSet;
 import java.util.List;
 
 import james.monochrome.Monochrome;
+import james.monochrome.data.PositionData;
 import james.monochrome.data.SceneryData;
+import james.monochrome.data.items.ItemData;
 import james.monochrome.data.tiles.TileData;
 
 public class SceneryView extends SquareImageView {
 
     private SceneryData scenery;
+    private List<ItemData> items;
+
     private Paint paint;
 
     private Monochrome monochrome;
@@ -40,26 +44,32 @@ public class SceneryView extends SquareImageView {
         paint.setAntiAlias(true);
     }
 
-    public void setScenery(SceneryData scenery) {
+    public void setScenery(SceneryData scenery, List<ItemData> items) {
         this.scenery = scenery;
+        this.items = items;
         invalidate();
     }
 
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        if (scenery == null) return;
+        if (scenery == null || items == null) return;
 
         int tileSize = Math.min(canvas.getWidth(), canvas.getHeight()) / 10;
-        int pixelSize = tileSize / 10;
 
         List<List<TileData>> tiles = scenery.getTiles();
         for (int row = 0; row < tiles.size(); row++) {
             List<TileData> tileRow = tiles.get(row);
             for (int column = 0; column < tileRow.size(); column++) {
-                int x = tileSize * column, y = tileSize * row;
-                canvas.drawBitmap(monochrome.getBitmap(tileRow.get(column).getTile(), tileSize, paint), x, y, paint);
+                canvas.drawBitmap(monochrome.getBitmap(tileRow.get(column).getTile(), tileSize, paint), tileSize * column, tileSize * row, paint);
             }
+        }
+
+        for (ItemData item : items) {
+            PositionData position = item.getPosition();
+
+            if (position != null && position.getSceneX() == scenery.getX() && position.getSceneY() == scenery.getY() && !item.hasPickedUp())
+                canvas.drawBitmap(monochrome.getBitmap(item.getTile(), tileSize, paint), tileSize * position.getTileX(), tileSize * position.getTileY(), paint);
         }
     }
 }

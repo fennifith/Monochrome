@@ -2,6 +2,7 @@ package james.monochrome.data.tiles;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.preference.PreferenceManager;
 
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
@@ -11,15 +12,17 @@ import james.monochrome.utils.TileUtils;
 
 public class HouseTileData extends TileData {
 
+    private static final String KEY_LOCKED = "locked";
     private boolean isHouseOpen;
 
     public HouseTileData(Context context, boolean isHouseOpen, PositionData position) {
         super(context, TileUtils.TILE_HOUSE, position);
-        this.isHouseOpen = isHouseOpen;
+        this.isHouseOpen = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(KEY_LOCKED + getMapKey() + MapUtils.getTileId(getPosition()), isHouseOpen);
     }
 
     public void setOpen(boolean isHouseOpen) {
         this.isHouseOpen = isHouseOpen;
+        PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean(KEY_LOCKED + getMapKey() + MapUtils.getTileId(getPosition()), false).apply();
     }
 
     @Override

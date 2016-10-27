@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
@@ -13,6 +14,9 @@ import james.monochrome.data.RowData;
 import james.monochrome.data.SceneryData;
 import james.monochrome.data.characters.CharacterData;
 import james.monochrome.data.characters.QuestGiverCharacterData;
+import james.monochrome.data.items.AppleItemData;
+import james.monochrome.data.items.ItemData;
+import james.monochrome.data.items.KeyItemData;
 import james.monochrome.data.tiles.BushTileData;
 import james.monochrome.data.tiles.CheckpointTileData;
 import james.monochrome.data.tiles.ChestTileData;
@@ -36,6 +40,7 @@ public class MapUtils {
     public static final String KEY_MAP_DEFAULT = "default";
     public static final String KEY_MAP_HOUSE = "house";
     public static final String KEY_ITEM_KEY = "key";
+    public static final String KEY_ITEM_APPLE = "apple";
 
     private static final int
             TILE_EMPTY = 0,
@@ -1323,78 +1328,79 @@ public class MapUtils {
                 for (int i3 = 0; i3 < map[i][i2].length; i3++) {
                     List<TileData> tileRow = new ArrayList<>();
                     for (int i4 = 0; i4 < map[i][i2][i3].length; i4++) {
+                        PositionData position = new PositionData(key, i2, i, i4, i3);
                         switch(map[i][i2][i3][i4]) {
                             case TILE_EMPTY:
-                                tileRow.add(new EmptyTileData(context, new PositionData(i2, i, i4, i3)));
+                                tileRow.add(new EmptyTileData(context, position));
                                 break;
                             case TILE_GRASS:
-                                tileRow.add(new GrassTileData(context, 3, new PositionData(i2, i, i4, i3)));
+                                tileRow.add(new GrassTileData(context, 3, position));
                                 break;
                             case TILE_GRASS_THICK:
-                                tileRow.add(new GrassTileData(context, 4, new PositionData(i2, i, i4, i3)));
+                                tileRow.add(new GrassTileData(context, 4, position));
                                 break;
                             case TILE_WOOD:
-                                tileRow.add(new FloorTileData(context, TileUtils.TILE_WOOD, new PositionData(i2, i, i4, i3)));
+                                tileRow.add(new FloorTileData(context, TileUtils.TILE_WOOD, position));
                                 break;
                             case TILE_BUSH:
-                                tileRow.add(new BushTileData(context, new PositionData(i2, i, i4, i3)));
+                                tileRow.add(new BushTileData(context, position));
                                 break;
                             case TILE_TREE:
-                                tileRow.add(new TreeTileData(context, new PositionData(i2, i, i4, i3)));
+                                tileRow.add(new TreeTileData(context, position));
                                 break;
                             case TILE_HOUSE:
-                                tileRow.add(new HouseTileData(context, false, new PositionData(i2, i, i4, i3)));
+                                tileRow.add(new HouseTileData(context, false, position));
                                  break;
                             case TILE_HOUSE_OPEN:
-                                tileRow.add(new HouseTileData(context, true, new PositionData(i2, i, i4, i3)));
+                                tileRow.add(new HouseTileData(context, true, position));
                                 break;
                             case TILE_SIGN:
-                                tileRow.add(new SignTileData(context, new PositionData(i2, i, i4, i3)));
+                                tileRow.add(new SignTileData(context, position));
                                 break;
                             case TILE_CHECKPOINT:
-                                tileRow.add(new CheckpointTileData(context, new PositionData(i2, i, i4, i3)));
+                                tileRow.add(new CheckpointTileData(context, position));
                                 break;
                             case TILE_WALL:
-                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL, new PositionData(i2, i, i4, i3)));
+                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL, position));
                                 break;
                             case TILE_WALL_TOP:
-                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_TOP, new PositionData(i2, i, i4, i3)));
+                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_TOP, position));
                                 break;
                             case TILE_WALL_BOTTOM:
-                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_BOTTOM, new PositionData(i2, i, i4, i3)));
+                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_BOTTOM, position));
                                 break;
                             case TILE_WALL_LEFT:
-                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_LEFT, new PositionData(i2, i, i4, i3)));
+                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_LEFT, position));
                                 break;
                             case TILE_WALL_RIGHT:
-                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_RIGHT, new PositionData(i2, i, i4, i3)));
+                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_RIGHT, position));
                                 break;
                             case TILE_WALL_CORNER_BOTTOM_LEFT:
-                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_CORNER_BOTTOM_LEFT, new PositionData(i2, i, i4, i3)));
+                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_CORNER_BOTTOM_LEFT, position));
                                 break;
                             case TILE_WALL_CORNER_BOTTOM_RIGHT:
-                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_CORNER_BOTTOM_RIGHT, new PositionData(i2, i, i4, i3)));
+                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_CORNER_BOTTOM_RIGHT, position));
                                 break;
                             case TILE_WALL_CORNER_TOP_LEFT:
-                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_CORNER_TOP_LEFT, new PositionData(i2, i, i4, i3)));
+                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_CORNER_TOP_LEFT, position));
                                 break;
                             case TILE_WALL_CORNER_TOP_RIGHT:
-                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_CORNER_TOP_RIGHT, new PositionData(i2, i, i4, i3)));
+                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_CORNER_TOP_RIGHT, position));
                                 break;
                             case TILE_WALL_DOOR_TOP:
-                                tileRow.add(new DoorTileData(context, TileUtils.TILE_WALL_DOOR_TOP, KEY_MAP_DEFAULT, new PositionData(i2, i, i4, i3)));
+                                tileRow.add(new DoorTileData(context, TileUtils.TILE_WALL_DOOR_TOP, KEY_MAP_DEFAULT, position));
                                 break;
                             case TILE_WALL_DOOR_BOTTOM:
-                                tileRow.add(new DoorTileData(context, TileUtils.TILE_WALL_DOOR_BOTTOM, KEY_MAP_DEFAULT, new PositionData(i2, i, i4, i3)));
+                                tileRow.add(new DoorTileData(context, TileUtils.TILE_WALL_DOOR_BOTTOM, KEY_MAP_DEFAULT, position));
                                 break;
                             case TILE_WALL_DOOR_LEFT:
-                                tileRow.add(new DoorTileData(context, TileUtils.TILE_WALL_DOOR_LEFT, KEY_MAP_DEFAULT, new PositionData(i2, i, i4, i3)));
+                                tileRow.add(new DoorTileData(context, TileUtils.TILE_WALL_DOOR_LEFT, KEY_MAP_DEFAULT, position));
                                 break;
                             case TILE_WALL_DOOR_RIGHT:
-                                tileRow.add(new DoorTileData(context, TileUtils.TILE_WALL_DOOR_RIGHT, KEY_MAP_DEFAULT, new PositionData(i2, i, i4, i3)));
+                                tileRow.add(new DoorTileData(context, TileUtils.TILE_WALL_DOOR_RIGHT, KEY_MAP_DEFAULT, position));
                                 break;
                             case TILE_CHEST:
-                                tileRow.add(new ChestTileData(context, new PositionData(i2, i, i4, i3)));
+                                tileRow.add(new ChestTileData(context, position));
                                 break;
                         }
                     }
@@ -1412,41 +1418,193 @@ public class MapUtils {
         List<CharacterData> characters = new ArrayList<>();
         switch (mapKey) {
             case KEY_MAP_HOUSE:
-                characters.add(new QuestGiverCharacterData(context, new PositionData(0, 0, 4, 3)));
+                characters.add(new QuestGiverCharacterData(context, new PositionData(mapKey, 0, 0, 4, 3)));
                 break;
         }
         return characters;
     }
 
-    public static String getMessage(Context context, String mapKey, int sceneRow, int sceneColumn, int tileRow, int tileColumn) {
+    public static String getTileId(PositionData position) {
+        return position.getSceneX() + "," + position.getSceneY() + "," + position.getTileX() + "," + position.getTileY();
+    }
+
+    public static String getMessage(Context context, String mapKey, String tileId) {
         switch (mapKey) {
             case KEY_MAP_DEFAULT:
-                switch (sceneRow) {
-                    case 0:
-                        switch (sceneColumn) {
-                            case 0:
-                                switch (tileRow) {
-                                    case 0:
-                                        switch (tileColumn) {
-                                            case 2:
-                                                return context.getString(R.string.msg_sign_tutorial1);
-                                            case 3:
-                                                return context.getString(R.string.msg_sign_tutorial2);
-                                            case 4:
-                                                return context.getString(R.string.msg_sign_tutorial3);
-                                            case 5:
-                                                return context.getString(R.string.msg_sign_tutorial4);
-                                        }
-                                        break;
-                                }
-                                break;
-                        }
-                        break;
+                switch (tileId) {
+                    case "0,0,0,2":
+                        return context.getString(R.string.msg_sign_tutorial1);
+                    case "0,0,0,3":
+                        return context.getString(R.string.msg_sign_tutorial2);
+                    case "0,0,0,4":
+                        return context.getString(R.string.msg_sign_tutorial3);
+                    case "0,0,0,5":
+                        return context.getString(R.string.msg_sign_tutorial4);
                 }
                 break;
         }
 
         return "";
+    }
+
+    public static List<ItemData> getItems(Context context, String mapKey) {
+        List<ItemData> items = new ArrayList<>();
+
+        switch (mapKey) {
+            case KEY_MAP_DEFAULT:
+                items.add(new KeyItemData(context, new PositionData(mapKey, 0, 0, 2, 5)));
+                break;
+        }
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+        int pickedUpApples = prefs.getInt(ItemData.KEY_PICKED_UP + KEY_ITEM_APPLE, 0), holdingApples = prefs.getInt(ItemData.KEY_HOLDING + KEY_ITEM_APPLE, 0);
+        for (int i = 0; i < pickedUpApples; i++) {
+            items.add(new AppleItemData(context, true, i < holdingApples));
+        }
+
+        Random random = new Random();
+
+        int[][][][] map = getMap(context, mapKey);
+        List<RowData> mapList = getMapList(context, mapKey);
+        List<CharacterData> characters = getCharacters(context, mapKey);
+        for (int i = 0; i < map.length; i++) {
+            for (int i2 = 0; i2 < map[i].length; i2++) {
+                int appleCount = 0;
+                int[][] scene = map[i][i2];
+
+                SceneryData scenery = mapList.get(i).getScenery(i2);
+
+                for (int i3 = 0; i3 < scene.length; i3++) {
+                    for (int i4 = 0; i4 < scene[i3].length; i4++) {
+                        PositionData position = getEmptyPosition(scenery, characters, items, new PositionData(mapKey, i2, i, i4, i3));
+
+                        if (appleCount < 1 && map[i][i2][i3][i4] == TILE_TREE && random.nextInt(2) == 0) {
+                            items.add(new AppleItemData(context, position));
+                            appleCount++;
+                        }
+                    }
+                }
+            }
+        }
+
+        return items;
+    }
+
+    public static PositionData getEmptyPosition(SceneryData scenery, List<CharacterData> characters, List<ItemData> items, PositionData startPosition) {
+        int x = startPosition.getX(), y = startPosition.getY();
+
+        for (int scale = 0; !isValidPosition(scenery, characters, items, x, y) && scale < 10; scale++) {
+            if (x - scale >= 0) {
+                x -= scale;
+
+                if (isValidPosition(scenery, characters, items, x, y)) break;
+                else x += scale;
+            }
+
+            if (x + scale < 10) {
+                x += scale;
+
+                if (isValidPosition(scenery, characters, items, x, y)) break;
+                else x -= scale;
+            }
+
+            if (y - scale >= 0) {
+                y -= scale;
+
+                if (isValidPosition(scenery, characters, items, x, y)) break;
+                else y += scale;
+            }
+
+            if (y + scale < 10) {
+                y += scale;
+
+                if (isValidPosition(scenery, characters, items, x, y)) break;
+                else y -= scale;
+            }
+
+            if (x + scale < 10 && y + scale < 10) {
+                x += scale;
+                y += scale;
+
+                if (isValidPosition(scenery, characters, items, x, y)) break;
+                else {
+                    x -= scale;
+                    y -= scale;
+                }
+            }
+
+            if (x - scale >= 0 && y - scale >= 0) {
+                x -= scale;
+                y -= scale;
+
+                if (isValidPosition(scenery, characters, items, x, y)) break;
+                else {
+                    x += scale;
+                    y += scale;
+                }
+            }
+
+            if (x + scale < 10 && y - scale >= 0) {
+                x += scale;
+                y -= scale;
+
+                if (isValidPosition(scenery, characters, items, x, y)) break;
+                else {
+                    x -= scale;
+                    y += scale;
+                }
+            }
+
+            if (x - scale >= 0 && y + scale < 10) {
+                x -= scale;
+                y += scale;
+
+                if (isValidPosition(scenery, characters, items, x, y)) break;
+                else {
+                    x += scale;
+                    y -= scale;
+                }
+            }
+        }
+
+        return new PositionData(startPosition.getMapKey(), startPosition.getSceneX(), startPosition.getSceneY(), x, y);
+    }
+
+    public static boolean isValidPosition(SceneryData scenery, List<CharacterData> characters, List<ItemData> items, int x, int y) {
+        for (TileData tile : getTilesAt(scenery, characters, items, x, y)) {
+            if (tile == null || !tile.canEnter()) return false;
+        }
+
+        return true;
+    }
+
+    public static List<TileData> getTilesAt(SceneryData scenery, List<CharacterData> characters, List<ItemData> items, int x, int y) {
+        List<TileData> tiles = new ArrayList<>();
+        tiles.add(scenery.getTile(x, y));
+
+        for (CharacterData character : characters) {
+            PositionData position = character.getPosition();
+            if (position.getTileX() == x && position.getTileY() == y) tiles.add(character);
+        }
+
+        for (ItemData item : items) {
+            PositionData position = item.getPosition();
+            if (position != null && position.getSceneX() == scenery.getX() && position.getSceneY() == scenery.getY() && position.getTileX() == x && position.getTileY() == y && !item.hasPickedUp())
+                tiles.add(item);
+        }
+
+        return tiles;
+    }
+
+    public static void addToHolding(Context context, String itemKey) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs.edit().putInt(ItemData.KEY_HOLDING + itemKey, prefs.getInt(ItemData.KEY_HOLDING + itemKey, 0) + 1).apply();
+    }
+
+    public static void addToChest(Context context, String itemKey) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs.edit().putInt(ItemData.KEY_PICKED_UP + itemKey, prefs.getInt(ItemData.KEY_PICKED_UP + itemKey, 0) + 1).apply();
     }
 
     public static void saveMap(Context context, String key, int[][][][] map) {

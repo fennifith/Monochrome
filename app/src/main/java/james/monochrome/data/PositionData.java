@@ -2,14 +2,17 @@ package james.monochrome.data;
 
 public class PositionData {
 
+    private String mapKey;
     private int x, y;
 
-    public PositionData(int x, int y) {
+    public PositionData(String mapKey, int x, int y) {
+        this.mapKey = mapKey;
         this.x = x;
         this.y = y;
     }
 
-    public PositionData(int sceneX, int sceneY, int tileX, int tileY) {
+    public PositionData(String mapKey, int sceneX, int sceneY, int tileX, int tileY) {
+        this.mapKey = mapKey;
         x = (sceneX * 10) + tileX;
         y = (sceneY * 10) + tileY;
     }
@@ -20,6 +23,10 @@ public class PositionData {
 
     public int getY() {
         return y;
+    }
+
+    public String getMapKey() {
+        return mapKey;
     }
 
     public int getSceneX() {

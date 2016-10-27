@@ -26,7 +26,7 @@ public abstract class TileData {
         return tile;
     }
 
-    void setTile(int[][] tile) {
+    public void setTile(int[][] tile) {
         this.tile = tile;
         if (listener != null) listener.onTileChange(this);
     }

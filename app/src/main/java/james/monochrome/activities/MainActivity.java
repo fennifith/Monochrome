@@ -20,6 +20,8 @@ import james.monochrome.R;
 import james.monochrome.data.PositionData;
 import james.monochrome.data.RowData;
 import james.monochrome.data.SceneryData;
+import james.monochrome.data.characters.CharacterData;
+import james.monochrome.data.items.ItemData;
 import james.monochrome.data.tiles.TileData;
 import james.monochrome.dialogs.MapDialog;
 import james.monochrome.dialogs.StartScreenDialog;
@@ -30,7 +32,7 @@ import james.monochrome.views.CharacterView;
 import james.monochrome.views.SceneryView;
 import james.monochrome.views.SquareImageView;
 
-public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
+public class MainActivity extends AppCompatActivity implements View.OnTouchListener, TileData.OnTileChangeListener {
 
     public static final String
             KEY_READ_SIGN = "tutorialSign",
@@ -47,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private String mapKey;
 
     private SceneryData sceneryData;
+    private List<CharacterData> characters;
+    private List<ItemData> items;
     private int sceneX, sceneY;
 
     private Map<String, PositionData> mapPositions;
@@ -176,8 +180,31 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             characterY = prefs.getInt(MapUtils.KEY_CHARACTER_Y + mapKey, 0);
         }
 
+        if (characters != null) {
+            for (CharacterData character : characters) {
+                character.setOnTileChangeListener(null);
+            }
+        }
+
+        if (items != null) {
+            for (ItemData item : items) {
+                item.setOnTileChangeListener(null);
+            }
+        }
+
+        characters = MapUtils.getCharacters(this, mapKey);
+        items = MapUtils.getItems(this, mapKey);
+
+        for (CharacterData character : characters) {
+            character.setOnTileChangeListener(this);
+        }
+
+        for (ItemData item : items) {
+            item.setOnTileChangeListener(this);
+        }
+
         setScenery(map.get(sceneY).getScenery(sceneX));
-        character.setCharacterPosition(characterX, characterY);
+        character.setCharacterPosition(new PositionData(mapKey, sceneX, sceneY, characterX, characterY));
         background.setMap(mapKey);
     }
 
@@ -192,60 +219,14 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
         sceneryData = data;
 
-        TileData.OnTileChangeListener listener = new TileData.OnTileChangeListener() {
-            @Override
-            public void onTileChange(TileData tile) {
-                scenery.invalidate();
-            }
-
-            @Override
-            public void onRequestTileKeyChange(TileData tile, int tileKey) {
-                int[][][][] map = MapUtils.getMap(MainActivity.this, mapKey);
-                PositionData position = tile.getPosition();
-                map[position.getSceneY()][position.getSceneX()][position.getTileY()][position.getTileX()] = tileKey;
-                MapUtils.saveMap(MainActivity.this, mapKey, map);
-
-                setMap(mapKey);
-            }
-
-            @Override
-            public void onRequestMapChange(String mapKey) {
-                setMap(mapKey);
-            }
-
-            @Override
-            public void onRequestPositionSave() {
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString(MapUtils.KEY_MAP, mapKey);
-                for (String mapKey : mapPositions.keySet()) {
-                    PositionData position = mapPositions.get(mapKey);
-                    editor.putInt(MapUtils.KEY_SCENE_X + mapKey, position.getSceneX());
-                    editor.putInt(MapUtils.KEY_SCENE_Y + mapKey, position.getSceneY());
-                    editor.putInt(MapUtils.KEY_CHARACTER_X + mapKey, position.getTileX());
-                    editor.putInt(MapUtils.KEY_CHARACTER_Y + mapKey, position.getTileY());
-                }
-                editor.apply();
-            }
-
-            @Override
-            public void onRequestShake() {
-                scenery.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
-            }
-
-            @Override
-            public String getMapKey() {
-                return mapKey;
-            }
-        };
-
         for (List<TileData> row : sceneryData.getTiles()) {
             for (TileData tile : row) {
-                tile.setOnTileChangeListener(listener);
+                tile.setOnTileChangeListener(this);
             }
         }
 
-        character.setScenery(mapKey, data);
-        scenery.setScenery(data);
+        character.setScenery(mapKey, data, characters, items);
+        scenery.setScenery(data, items);
     }
 
     public void moveUp() {
@@ -253,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             sceneY -= 1;
 
             setScenery(map.get(sceneY).getScenery(sceneX));
-            character.setCharacterPosition(character.getCharacterX(), 9);
+            character.setCharacterPosition(new PositionData(mapKey, sceneX, sceneY, character.getCharacterX(), 9));
         } else character.moveUp();
         mapPositions.put(mapKey, character.getPosition());
     }
@@ -263,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             sceneY += 1;
 
             setScenery(map.get(sceneY).getScenery(sceneX));
-            character.setCharacterPosition(character.getCharacterX(), 0);
+            character.setCharacterPosition(new PositionData(mapKey, sceneX, sceneY, character.getCharacterX(), 0));
         } else character.moveDown();
         mapPositions.put(mapKey, character.getPosition());
     }
@@ -273,7 +254,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             sceneX -= 1;
 
             setScenery(map.get(sceneY).getScenery(sceneX));
-            character.setCharacterPosition(9, character.getCharacterY());
+            character.setCharacterPosition(new PositionData(mapKey, sceneX, sceneY, 9, character.getCharacterY()));
         } else character.moveLeft();
         mapPositions.put(mapKey, character.getPosition());
     }
@@ -283,7 +264,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             sceneX += 1;
 
             setScenery(map.get(sceneY).getScenery(sceneX));
-            character.setCharacterPosition(0, character.getCharacterY());
+            character.setCharacterPosition(new PositionData(mapKey, sceneX, sceneY, 0, character.getCharacterY()));
         } else character.moveRight();
         mapPositions.put(mapKey, character.getPosition());
     }
@@ -313,5 +294,50 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 break;
         }
         return false;
+    }
+
+    @Override
+    public void onTileChange(TileData tile) {
+        scenery.invalidate();
+        character.invalidate();
+    }
+
+    @Override
+    public void onRequestTileKeyChange(TileData tile, int tileKey) {
+        int[][][][] map = MapUtils.getMap(MainActivity.this, mapKey);
+        PositionData position = tile.getPosition();
+        map[position.getSceneY()][position.getSceneX()][position.getTileY()][position.getTileX()] = tileKey;
+        MapUtils.saveMap(MainActivity.this, mapKey, map);
+
+        setMap(mapKey);
+    }
+
+    @Override
+    public void onRequestMapChange(String mapKey) {
+        setMap(mapKey);
+    }
+
+    @Override
+    public void onRequestPositionSave() {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(MapUtils.KEY_MAP, mapKey);
+        for (String mapKey : mapPositions.keySet()) {
+            PositionData position = mapPositions.get(mapKey);
+            editor.putInt(MapUtils.KEY_SCENE_X + mapKey, position.getSceneX());
+            editor.putInt(MapUtils.KEY_SCENE_Y + mapKey, position.getSceneY());
+            editor.putInt(MapUtils.KEY_CHARACTER_X + mapKey, position.getTileX());
+            editor.putInt(MapUtils.KEY_CHARACTER_Y + mapKey, position.getTileY());
+        }
+        editor.apply();
+    }
+
+    @Override
+    public void onRequestShake() {
+        scenery.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+    }
+
+    @Override
+    public String getMapKey() {
+        return mapKey;
     }
 }

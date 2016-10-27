@@ -15,15 +15,10 @@ public class SignTileData extends TileData {
         super(context, TileUtils.TILE_SIGN, position);
     }
 
-    public String getMessage() {
-        PositionData position = getPosition();
-        return MapUtils.getMessage(getContext(), getMapKey(), position.getSceneY(), position.getSceneX(), position.getTileY(), position.getTileX());
-    }
-
     @Override
     public void onTouch() {
         PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean(MainActivity.KEY_READ_SIGN, true).apply();
-        StaticUtils.makeToast(getContext(), getMessage()).show();
+        StaticUtils.makeToast(getContext(), MapUtils.getMessage(getContext(), getMapKey(), MapUtils.getTileId(getPosition()))).show();
     }
 
     @Override
