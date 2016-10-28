@@ -8,6 +8,7 @@ import james.monochrome.R;
 import james.monochrome.data.PositionData;
 import james.monochrome.data.items.ItemData;
 import james.monochrome.data.items.KeyItemData;
+import james.monochrome.utils.ItemUtils;
 import james.monochrome.utils.MapUtils;
 import james.monochrome.utils.StaticUtils;
 import james.monochrome.utils.TileUtils;
@@ -25,15 +26,15 @@ public class HouseTileData extends TileData {
     }
 
     private void setLocked(boolean isLocked) {
-        PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean(KEY_LOCKED + getMapKey() + MapUtils.getTileId(getPosition()), isLocked).apply();
+        PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean(KEY_LOCKED + getPosition().getMapKey() + MapUtils.getTileId(getPosition()), isLocked).apply();
         this.isLocked = isLocked;
     }
 
     @Override
     public void onTouch() {
         if (isLocked) {
-            for (ItemData item : getItems()) {
-                if (item instanceof KeyItemData && item.isHolding() && !item.isUseless()) {
+            for (ItemData item : ItemUtils.getHoldingItems(getContext())) {
+                if (item instanceof KeyItemData && !item.isUseless()) {
                     key = (KeyItemData) item;
                     break;
                 }

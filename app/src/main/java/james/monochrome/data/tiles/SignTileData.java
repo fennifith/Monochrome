@@ -15,7 +15,7 @@ public class SignTileData extends TileData {
 
     @Override
     public void onTouch() {
-        StaticUtils.makeToast(getContext(), MapUtils.getMessage(getContext(), getMapKey(), MapUtils.getTileId(getPosition()))).show();
+        StaticUtils.makeToast(getContext(), MapUtils.getMessage(getContext(), getPosition().getMapKey(), MapUtils.getTileId(getPosition()))).show();
     }
 
     @Override

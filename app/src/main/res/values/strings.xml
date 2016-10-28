@@ -16,9 +16,13 @@
     <string name="action_ok">OK</string>
     <string name="action_use_item">Use the %1$s?</string>
 
+    <string name="title_chest">Chest</string>
+    <string name="title_holding">Holding</string>
+
     <string name="item_apple">Apple</string>
     <string name="item_pumpkin">Pumpkin</string>
     <string name="item_key">Key</string>
+    <string name="item_number">x%1$d</string>
 
     <string name="msg_tutorial">Well look at you, fluffy puff ball. Or is it puffy fluff ball? I can\'t remember. You should probably go to the right and read some of those signs.</string>
     <string name="msg_tutorial_move">You can move by swiping left, right, up, or down. Swipe towards an object to interact with it.</string>
@@ -28,7 +32,7 @@
     <string name="msg_sign_tutorial3">I get distracted a lot.</string>
     <string name="msg_sign_tutorial4">You should probably go to the right before I get distracted any more.</string>
 
-    <string name="msg_char_tutorial1">What is that thing to the left you say? Well, I shall tell you a story that has been passed down through generations. It is a house. They are locked by default, but once you acquire a mystical key item you can gain access to them. Inside, you have the ability to save the progress of your game using the ominous checkpoint flag and store items such as apples or pumpkins in a magically teleporting chest.</string>
+    <string name="msg_char_tutorial1">What is that thing to the left you say? Well, I shall tell you a story that has been passed down through generations. It is a house. They are locked by default, but once you acquire a mystical key item you can gain access to them. Once inside, you have the ability to save the progress of your game using the ominous checkpoint flag and store items such as apples or pumpkins in a magically teleporting chest.</string>
 
     <string name="msg_save">Would you like to save the game?</string>
     <string name="msg_enter_house">Enter the house?</string>

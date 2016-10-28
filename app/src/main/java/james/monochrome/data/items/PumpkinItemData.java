@@ -10,6 +10,10 @@ import james.monochrome.utils.TileUtils;
 
 public class PumpkinItemData extends ItemData {
 
+    public PumpkinItemData(Context context, boolean hasPickedUp, boolean isHolding, boolean isUseless) {
+        super(context, TileUtils.TILE_PUMPKIN, hasPickedUp, isHolding, isUseless);
+    }
+
     public PumpkinItemData(Context context, PositionData position) {
         super(context, TileUtils.TILE_PUMPKIN, position);
     }
@@ -37,5 +41,9 @@ public class PumpkinItemData extends ItemData {
     @Override
     boolean hasConstantPosition() {
         return false;
+    }
+
+    @Override
+    public void onUse() {
     }
 }

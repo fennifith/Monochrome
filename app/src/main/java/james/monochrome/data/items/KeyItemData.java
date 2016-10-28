@@ -38,4 +38,8 @@ public class KeyItemData extends ItemData {
     boolean hasConstantPosition() {
         return true;
     }
+
+    @Override
+    public void onUse() {
+    }
 }

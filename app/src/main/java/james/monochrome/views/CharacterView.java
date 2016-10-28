@@ -60,8 +60,8 @@ public class CharacterView extends SquareImageView {
             @Override
             public void run() {
                 if (offsetY < 1) offsetY = 1;
-                else offsetY = -1;
-                setY(getY() + (offsetY * pixelSize));
+                else offsetY = 0;
+                invalidate();
 
                 handler.postDelayed(this, 500);
             }
@@ -210,9 +210,9 @@ public class CharacterView extends SquareImageView {
         for (CharacterData character : characters) {
             PositionData position = character.getPosition();
             if (position.getSceneX() == scenery.getX() && position.getSceneY() == scenery.getY())
-                canvas.drawBitmap(monochrome.getBitmap(character.getTile(), tileSize, paint), tileSize * position.getTileX(), tileSize * position.getTileY(), paint);
+                canvas.drawBitmap(monochrome.getBitmap(character.getTile(), tileSize, paint), tileSize * position.getTileX(), (tileSize * position.getTileY()) - (pixelSize * offsetY), paint);
         }
 
-        canvas.drawBitmap(monochrome.getBitmap(tile, tileSize, paint), tileSize * characterX, tileSize * characterY, paint);
+        canvas.drawBitmap(monochrome.getBitmap(tile, tileSize, paint), tileSize * characterX, (tileSize * characterY) + (pixelSize * offsetY), paint);
     }
 }

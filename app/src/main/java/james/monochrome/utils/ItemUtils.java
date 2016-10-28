@@ -64,9 +64,18 @@ public class ItemUtils {
     }
 
     public static List<ItemData> getHoldingItems(Context context) {
-        List<ItemData> items = getPickedUpItems(context);
-        for (ItemData item : items) {
-            if (!item.isHolding()) items.remove(item);
+        List<ItemData> items = new ArrayList<>();
+        for (ItemData item : getPickedUpItems(context)) {
+            if (item.isHolding()) items.add(item);
+        }
+
+        return items;
+    }
+
+    public static List<ItemData> getChestItems(Context context) {
+        List<ItemData> items = new ArrayList<>();
+        for (ItemData item : getPickedUpItems(context)) {
+            if (!item.isHolding()) items.add(item);
         }
 
         return items;
@@ -75,6 +84,7 @@ public class ItemUtils {
     public static List<ItemData> getPickedUpItems(Context context) {
         List<ItemData> items = new ArrayList<>();
         items.addAll(getItemsOf(context, KEY_ITEM_APPLE));
+        items.addAll(getItemsOf(context, KEY_ITEM_PUMPKIN));
 
         return items;
     }
@@ -82,7 +92,7 @@ public class ItemUtils {
     public static int getFreeVolume(Context context) {
         int volume = 100;
         for (ItemData item : getHoldingItems(context)) {
-            volume -= item.getVolume();
+            if (!item.isUseless()) volume -= item.getVolume();
         }
 
         return volume;
@@ -97,6 +107,9 @@ public class ItemUtils {
             switch (itemKey) {
                 case KEY_ITEM_APPLE:
                     items.add(new AppleItemData(context, true, i < holding, i < useless));
+                    break;
+                case KEY_ITEM_PUMPKIN:
+                    items.add(new PumpkinItemData(context, true, i < holding, i < useless));
                     break;
             }
         }

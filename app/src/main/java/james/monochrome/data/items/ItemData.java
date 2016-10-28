@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import james.monochrome.Monochrome;
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
 import james.monochrome.data.tiles.TileData;
@@ -60,6 +61,8 @@ public abstract class ItemData extends TileData {
 
     abstract boolean hasConstantPosition();
 
+    public abstract void onUse();
+
     public boolean hasPickedUp() {
         return hasPickedUp;
     }
@@ -88,6 +91,7 @@ public abstract class ItemData extends TileData {
 
             String name = getName();
             StaticUtils.makeToast(getContext(), String.format(getContext().getString(VOWELS.indexOf(Character.toLowerCase(name.charAt(0))) == -1 ? R.string.msg_picked_up : R.string.msg_picked_up_vowel), name)).show();
+            ((Monochrome) getContext().getApplicationContext()).onItemMoved(this);
 
             setTile(getTile());
         } else
@@ -98,22 +102,28 @@ public abstract class ItemData extends TileData {
         if (hasConstantPosition())
             PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean(KEY_HOLDING + getKey() + getId(), false).apply();
         else ItemUtils.moveToChest(getContext(), getKey());
+        ((Monochrome) getContext().getApplicationContext()).onItemMoved(this);
 
         isHolding = false;
     }
 
     public void moveToHolding() {
-        if (hasConstantPosition())
-            PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean(KEY_HOLDING + getKey() + getId(), true).apply();
-        else ItemUtils.moveToHolding(getContext(), getKey());
+        if (ItemUtils.getFreeVolume(getContext()) > getVolume()) {
+            if (hasConstantPosition())
+                PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean(KEY_HOLDING + getKey() + getId(), true).apply();
+            else ItemUtils.moveToHolding(getContext(), getKey());
+            ((Monochrome) getContext().getApplicationContext()).onItemMoved(this);
 
-        isHolding = true;
+            isHolding = true;
+        } else
+            StaticUtils.makeToast(getContext(), getContext().getString(R.string.msg_no_space)).show();
     }
 
     public void setUseless() {
         if (hasConstantPosition())
             PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean(KEY_USELESS + getKey() + getId(), true).apply();
         else ItemUtils.setUseless(getContext(), getKey());
+        ((Monochrome) getContext().getApplicationContext()).onItemMoved(this);
 
         isUseless = true;
     }

@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import java.util.List;
 import java.util.Map;
 
+import james.monochrome.Monochrome;
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
 import james.monochrome.data.RowData;
@@ -34,7 +35,7 @@ import james.monochrome.views.CharacterView;
 import james.monochrome.views.SceneryView;
 import james.monochrome.views.SquareImageView;
 
-public class MainActivity extends AppCompatActivity implements View.OnTouchListener, TileData.OnTileChangeListener {
+public class MainActivity extends AppCompatActivity implements View.OnTouchListener, Monochrome.OnSomethingHappenedListener {
 
     public static final String
             KEY_READ_TUTORIAL = "tutorialRead",
@@ -59,11 +60,16 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private float downX, downY;
 
     private SharedPreferences prefs;
+    private Monochrome monochrome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        monochrome = (Monochrome) getApplicationContext();
+        monochrome.addListener(this);
 
         background = (BackgroundView) findViewById(R.id.background);
         scenery = (SceneryView) findViewById(R.id.scenery);
@@ -74,7 +80,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         personView = (SquareImageView) findViewById(R.id.person);
         mapView = (SquareImageView) findViewById(R.id.map);
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         mapPositions = new ArrayMap<>();
         setMap(prefs.getString(MapUtils.KEY_MAP, MapUtils.KEY_MAP_DEFAULT));
 
@@ -178,6 +183,12 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         dialog.show();
     }
 
+    @Override
+    protected void onDestroy() {
+        monochrome.removeListener(this);
+        super.onDestroy();
+    }
+
     public void setMap(String mapKey) {
         this.mapKey = mapKey;
         map = MapUtils.getMapList(this, mapKey);
@@ -197,28 +208,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             characterY = prefs.getInt(MapUtils.KEY_CHARACTER_Y + mapKey, 0);
         }
 
-        if (characters != null) {
-            for (CharacterData character : characters) {
-                character.setOnTileChangeListener(null);
-            }
-        }
-
-        if (items != null) {
-            for (ItemData item : items) {
-                item.setOnTileChangeListener(null);
-            }
-        }
-
         characters = MapUtils.getCharacters(this, mapKey);
         items = ItemUtils.getItems(this, mapKey);
-
-        for (CharacterData character : characters) {
-            character.setOnTileChangeListener(this);
-        }
-
-        for (ItemData item : items) {
-            item.setOnTileChangeListener(this);
-        }
 
         setScenery(map.get(sceneY).getScenery(sceneX));
         character.setCharacterPosition(characterX, characterY);
@@ -226,21 +217,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     }
 
     public void setScenery(SceneryData data) {
-        if (sceneryData != null) {
-            for (List<TileData> row : sceneryData.getTiles()) {
-                for (TileData tile : row) {
-                    tile.setOnTileChangeListener(null);
-                }
-            }
-        }
-
         sceneryData = data;
-
-        for (List<TileData> row : sceneryData.getTiles()) {
-            for (TileData tile : row) {
-                tile.setOnTileChangeListener(this);
-            }
-        }
 
         character.setScenery(mapKey, data, characters, items);
         scenery.setScenery(mapKey, data, items);
@@ -354,12 +331,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     }
 
     @Override
-    public String getMapKey() {
-        return mapKey;
-    }
+    public void onItemMoved(ItemData item) {
 
-    @Override
-    public List<ItemData> getItems() {
-        return items;
     }
 }

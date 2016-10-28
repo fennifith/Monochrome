@@ -35,6 +35,6 @@ public class ProfileDialog extends AppCompatDialog {
             if (item.isHolding() && !item.isUseless()) holdingItems.add(item);
         }
 
-        recycler.setAdapter(new ItemAdapter(getContext(), holdingItems));
+        recycler.setAdapter(new ItemAdapter(getContext(), holdingItems, null));
     }
 }

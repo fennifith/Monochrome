@@ -41,4 +41,8 @@ public class AppleItemData extends ItemData {
     boolean hasConstantPosition() {
         return false;
     }
+
+    @Override
+    public void onUse() {
+    }
 }
