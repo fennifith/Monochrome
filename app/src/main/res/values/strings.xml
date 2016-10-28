@@ -16,9 +16,6 @@
     <string name="action_ok">OK</string>
     <string name="action_use_item">Use the %1$s?</string>
 
-    <string name="title_chest">Chest</string>
-    <string name="title_holding">Holding</string>
-
     <string name="item_apple">Apple</string>
     <string name="item_pumpkin">Pumpkin</string>
     <string name="item_key">Key</string>
@@ -49,4 +46,41 @@
     <string name="quest_title_apples">I Really Like Apples</string>
     <string name="quest_desc_apples">I want to eat a lot of apples. Could you go around and pick up about 10 apples for me?</string>
     <string name="quest_complete_apples">Thanks for getting me apples! Om nom nom nom nom.</string>
+
+    <string name="title_chest">Chest</string>
+    <string name="title_holding">Holding</string>
+    <string name="title_about">About</string>
+    <string name="title_contrib">Contributors</string>
+    <string name="title_libs">Libraries</string>
+
+    <string-array name="contrib_names">
+        <item>James Fenn</item>
+        <item>Vukašin Anđelković</item>
+        <item>Richard Yanchev</item>
+    </string-array>
+
+    <string-array name="contrib_descs">
+        <item>Made the app!</item>
+        <item>Helped design a lot of the graphics and user interface.</item>
+        <item>Made some weird noises.</item>
+    </string-array>
+
+    <string-array name="contrib_urls">
+        <item>https://theandroidmaster.github.io/</item>
+        <item>https://plus.google.com/105188221378780419527</item>
+        <item>https://www.youtube.com/user/TheGrayWolf81</item>
+    </string-array>
+
+    <string-array name="library_names">
+        <item>Android 3D Touch - PeekView</item>
+    </string-array>
+
+    <string-array name="library_descs">
+        <item>This library aims to create a simple and powerful API to enable 3D Touch style "Peeking" on Android.</item>
+    </string-array>
+
+    <string-array name="library_urls">
+        <item>https://github.com/klinker24/Android-3DTouch-PeekView</item>
+    </string-array>
+
 </resources>

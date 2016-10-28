@@ -1,15 +1,14 @@
 package james.monochrome.dialogs;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatDialog;
-import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 
 import james.monochrome.R;
-import james.monochrome.activities.MainActivity;
+import james.monochrome.activities.AboutActivity;
 
 public class StartScreenDialog extends AppCompatDialog {
 
@@ -23,10 +22,7 @@ public class StartScreenDialog extends AppCompatDialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_start);
 
-        AppCompatButton start = (AppCompatButton) findViewById(R.id.start);
-        if (PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(MainActivity.KEY_READ_TUTORIAL, false))
-            start.setText(R.string.action_resume);
-        start.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.start).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
@@ -36,6 +32,13 @@ public class StartScreenDialog extends AppCompatDialog {
         findViewById(R.id.settings).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+            }
+        });
+
+        findViewById(R.id.about).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getContext().startActivity(new Intent(getContext(), AboutActivity.class));
             }
         });
     }
