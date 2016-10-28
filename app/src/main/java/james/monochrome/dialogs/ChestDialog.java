@@ -2,10 +2,12 @@ package james.monochrome.dialogs;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +46,10 @@ public class ChestDialog extends AppCompatDialog implements Monochrome.OnSomethi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_chest);
+
+        Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), "VT323-Regular.ttf");
+        ((TextView) findViewById(R.id.titleHolding)).setTypeface(typeface);
+        ((TextView) findViewById(R.id.titleChest)).setTypeface(typeface);
 
         holding = (RecyclerView) findViewById(R.id.holding);
         holding.setLayoutManager(new GridLayoutManager(getContext(), 3));

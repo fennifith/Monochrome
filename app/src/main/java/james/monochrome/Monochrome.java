@@ -34,7 +34,7 @@ public class Monochrome extends Application {
                 return bitmap;
         }
 
-        if (tileSize == null) tileSize = 10;
+        if (tileSize == null) tileSize = 100;
 
         Bitmap bitmap = Bitmap.createBitmap(tileSize, tileSize, Bitmap.Config.ARGB_4444);
         Canvas canvas = new Canvas(bitmap);
