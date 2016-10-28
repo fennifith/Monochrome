@@ -15,6 +15,7 @@ public abstract class ItemData extends TileData {
     public static final String KEY_PICKED_UP = "pickedUp";
     public static final String KEY_HOLDING = "holding";
     public static final String KEY_USELESS = "useless";
+    private static final String VOWELS = "aeiou";
 
     private PositionData position;
     private boolean hasPickedUp;
@@ -55,6 +56,8 @@ public abstract class ItemData extends TileData {
 
     public abstract String getKey();
 
+    public abstract int getVolume();
+
     abstract boolean hasConstantPosition();
 
     public boolean hasPickedUp() {
@@ -71,19 +74,24 @@ public abstract class ItemData extends TileData {
 
     @Override
     public void onTouch() {
-        if (hasConstantPosition()) {
-            PreferenceManager.getDefaultSharedPreferences(getContext())
-                    .edit()
-                    .putBoolean(KEY_PICKED_UP + getKey() + getId(), true)
-                    .putBoolean(KEY_HOLDING + getKey() + getId(), true)
-                    .apply();
-        } else ItemUtils.addToHolding(getContext(), getKey());
+        if (ItemUtils.getFreeVolume(getContext()) >= getVolume()) {
+            if (hasConstantPosition()) {
+                PreferenceManager.getDefaultSharedPreferences(getContext())
+                        .edit()
+                        .putBoolean(KEY_PICKED_UP + getKey() + getId(), true)
+                        .putBoolean(KEY_HOLDING + getKey() + getId(), true)
+                        .apply();
+            } else ItemUtils.addToHolding(getContext(), getKey());
 
-        hasPickedUp = true;
-        isHolding = true;
+            hasPickedUp = true;
+            isHolding = true;
 
-        StaticUtils.makeToast(getContext(), String.format(getContext().getString(R.string.msg_picked_up), getName())).show();
-        setTile(getTile());
+            String name = getName();
+            StaticUtils.makeToast(getContext(), String.format(getContext().getString(VOWELS.indexOf(Character.toLowerCase(name.charAt(0))) == -1 ? R.string.msg_picked_up : R.string.msg_picked_up_vowel), name)).show();
+
+            setTile(getTile());
+        } else
+            StaticUtils.makeToast(getContext(), getContext().getString(R.string.msg_no_space)).show();
     }
 
     public void moveToChest() {

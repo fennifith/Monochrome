@@ -209,7 +209,8 @@ public class CharacterView extends SquareImageView {
 
         for (CharacterData character : characters) {
             PositionData position = character.getPosition();
-            canvas.drawBitmap(monochrome.getBitmap(character.getTile(), tileSize, paint), tileSize * position.getTileX(), tileSize * position.getTileY(), paint);
+            if (position.getSceneX() == scenery.getX() && position.getSceneY() == scenery.getY())
+                canvas.drawBitmap(monochrome.getBitmap(character.getTile(), tileSize, paint), tileSize * position.getTileX(), tileSize * position.getTileY(), paint);
         }
 
         canvas.drawBitmap(monochrome.getBitmap(tile, tileSize, paint), tileSize * characterX, tileSize * characterY, paint);

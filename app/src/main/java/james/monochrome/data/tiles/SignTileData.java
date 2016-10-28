@@ -1,9 +1,7 @@
 package james.monochrome.data.tiles;
 
 import android.content.Context;
-import android.preference.PreferenceManager;
 
-import james.monochrome.activities.MainActivity;
 import james.monochrome.data.PositionData;
 import james.monochrome.utils.MapUtils;
 import james.monochrome.utils.StaticUtils;
@@ -17,7 +15,6 @@ public class SignTileData extends TileData {
 
     @Override
     public void onTouch() {
-        PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean(MainActivity.KEY_READ_SIGN, true).apply();
         StaticUtils.makeToast(getContext(), MapUtils.getMessage(getContext(), getMapKey(), MapUtils.getTileId(getPosition()))).show();
     }
 

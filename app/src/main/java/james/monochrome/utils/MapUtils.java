@@ -7,11 +7,13 @@ import android.preference.PreferenceManager;
 import java.util.ArrayList;
 import java.util.List;
 
+import james.monochrome.BuildConfig;
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
 import james.monochrome.data.RowData;
 import james.monochrome.data.SceneryData;
 import james.monochrome.data.characters.CharacterData;
+import james.monochrome.data.characters.DialogueCharacterData;
 import james.monochrome.data.characters.QuestGiverCharacterData;
 import james.monochrome.data.items.ItemData;
 import james.monochrome.data.tiles.BushTileData;
@@ -38,13 +40,9 @@ public class MapUtils {
     public static final String KEY_MAP_DEFAULT = "default";
     public static final String KEY_MAP_HOUSE = "house";
 
-    public static final String KEY_ITEM_KEY = "key";
-    public static final String KEY_ITEM_APPLE = "apple";
-    public static final String KEY_ITEM_PUMPKIN = "pumpkin";
-
     private static final int TILE_EMPTY = 0;
     private static final int TILE_GRASS = 6;
-    private static final int TILE_GRASS_THICK = 7;
+    static final int TILE_GRASS_THICK = 7;
     private static final int TILE_WOOD = 22;
     private static final int TILE_BUSH = 1;
     static final int TILE_TREE = 2;
@@ -191,40 +189,40 @@ public class MapUtils {
             },
             new int[][][]{
                     new int[][]{
-                            new int[]{2, 0, 2, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{2, 3, 2, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{2, 2, 2, 0, 0, 0, 0, 0, 0, 0},
+                            new int[]{2, 0, 0, 0, 0, 0, 7, 7, 7, 7},
+                            new int[]{2, 0, 0, 0, 0, 0, 0, 7, 7, 7},
                             new int[]{2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{2, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+                            new int[]{2, 0, 0, 0, 1, 1, 0, 0, 0, 0},
+                            new int[]{2, 1, 1, 1, 2, 2, 1, 1, 1, 1},
+                            new int[]{2, 1, 1, 1, 2, 2, 1, 1, 1, 1},
+                            new int[]{2, 0, 0, 0, 1, 1, 0, 0, 0, 0},
+                            new int[]{2, 0, 0, 0, 1, 1, 0, 0, 0, 0},
+                            new int[]{2, 0, 0, 0, 1, 1, 0, 0, 0, 0},
+                            new int[]{2, 0, 0, 0, 1, 1, 0, 0, 0, 0}
                     },
                     new int[][]{
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                            new int[]{2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+                            new int[]{7, 7, 7, 0, 7, 7, 0, 7, 7, 7},
+                            new int[]{7, 7, 0, 0, 0, 0, 0, 0, 7, 7},
+                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 7, 7},
+                            new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                            new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                             new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                             new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                             new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                             new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
                     },
                     new int[][]{
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+                            new int[]{2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+                            new int[]{0, 0, 0, 0, 1, 1, 0, 0, 0, 2},
+                            new int[]{1, 1, 1, 1, 2, 2, 1, 0, 0, 2},
+                            new int[]{1, 1, 1, 1, 2, 2, 1, 0, 0, 2},
+                            new int[]{0, 0, 0, 0, 2, 2, 0, 0, 0, 2},
+                            new int[]{0, 0, 0, 0, 0, 5, 0, 0, 0, 2},
+                            new int[]{0, 0, 0, 0, 2, 2, 0, 0, 0, 2},
+                            new int[]{2, 2, 2, 2, 2, 2, 2, 2, 2, 2}
                     },
                     new int[][]{
                             new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -1412,6 +1410,9 @@ public class MapUtils {
     public static List<CharacterData> getCharacters(Context context, String mapKey) {
         List<CharacterData> characters = new ArrayList<>();
         switch (mapKey) {
+            case KEY_MAP_DEFAULT:
+                characters.add(new DialogueCharacterData(context, new PositionData(mapKey, 0, 0, 5, 4), context.getString(R.string.msg_char_tutorial1)));
+                break;
             case KEY_MAP_HOUSE:
                 characters.add(new QuestGiverCharacterData(context, new PositionData(mapKey, 0, 0, 4, 3), QuestUtils.getNextQuest(context)));
                 break;
@@ -1435,11 +1436,14 @@ public class MapUtils {
                         return context.getString(R.string.msg_sign_tutorial3);
                     case "0,0,5,0":
                         return context.getString(R.string.msg_sign_tutorial4);
+                    case "2,1,5,7":
+                        return context.getString(R.string.msg_no_scenes);
                 }
                 break;
         }
 
-        return "";
+        if (BuildConfig.DEBUG) return tileId;
+        else return "";
     }
 
     public static PositionData getEmptyPosition(SceneryData scenery, List<CharacterData> characters, List<ItemData> items, PositionData startPosition) {

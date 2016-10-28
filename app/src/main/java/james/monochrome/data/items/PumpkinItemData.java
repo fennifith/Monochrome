@@ -4,6 +4,7 @@ import android.content.Context;
 
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
+import james.monochrome.utils.ItemUtils;
 import james.monochrome.utils.MapUtils;
 import james.monochrome.utils.TileUtils;
 
@@ -25,11 +26,16 @@ public class PumpkinItemData extends ItemData {
 
     @Override
     public String getKey() {
-        return MapUtils.KEY_ITEM_PUMPKIN;
+        return ItemUtils.KEY_ITEM_PUMPKIN;
+    }
+
+    @Override
+    public int getVolume() {
+        return 20;
     }
 
     @Override
     boolean hasConstantPosition() {
-        return true;
+        return false;
     }
 }

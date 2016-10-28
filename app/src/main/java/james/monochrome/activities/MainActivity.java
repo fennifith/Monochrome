@@ -37,7 +37,7 @@ import james.monochrome.views.SquareImageView;
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener, TileData.OnTileChangeListener {
 
     public static final String
-            KEY_READ_SIGN = "tutorialSign",
+            KEY_READ_TUTORIAL = "tutorialRead",
             KEY_SWIPED = "tutorialSwiped";
 
     private BackgroundView background;
@@ -157,8 +157,22 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                if (!prefs.getBoolean(KEY_READ_SIGN, false))
-                    StaticUtils.makeToast(MainActivity.this, getString(R.string.msg_tutorial)).show();
+                if (!prefs.getBoolean(KEY_READ_TUTORIAL, false)) {
+                    StaticUtils.makeDialog(
+                            MainActivity.this,
+                            null,
+                            getString(R.string.msg_tutorial),
+                            getString(R.string.action_ok),
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    prefs.edit().putBoolean(KEY_READ_TUTORIAL, true).apply();
+                                }
+                            },
+                            null,
+                            null
+                    ).show();
+                }
             }
         });
         dialog.show();

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
+import james.monochrome.utils.ItemUtils;
 import james.monochrome.utils.MapUtils;
 import james.monochrome.utils.TileUtils;
 
@@ -25,7 +26,12 @@ public class KeyItemData extends ItemData {
 
     @Override
     public String getKey() {
-        return MapUtils.KEY_ITEM_KEY;
+        return ItemUtils.KEY_ITEM_KEY;
+    }
+
+    @Override
+    public int getVolume() {
+        return 5;
     }
 
     @Override

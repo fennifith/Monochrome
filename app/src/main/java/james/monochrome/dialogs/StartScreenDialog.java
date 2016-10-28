@@ -9,8 +9,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 
 import james.monochrome.R;
-
-import static james.monochrome.activities.MainActivity.KEY_READ_SIGN;
+import james.monochrome.activities.MainActivity;
 
 public class StartScreenDialog extends AppCompatDialog {
 
@@ -25,7 +24,7 @@ public class StartScreenDialog extends AppCompatDialog {
         setContentView(R.layout.dialog_start);
 
         AppCompatButton start = (AppCompatButton) findViewById(R.id.start);
-        if (PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(KEY_READ_SIGN, false))
+        if (PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(MainActivity.KEY_READ_TUTORIAL, false))
             start.setText(R.string.action_resume);
         start.setOnClickListener(new View.OnClickListener() {
             @Override

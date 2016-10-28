@@ -4,7 +4,7 @@ import android.content.Context;
 
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
-import james.monochrome.utils.MapUtils;
+import james.monochrome.utils.ItemUtils;
 import james.monochrome.utils.TileUtils;
 
 public class AppleItemData extends ItemData {
@@ -24,12 +24,17 @@ public class AppleItemData extends ItemData {
 
     @Override
     String getId() {
-        return MapUtils.KEY_ITEM_APPLE;
+        return ItemUtils.KEY_ITEM_APPLE;
     }
 
     @Override
     public String getKey() {
-        return MapUtils.KEY_ITEM_APPLE;
+        return ItemUtils.KEY_ITEM_APPLE;
+    }
+
+    @Override
+    public int getVolume() {
+        return 5;
     }
 
     @Override

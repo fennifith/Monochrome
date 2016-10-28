@@ -20,7 +20,7 @@
     <string name="item_pumpkin">Pumpkin</string>
     <string name="item_key">Key</string>
 
-    <string name="msg_tutorial">Well look at you, fluffy puff ball. Or is it puffy fluff ball? I can\'t remember. You should probably go and read some of those signs.</string>
+    <string name="msg_tutorial">Well look at you, fluffy puff ball. Or is it puffy fluff ball? I can\'t remember. You should probably go to the right and read some of those signs.</string>
     <string name="msg_tutorial_move">You can move by swiping left, right, up, or down. Swipe towards an object to interact with it.</string>
 
     <string name="msg_sign_tutorial1">Yay. You can read signs. Good job.</string>
@@ -28,14 +28,19 @@
     <string name="msg_sign_tutorial3">I get distracted a lot.</string>
     <string name="msg_sign_tutorial4">You should probably go to the right before I get distracted any more.</string>
 
+    <string name="msg_char_tutorial1">What is that thing to the left you say? Well, I shall tell you a story that has been passed down through generations. It is a house. They are locked by default, but once you acquire a mystical key item you can gain access to them. Inside, you have the ability to save the progress of your game using the ominous checkpoint flag and store items such as apples or pumpkins in a magically teleporting chest.</string>
+
     <string name="msg_save">Would you like to save the game?</string>
     <string name="msg_enter_house">Enter the house?</string>
     <string name="msg_door">Go through the door?</string>
     <string name="msg_locked_house">The house is locked.</string>
     <string name="msg_unlock_house">Do you want to use a key to unlock this house? This action cannot be undone.</string>
     <string name="msg_picked_up">You picked up a %1$s</string>
+    <string name="msg_picked_up_vowel">You picked up an %1$s</string>
+    <string name="msg_no_space">You don\'t have enough space to hold this item! Please move some of your items into a chest to make room.</string>
     <string name="msg_quest_incomplete">Please come back when you have finished the quest.</string>
     <string name="msg_no_quests">It seems you\'ve played all the quests currently available. Check back later for more!</string>
+    <string name="msg_no_scenes">This part of the map hasn\'t been finished yet! Lazy developers…</string>
 
     <string name="quest_title_apples">I Really Like Apples</string>
     <string name="quest_desc_apples">I want to eat a lot of apples. Could you go around and pick up about 10 apples for me?</string>

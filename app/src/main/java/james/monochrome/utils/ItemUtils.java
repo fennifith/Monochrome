@@ -15,8 +15,13 @@ import james.monochrome.data.characters.CharacterData;
 import james.monochrome.data.items.AppleItemData;
 import james.monochrome.data.items.ItemData;
 import james.monochrome.data.items.KeyItemData;
+import james.monochrome.data.items.PumpkinItemData;
 
 public class ItemUtils {
+
+    public static final String KEY_ITEM_KEY = "key";
+    public static final String KEY_ITEM_APPLE = "apple";
+    public static final String KEY_ITEM_PUMPKIN = "pumpkin";
 
     public static List<ItemData> getItems(Context context, String mapKey) {
         List<ItemData> items = new ArrayList<>();
@@ -32,7 +37,7 @@ public class ItemUtils {
         List<CharacterData> characters = MapUtils.getCharacters(context, mapKey);
         for (int i = 0; i < map.length; i++) {
             for (int i2 = 0; i2 < map[i].length; i2++) {
-                int appleCount = 0;
+                int appleCount = 0, pumpkinCount = 0;
                 int[][] scene = map[i][i2];
 
                 SceneryData scenery = mapList.get(i).getScenery(i2);
@@ -44,6 +49,11 @@ public class ItemUtils {
                         if (appleCount < 2 && map[i][i2][i3][i4] == MapUtils.TILE_TREE && random.nextInt(4) == 0) {
                             items.add(new AppleItemData(context, position));
                             appleCount++;
+                        }
+
+                        if (pumpkinCount < 2 && map[i][i2][i3][i4] == MapUtils.TILE_GRASS_THICK && random.nextInt(4) == 0) {
+                            items.add(new PumpkinItemData(context, position));
+                            pumpkinCount++;
                         }
                     }
                 }
@@ -64,9 +74,18 @@ public class ItemUtils {
 
     public static List<ItemData> getPickedUpItems(Context context) {
         List<ItemData> items = new ArrayList<>();
-        items.addAll(getItemsOf(context, MapUtils.KEY_ITEM_APPLE));
+        items.addAll(getItemsOf(context, KEY_ITEM_APPLE));
 
         return items;
+    }
+
+    public static int getFreeVolume(Context context) {
+        int volume = 100;
+        for (ItemData item : getHoldingItems(context)) {
+            volume -= item.getVolume();
+        }
+
+        return volume;
     }
 
     private static List<ItemData> getItemsOf(Context context, String itemKey) {
@@ -76,7 +95,7 @@ public class ItemUtils {
         int pickedUp = prefs.getInt(ItemData.KEY_PICKED_UP + itemKey, 0), holding = prefs.getInt(ItemData.KEY_HOLDING + itemKey, 0), useless = prefs.getInt(ItemData.KEY_USELESS + itemKey, 0);
         for (int i = 0; i < pickedUp; i++) {
             switch (itemKey) {
-                case MapUtils.KEY_ITEM_APPLE:
+                case KEY_ITEM_APPLE:
                     items.add(new AppleItemData(context, true, i < holding, i < useless));
                     break;
             }
