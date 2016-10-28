@@ -7,7 +7,7 @@ import android.preference.PreferenceManager;
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
 import james.monochrome.data.tiles.TileData;
-import james.monochrome.utils.MapUtils;
+import james.monochrome.utils.ItemUtils;
 import james.monochrome.utils.StaticUtils;
 
 public abstract class ItemData extends TileData {
@@ -53,7 +53,7 @@ public abstract class ItemData extends TileData {
 
     abstract String getId();
 
-    abstract String getKey();
+    public abstract String getKey();
 
     abstract boolean hasConstantPosition();
 
@@ -77,7 +77,7 @@ public abstract class ItemData extends TileData {
                     .putBoolean(KEY_PICKED_UP + getKey() + getId(), true)
                     .putBoolean(KEY_HOLDING + getKey() + getId(), true)
                     .apply();
-        } else MapUtils.addToHolding(getContext(), getKey());
+        } else ItemUtils.addToHolding(getContext(), getKey());
 
         hasPickedUp = true;
         isHolding = true;
@@ -89,7 +89,7 @@ public abstract class ItemData extends TileData {
     public void moveToChest() {
         if (hasConstantPosition())
             PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean(KEY_HOLDING + getKey() + getId(), false).apply();
-        else MapUtils.moveToChest(getContext(), getKey());
+        else ItemUtils.moveToChest(getContext(), getKey());
 
         isHolding = false;
     }
@@ -97,7 +97,7 @@ public abstract class ItemData extends TileData {
     public void moveToHolding() {
         if (hasConstantPosition())
             PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean(KEY_HOLDING + getKey() + getId(), true).apply();
-        else MapUtils.moveToHolding(getContext(), getKey());
+        else ItemUtils.moveToHolding(getContext(), getKey());
 
         isHolding = true;
     }
@@ -105,6 +105,7 @@ public abstract class ItemData extends TileData {
     public void setUseless() {
         if (hasConstantPosition())
             PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean(KEY_USELESS + getKey() + getId(), true).apply();
+        else ItemUtils.setUseless(getContext(), getKey());
 
         isUseless = true;
     }

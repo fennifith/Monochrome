@@ -6,7 +6,6 @@ import android.preference.PreferenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
@@ -14,9 +13,7 @@ import james.monochrome.data.RowData;
 import james.monochrome.data.SceneryData;
 import james.monochrome.data.characters.CharacterData;
 import james.monochrome.data.characters.QuestGiverCharacterData;
-import james.monochrome.data.items.AppleItemData;
 import james.monochrome.data.items.ItemData;
-import james.monochrome.data.items.KeyItemData;
 import james.monochrome.data.tiles.BushTileData;
 import james.monochrome.data.tiles.CheckpointTileData;
 import james.monochrome.data.tiles.ChestTileData;
@@ -36,36 +33,38 @@ public class MapUtils {
     public static final String KEY_SCENE_Y = "posY";
     public static final String KEY_CHARACTER_X = "charX";
     public static final String KEY_CHARACTER_Y = "charY";
+
     public static final String KEY_MAP = "map";
     public static final String KEY_MAP_DEFAULT = "default";
     public static final String KEY_MAP_HOUSE = "house";
+
     public static final String KEY_ITEM_KEY = "key";
     public static final String KEY_ITEM_APPLE = "apple";
+    public static final String KEY_ITEM_PUMPKIN = "pumpkin";
 
-    private static final int
-            TILE_EMPTY = 0,
-            TILE_GRASS = 6,
-            TILE_GRASS_THICK = 7,
-            TILE_WOOD = 22,
-            TILE_BUSH = 1,
-            TILE_TREE = 2,
-            TILE_HOUSE = 3,
-            TILE_SIGN = 5,
-            TILE_CHECKPOINT = 8,
-            TILE_WALL = 23,
-            TILE_WALL_TOP = 9,
-            TILE_WALL_BOTTOM = 10,
-            TILE_WALL_LEFT = 11,
-            TILE_WALL_RIGHT = 12,
-            TILE_WALL_CORNER_TOP_RIGHT = 13,
-            TILE_WALL_CORNER_BOTTOM_RIGHT = 14,
-            TILE_WALL_CORNER_TOP_LEFT = 15,
-            TILE_WALL_CORNER_BOTTOM_LEFT = 16,
-            TILE_WALL_DOOR_TOP = 17,
-            TILE_WALL_DOOR_BOTTOM = 18,
-            TILE_WALL_DOOR_LEFT = 19,
-            TILE_WALL_DOOR_RIGHT = 20,
-            TILE_CHEST = 21;
+    private static final int TILE_EMPTY = 0;
+    private static final int TILE_GRASS = 6;
+    private static final int TILE_GRASS_THICK = 7;
+    private static final int TILE_WOOD = 22;
+    private static final int TILE_BUSH = 1;
+    static final int TILE_TREE = 2;
+    private static final int TILE_HOUSE = 3;
+    private static final int TILE_SIGN = 5;
+    private static final int TILE_CHECKPOINT = 8;
+    private static final int TILE_WALL = 23;
+    private static final int TILE_WALL_TOP = 9;
+    private static final int TILE_WALL_BOTTOM = 10;
+    private static final int TILE_WALL_LEFT = 11;
+    private static final int TILE_WALL_RIGHT = 12;
+    private static final int TILE_WALL_CORNER_TOP_RIGHT = 13;
+    private static final int TILE_WALL_CORNER_BOTTOM_RIGHT = 14;
+    private static final int TILE_WALL_CORNER_TOP_LEFT = 15;
+    private static final int TILE_WALL_CORNER_BOTTOM_LEFT = 16;
+    private static final int TILE_WALL_DOOR_TOP = 17;
+    private static final int TILE_WALL_DOOR_BOTTOM = 18;
+    private static final int TILE_WALL_DOOR_LEFT = 19;
+    private static final int TILE_WALL_DOOR_RIGHT = 20;
+    private static final int TILE_CHEST = 21;
 
     private static final int[][][][] MAP_DEFAULT = new int[][][][]{
             new int[][][]{
@@ -1414,7 +1413,7 @@ public class MapUtils {
         List<CharacterData> characters = new ArrayList<>();
         switch (mapKey) {
             case KEY_MAP_HOUSE:
-                characters.add(new QuestGiverCharacterData(context, new PositionData(mapKey, 0, 0, 4, 3)));
+                characters.add(new QuestGiverCharacterData(context, new PositionData(mapKey, 0, 0, 4, 3), QuestUtils.getNextQuest(context)));
                 break;
         }
         return characters;
@@ -1441,78 +1440,6 @@ public class MapUtils {
         }
 
         return "";
-    }
-
-    public static List<ItemData> getItems(Context context, String mapKey) {
-        List<ItemData> items = new ArrayList<>();
-
-        items.add(new KeyItemData(context, new PositionData(KEY_MAP_DEFAULT, 0, 0, 2, 5)));
-
-        items.addAll(getItemsOf(context, KEY_ITEM_APPLE));
-
-        Random random = new Random();
-
-        int[][][][] map = getMap(context, mapKey);
-        List<RowData> mapList = getMapList(context, mapKey);
-        List<CharacterData> characters = getCharacters(context, mapKey);
-        for (int i = 0; i < map.length; i++) {
-            for (int i2 = 0; i2 < map[i].length; i2++) {
-                int appleCount = 0;
-                int[][] scene = map[i][i2];
-
-                SceneryData scenery = mapList.get(i).getScenery(i2);
-
-                for (int i3 = 0; i3 < scene.length; i3++) {
-                    for (int i4 = 0; i4 < scene[i3].length; i4++) {
-                        PositionData position = getEmptyPosition(scenery, characters, items, new PositionData(mapKey, i2, i, i4, i3));
-
-                        if (appleCount < 2 && map[i][i2][i3][i4] == TILE_TREE && random.nextInt(4) == 0) {
-                            items.add(new AppleItemData(context, position));
-                            appleCount++;
-                        }
-                    }
-                }
-            }
-        }
-
-        return items;
-    }
-
-    private static List<ItemData> getItemsOf(Context context, String itemKey) {
-        List<ItemData> items = new ArrayList<>();
-
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        int pickedUp = prefs.getInt(ItemData.KEY_PICKED_UP + itemKey, 0), holding = prefs.getInt(ItemData.KEY_HOLDING + itemKey, 0), useless = prefs.getInt(ItemData.KEY_USELESS + itemKey, 0);
-        for (int i = 0; i < pickedUp; i++) {
-            switch (itemKey) {
-                case KEY_ITEM_APPLE:
-                    items.add(new AppleItemData(context, true, i < holding, i < useless));
-                    break;
-            }
-        }
-
-        return items;
-    }
-
-    public static void addToHolding(Context context, String itemKey) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        prefs.edit().putInt(ItemData.KEY_PICKED_UP + itemKey, prefs.getInt(ItemData.KEY_PICKED_UP + itemKey, 0) + 1).apply();
-        prefs.edit().putInt(ItemData.KEY_HOLDING + itemKey, prefs.getInt(ItemData.KEY_HOLDING + itemKey, 0) + 1).apply();
-    }
-
-    public static void moveToChest(Context context, String itemKey) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        prefs.edit().putInt(ItemData.KEY_HOLDING + itemKey, prefs.getInt(ItemData.KEY_HOLDING + itemKey, 0) - 1).apply();
-    }
-
-    public static void moveToHolding(Context context, String itemKey) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        prefs.edit().putInt(ItemData.KEY_HOLDING + itemKey, prefs.getInt(ItemData.KEY_HOLDING + itemKey, 0) + 1).apply();
-    }
-
-    public static void setUseless(Context context, String itemKey) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        prefs.edit().putInt(ItemData.KEY_USELESS + itemKey, prefs.getInt(ItemData.KEY_USELESS + itemKey, 0) + 1).apply();
     }
 
     public static PositionData getEmptyPosition(SceneryData scenery, List<CharacterData> characters, List<ItemData> items, PositionData startPosition) {

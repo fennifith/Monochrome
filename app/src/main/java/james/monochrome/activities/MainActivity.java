@@ -26,6 +26,7 @@ import james.monochrome.data.tiles.TileData;
 import james.monochrome.dialogs.MapDialog;
 import james.monochrome.dialogs.ProfileDialog;
 import james.monochrome.dialogs.StartScreenDialog;
+import james.monochrome.utils.ItemUtils;
 import james.monochrome.utils.MapUtils;
 import james.monochrome.utils.StaticUtils;
 import james.monochrome.views.BackgroundView;
@@ -195,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         }
 
         characters = MapUtils.getCharacters(this, mapKey);
-        items = MapUtils.getItems(this, mapKey);
+        items = ItemUtils.getItems(this, mapKey);
 
         for (CharacterData character : characters) {
             character.setOnTileChangeListener(this);

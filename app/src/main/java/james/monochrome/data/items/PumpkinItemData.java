@@ -7,15 +7,15 @@ import james.monochrome.data.PositionData;
 import james.monochrome.utils.MapUtils;
 import james.monochrome.utils.TileUtils;
 
-public class KeyItemData extends ItemData {
+public class PumpkinItemData extends ItemData {
 
-    public KeyItemData(Context context, PositionData position) {
-        super(context, TileUtils.TILE_KEY, position);
+    public PumpkinItemData(Context context, PositionData position) {
+        super(context, TileUtils.TILE_PUMPKIN, position);
     }
 
     @Override
     public String getName() {
-        return getContext().getString(R.string.item_key);
+        return getContext().getString(R.string.item_pumpkin);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class KeyItemData extends ItemData {
 
     @Override
     public String getKey() {
-        return MapUtils.KEY_ITEM_KEY;
+        return MapUtils.KEY_ITEM_PUMPKIN;
     }
 
     @Override

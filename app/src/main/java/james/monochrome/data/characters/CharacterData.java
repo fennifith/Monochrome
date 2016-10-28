@@ -53,12 +53,28 @@ public abstract class CharacterData extends TileData {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             String message = getCancelledMessage();
-                            if (message != null) StaticUtils.makeToast(getContext(), message);
+                            if (message != null)
+                                StaticUtils.makeToast(getContext(), message).show();
                             dialog.dismiss();
                         }
                     }
             ).show();
-        } else StaticUtils.makeToast(getContext(), getMessage()).show();
+        } else {
+            StaticUtils.makeDialog(
+                    getContext(),
+                    getTitle(),
+                    getMessage(),
+                    getContext().getString(R.string.action_ok),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    },
+                    null,
+                    null
+            ).show();
+        }
     }
 
     @Override

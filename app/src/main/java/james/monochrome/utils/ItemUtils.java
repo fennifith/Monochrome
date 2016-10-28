@@ -1,0 +1,109 @@
+package james.monochrome.utils;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import james.monochrome.data.PositionData;
+import james.monochrome.data.RowData;
+import james.monochrome.data.SceneryData;
+import james.monochrome.data.characters.CharacterData;
+import james.monochrome.data.items.AppleItemData;
+import james.monochrome.data.items.ItemData;
+import james.monochrome.data.items.KeyItemData;
+
+public class ItemUtils {
+
+    public static List<ItemData> getItems(Context context, String mapKey) {
+        List<ItemData> items = new ArrayList<>();
+
+        items.add(new KeyItemData(context, new PositionData(MapUtils.KEY_MAP_DEFAULT, 0, 0, 2, 5)));
+
+        items.addAll(getPickedUpItems(context));
+
+        Random random = new Random();
+
+        int[][][][] map = MapUtils.getMap(context, mapKey);
+        List<RowData> mapList = MapUtils.getMapList(context, mapKey);
+        List<CharacterData> characters = MapUtils.getCharacters(context, mapKey);
+        for (int i = 0; i < map.length; i++) {
+            for (int i2 = 0; i2 < map[i].length; i2++) {
+                int appleCount = 0;
+                int[][] scene = map[i][i2];
+
+                SceneryData scenery = mapList.get(i).getScenery(i2);
+
+                for (int i3 = 0; i3 < scene.length; i3++) {
+                    for (int i4 = 0; i4 < scene[i3].length; i4++) {
+                        PositionData position = MapUtils.getEmptyPosition(scenery, characters, items, new PositionData(mapKey, i2, i, i4, i3));
+
+                        if (appleCount < 2 && map[i][i2][i3][i4] == MapUtils.TILE_TREE && random.nextInt(4) == 0) {
+                            items.add(new AppleItemData(context, position));
+                            appleCount++;
+                        }
+                    }
+                }
+            }
+        }
+
+        return items;
+    }
+
+    public static List<ItemData> getHoldingItems(Context context) {
+        List<ItemData> items = getPickedUpItems(context);
+        for (ItemData item : items) {
+            if (!item.isHolding()) items.remove(item);
+        }
+
+        return items;
+    }
+
+    public static List<ItemData> getPickedUpItems(Context context) {
+        List<ItemData> items = new ArrayList<>();
+        items.addAll(getItemsOf(context, MapUtils.KEY_ITEM_APPLE));
+
+        return items;
+    }
+
+    private static List<ItemData> getItemsOf(Context context, String itemKey) {
+        List<ItemData> items = new ArrayList<>();
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        int pickedUp = prefs.getInt(ItemData.KEY_PICKED_UP + itemKey, 0), holding = prefs.getInt(ItemData.KEY_HOLDING + itemKey, 0), useless = prefs.getInt(ItemData.KEY_USELESS + itemKey, 0);
+        for (int i = 0; i < pickedUp; i++) {
+            switch (itemKey) {
+                case MapUtils.KEY_ITEM_APPLE:
+                    items.add(new AppleItemData(context, true, i < holding, i < useless));
+                    break;
+            }
+        }
+
+        return items;
+    }
+
+    public static void addToHolding(Context context, String itemKey) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs.edit().putInt(ItemData.KEY_PICKED_UP + itemKey, prefs.getInt(ItemData.KEY_PICKED_UP + itemKey, 0) + 1).apply();
+        prefs.edit().putInt(ItemData.KEY_HOLDING + itemKey, prefs.getInt(ItemData.KEY_HOLDING + itemKey, 0) + 1).apply();
+    }
+
+    public static void moveToChest(Context context, String itemKey) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs.edit().putInt(ItemData.KEY_HOLDING + itemKey, prefs.getInt(ItemData.KEY_HOLDING + itemKey, 0) - 1).apply();
+    }
+
+    public static void moveToHolding(Context context, String itemKey) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs.edit().putInt(ItemData.KEY_HOLDING + itemKey, prefs.getInt(ItemData.KEY_HOLDING + itemKey, 0) + 1).apply();
+    }
+
+    public static void setUseless(Context context, String itemKey) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs.edit().putInt(ItemData.KEY_USELESS + itemKey, prefs.getInt(ItemData.KEY_USELESS + itemKey, 0) + 1).apply();
+    }
+
+}

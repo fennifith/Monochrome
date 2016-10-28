@@ -28,7 +28,7 @@ public class AppleItemData extends ItemData {
     }
 
     @Override
-    String getKey() {
+    public String getKey() {
         return MapUtils.KEY_ITEM_APPLE;
     }
 

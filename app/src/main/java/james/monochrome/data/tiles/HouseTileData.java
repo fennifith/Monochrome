@@ -51,7 +51,7 @@ public class HouseTileData extends TileData {
                     }
                 }).show();
             } else {
-                StaticUtils.makeToast(getContext(), "The house is locked.").show();
+                StaticUtils.makeToast(getContext(), getContext().getString(R.string.msg_locked_house)).show();
             }
         } else {
             setTile(TileUtils.TILE_HOUSE_OPEN);

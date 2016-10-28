@@ -11,11 +11,13 @@
     <string name="action_no">No</string>
     <string name="action_house">House</string>
     <string name="action_door">Door</string>
-    <string name="action_quest">Quest</string>
+    <string name="action_quest">Quest: %1$s</string>
+    <string name="action_quest_accepted">Quest accepted: %1$s</string>
     <string name="action_ok">OK</string>
     <string name="action_use_item">Use the %1$s?</string>
 
     <string name="item_apple">Apple</string>
+    <string name="item_pumpkin">Pumpkin</string>
     <string name="item_key">Key</string>
 
     <string name="msg_tutorial">Well look at you, fluffy puff ball. Or is it puffy fluff ball? I can\'t remember. You should probably go and read some of those signs.</string>
@@ -29,7 +31,13 @@
     <string name="msg_save">Would you like to save the game?</string>
     <string name="msg_enter_house">Enter the house?</string>
     <string name="msg_door">Go through the door?</string>
-    <string name="msg_unlock_house">Do you want to use the key to unlock this house? This action cannot be undone.</string>
-
+    <string name="msg_locked_house">The house is locked.</string>
+    <string name="msg_unlock_house">Do you want to use a key to unlock this house? This action cannot be undone.</string>
     <string name="msg_picked_up">You picked up a %1$s</string>
+    <string name="msg_quest_incomplete">Please come back when you have finished the quest.</string>
+    <string name="msg_no_quests">It seems you\'ve played all the quests currently available. Check back later for more!</string>
+
+    <string name="quest_title_apples">I Really Like Apples</string>
+    <string name="quest_desc_apples">I want to eat a lot of apples. Could you go around and pick up about 10 apples for me?</string>
+    <string name="quest_complete_apples">Thanks for getting me apples! Om nom nom nom nom.</string>
 </resources>
