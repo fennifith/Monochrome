@@ -1,6 +1,7 @@
 package james.monochrome.data.tiles;
 
 import android.content.Context;
+import android.view.MotionEvent;
 
 import james.monochrome.Monochrome;
 import james.monochrome.data.PositionData;
@@ -50,7 +51,7 @@ public abstract class TileData {
         return position;
     }
 
-    public abstract void onTouch();
+    public abstract void onTouch(MotionEvent event);
 
     public abstract void onEnter();
 

@@ -1,10 +1,10 @@
 package james.monochrome.data.tiles;
 
 import android.content.Context;
-import android.content.DialogInterface;
+import android.view.MotionEvent;
 
+import james.monochrome.Monochrome;
 import james.monochrome.data.PositionData;
-import james.monochrome.dialogs.ChestDialog;
 import james.monochrome.utils.TileUtils;
 
 public class ChestTileData extends TileData {
@@ -14,17 +14,9 @@ public class ChestTileData extends TileData {
     }
 
     @Override
-    public void onTouch() {
+    public void onTouch(MotionEvent event) {
         setTile(TileUtils.TILE_CHEST_OPEN);
-
-        ChestDialog dialog = new ChestDialog(getContext());
-        dialog.addOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                setTile(TileUtils.TILE_CHEST);
-            }
-        });
-        dialog.show();
+        ((Monochrome) getContext().getApplicationContext()).onOpenChest(event);
     }
 
     @Override

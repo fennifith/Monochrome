@@ -3,6 +3,7 @@ package james.monochrome.data.tiles;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.preference.PreferenceManager;
+import android.view.MotionEvent;
 
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
@@ -31,7 +32,7 @@ public class HouseTileData extends TileData {
     }
 
     @Override
-    public void onTouch() {
+    public void onTouch(MotionEvent event) {
         if (isLocked) {
             for (ItemData item : ItemUtils.getHoldingItems(getContext())) {
                 if (item instanceof KeyItemData && !item.isUseless()) {
@@ -53,31 +54,7 @@ public class HouseTileData extends TileData {
                 }).show();
             } else
                 StaticUtils.makeToast(getContext(), getContext().getString(R.string.msg_locked_house)).show();
-        } else {
-            setTile(TileUtils.TILE_HOUSE_OPEN);
-
-            StaticUtils.makeDialog(
-                    getContext(),
-                    getContext().getString(R.string.action_house),
-                    getContext().getString(R.string.msg_enter_house),
-                    getContext().getString(R.string.action_yes),
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            setMap(MapUtils.KEY_MAP_HOUSE);
-                            dialog.dismiss();
-                        }
-                    },
-                    getContext().getString(R.string.action_no),
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            setTile(TileUtils.TILE_HOUSE);
-                            dialog.dismiss();
-                        }
-                    }
-            ).show();
-        }
+        } else setMap(MapUtils.KEY_MAP_HOUSE);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package james.monochrome.data.tiles;
 
 import android.content.Context;
+import android.view.MotionEvent;
 
 import james.monochrome.data.PositionData;
 import james.monochrome.utils.TileUtils;
@@ -12,7 +13,7 @@ public class TreeTileData extends TileData {
     }
 
     @Override
-    public void onTouch() {
+    public void onTouch(MotionEvent event) {
     }
 
     @Override

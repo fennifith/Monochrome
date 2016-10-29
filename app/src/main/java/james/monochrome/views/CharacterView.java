@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.HapticFeedbackConstants;
+import android.view.MotionEvent;
 
 import java.util.List;
 
@@ -91,7 +92,7 @@ public class CharacterView extends SquareImageView {
         return new PositionData(mapKey, (scenery.getX() * 10) + characterX, (scenery.getY() * 10) + characterY);
     }
 
-    public void moveUp() {
+    public void moveUp(MotionEvent event) {
         List<TileData> tiles = MapUtils.getTilesAt(mapKey, scenery, characters, items, characterX, characterY - 1);
 
         if (MapUtils.isValidPosition(mapKey, scenery, characters, items, characterX, characterY - 1)) {
@@ -105,7 +106,7 @@ public class CharacterView extends SquareImageView {
         } else {
             performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
             for (TileData tile : tiles) {
-                tile.onTouch();
+                tile.onTouch(event);
             }
         }
 
@@ -116,7 +117,7 @@ public class CharacterView extends SquareImageView {
         handler.postDelayed(runnable, 3000);
     }
 
-    public void moveDown() {
+    public void moveDown(MotionEvent event) {
         List<TileData> tiles = MapUtils.getTilesAt(mapKey, scenery, characters, items, characterX, characterY + 1);
 
         if (MapUtils.isValidPosition(mapKey, scenery, characters, items, characterX, characterY + 1)) {
@@ -130,7 +131,7 @@ public class CharacterView extends SquareImageView {
         } else {
             performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
             for (TileData tile : tiles) {
-                tile.onTouch();
+                tile.onTouch(event);
             }
         }
 
@@ -141,7 +142,7 @@ public class CharacterView extends SquareImageView {
         handler.postDelayed(runnable, 3000);
     }
 
-    public void moveLeft() {
+    public void moveLeft(MotionEvent event) {
         List<TileData> tiles = MapUtils.getTilesAt(mapKey, scenery, characters, items, characterX - 1, characterY);
 
         if (MapUtils.isValidPosition(mapKey, scenery, characters, items, characterX - 1, characterY)) {
@@ -155,7 +156,7 @@ public class CharacterView extends SquareImageView {
         } else {
             performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
             for (TileData tile : tiles) {
-                tile.onTouch();
+                tile.onTouch(event);
             }
         }
 
@@ -166,7 +167,7 @@ public class CharacterView extends SquareImageView {
         handler.postDelayed(runnable, 3000);
     }
 
-    public void moveRight() {
+    public void moveRight(MotionEvent event) {
         List<TileData> tiles = MapUtils.getTilesAt(mapKey, scenery, characters, items, characterX + 1, characterY);
 
         if (MapUtils.isValidPosition(mapKey, scenery, characters, items, characterX + 1, characterY)) {
@@ -180,7 +181,7 @@ public class CharacterView extends SquareImageView {
         } else {
             performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
             for (TileData tile : tiles) {
-                tile.onTouch();
+                tile.onTouch(event);
             }
         }
 

@@ -19,10 +19,10 @@ import android.widget.TextView;
 
 import com.klinker.android.peekview.PeekViewActivity;
 import com.klinker.android.peekview.builder.Peek;
+import com.klinker.android.peekview.callback.OnPeek;
 import com.klinker.android.peekview.callback.SimpleOnPeek;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +39,7 @@ import james.monochrome.dialogs.MapDialog;
 import james.monochrome.dialogs.StartScreenDialog;
 import james.monochrome.utils.ItemUtils;
 import james.monochrome.utils.MapUtils;
+import james.monochrome.utils.OnClickTouchListener;
 import james.monochrome.utils.StaticUtils;
 import james.monochrome.views.BackgroundView;
 import james.monochrome.views.CharacterView;
@@ -115,41 +116,30 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
             }
         });
 
-        itemsView.setOnTouchListener(new View.OnTouchListener() {
-            private long time;
-
+        itemsView.setOnTouchListener(new OnClickTouchListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        time = Calendar.getInstance().getTimeInMillis();
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        if (Calendar.getInstance().getTimeInMillis() - time < 200) {
-                            Peek.into(R.layout.dialog_chest, new SimpleOnPeek() {
-                                @Override
-                                public void onInflated(View rootView) {
-                                    rootView.findViewById(R.id.chestLayout).setVisibility(View.GONE);
+            public void onClick(View view, MotionEvent event) {
+                Peek.into(R.layout.dialog_chest, new SimpleOnPeek() {
+                    @Override
+                    public void onInflated(View rootView) {
+                        rootView.findViewById(R.id.chestLayout).setVisibility(View.GONE);
 
-                                    Typeface typeface = Typeface.createFromAsset(MainActivity.this.getAssets(), "VT323-Regular.ttf");
-                                    ((TextView) rootView.findViewById(R.id.titleHolding)).setTypeface(typeface);
-                                    ((TextView) rootView.findViewById(R.id.titleChest)).setTypeface(typeface);
+                        Typeface typeface = Typeface.createFromAsset(MainActivity.this.getAssets(), "VT323-Regular.ttf");
+                        ((TextView) rootView.findViewById(R.id.titleHolding)).setTypeface(typeface);
+                        ((TextView) rootView.findViewById(R.id.titleChest)).setTypeface(typeface);
 
-                                    RecyclerView recycler = (RecyclerView) rootView.findViewById(R.id.holding);
-                                    recycler.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
+                        RecyclerView recycler = (RecyclerView) rootView.findViewById(R.id.holding);
+                        recycler.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
 
-                                    List<ItemData> holdingItems = new ArrayList<>();
-                                    List<ItemData> items = ItemUtils.getHoldingItems(MainActivity.this);
-                                    for (ItemData item : items) {
-                                        if (!item.isUseless()) holdingItems.add(item);
-                                    }
-
-                                    recycler.setAdapter(new ItemAdapter(MainActivity.this, holdingItems, null));
-                                }
-                            }).with(StaticUtils.getPeekViewOptions(MainActivity.this)).show(MainActivity.this, event);
+                        List<ItemData> holdingItems = new ArrayList<>();
+                        List<ItemData> items = ItemUtils.getHoldingItems(MainActivity.this);
+                        for (ItemData item : items) {
+                            if (!item.isUseless()) holdingItems.add(item);
                         }
-                }
-                return true;
+
+                        recycler.setAdapter(new ItemAdapter(MainActivity.this, holdingItems, null));
+                    }
+                }).with(StaticUtils.getPeekViewOptions(MainActivity.this)).show(MainActivity.this, event);
             }
         });
 
@@ -163,31 +153,31 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
         if (prefs.getBoolean("dpad", false))
             findViewById(R.id.buttonLayout).setVisibility(View.VISIBLE);
 
-        findViewById(R.id.up).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.up).setOnTouchListener(new OnClickTouchListener() {
             @Override
-            public void onClick(View v) {
-                moveUp();
+            public void onClick(View view, MotionEvent event) {
+                moveUp(event);
             }
         });
 
-        findViewById(R.id.down).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.down).setOnTouchListener(new OnClickTouchListener() {
             @Override
-            public void onClick(View v) {
-                moveDown();
+            public void onClick(View view, MotionEvent event) {
+                moveDown(event);
             }
         });
 
-        findViewById(R.id.left).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.left).setOnTouchListener(new OnClickTouchListener() {
             @Override
-            public void onClick(View v) {
-                moveLeft();
+            public void onClick(View view, MotionEvent event) {
+                moveLeft(event);
             }
         });
 
-        findViewById(R.id.right).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.right).setOnTouchListener(new OnClickTouchListener() {
             @Override
-            public void onClick(View v) {
-                moveRight();
+            public void onClick(View view, MotionEvent event) {
+                moveRight(event);
             }
         });
 
@@ -277,43 +267,43 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
         scenery.setScenery(mapKey, data, items);
     }
 
-    public void moveUp() {
+    public void moveUp(MotionEvent event) {
         if (character.getCharacterY() == 0 && sceneY > 0) {
             sceneY -= 1;
 
             setScenery(map.get(sceneY).getScenery(sceneX));
             character.setCharacterPosition(character.getCharacterX(), 9);
-        } else character.moveUp();
+        } else character.moveUp(event);
         mapPositions.put(mapKey, character.getPosition());
     }
 
-    public void moveDown() {
+    public void moveDown(MotionEvent event) {
         if (character.getCharacterY() == 9 && sceneY < map.size() - 1) {
             sceneY += 1;
 
             setScenery(map.get(sceneY).getScenery(sceneX));
             character.setCharacterPosition(character.getCharacterX(), 0);
-        } else character.moveDown();
+        } else character.moveDown(event);
         mapPositions.put(mapKey, character.getPosition());
     }
 
-    public void moveLeft() {
+    public void moveLeft(MotionEvent event) {
         if (character.getCharacterX() == 0 && sceneX > 0) {
             sceneX -= 1;
 
             setScenery(map.get(sceneY).getScenery(sceneX));
             character.setCharacterPosition(9, character.getCharacterY());
-        } else character.moveLeft();
+        } else character.moveLeft(event);
         mapPositions.put(mapKey, character.getPosition());
     }
 
-    public void moveRight() {
+    public void moveRight(MotionEvent event) {
         if (character.getCharacterX() == 9 && sceneX < map.get(sceneY).getRow().size() - 1) {
             sceneX += 1;
 
             setScenery(map.get(sceneY).getScenery(sceneX));
             character.setCharacterPosition(0, character.getCharacterY());
-        } else character.moveRight();
+        } else character.moveRight(event);
         mapPositions.put(mapKey, character.getPosition());
     }
 
@@ -330,12 +320,12 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
                 float dy = downY - event.getY();
 
                 if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 100) {
-                    if (dx < 0) moveRight();
-                    else moveLeft();
+                    if (dx < 0) moveRight(event);
+                    else moveLeft(event);
                     prefs.edit().putBoolean(KEY_SWIPED, true).apply();
                 } else if (Math.abs(dy) > 100) {
-                    if (dy < 0) moveDown();
-                    else moveUp();
+                    if (dy < 0) moveDown(event);
+                    else moveUp(event);
                     prefs.edit().putBoolean(KEY_SWIPED, true).apply();
                 } else if (!prefs.getBoolean(KEY_SWIPED, false))
                     StaticUtils.makeToast(this, getString(R.string.msg_tutorial_move)).show();
@@ -385,8 +375,101 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
     }
 
     @Override
-    public void onOpenChest() {
+    public void onOpenChest(MotionEvent event) {
+        Peek.into(R.layout.dialog_chest, new OnPeek() {
 
+            private RecyclerView holding, chest;
+            private ItemAdapter holdingAdapter, chestAdapter;
+
+            private Monochrome.OnSomethingHappenedListener listener;
+
+            @Override
+            public void onInflated(View rootView) {
+                Typeface typeface = Typeface.createFromAsset(MainActivity.this.getAssets(), "VT323-Regular.ttf");
+                ((TextView) rootView.findViewById(R.id.titleHolding)).setTypeface(typeface);
+                ((TextView) rootView.findViewById(R.id.titleChest)).setTypeface(typeface);
+
+                holding = (RecyclerView) rootView.findViewById(R.id.holding);
+                holding.setLayoutManager(new GridLayoutManager(MainActivity.this, 1));
+
+                List<ItemData> holdingItems = new ArrayList<>();
+                for (ItemData item : ItemUtils.getHoldingItems(MainActivity.this)) {
+                    if (!item.isUseless()) holdingItems.add(item);
+                }
+
+                holdingAdapter = new ItemAdapter(MainActivity.this, holdingItems, false);
+                holding.setAdapter(holdingAdapter);
+
+                chest = (RecyclerView) rootView.findViewById(R.id.chest);
+                chest.setLayoutManager(new GridLayoutManager(MainActivity.this, 1));
+
+                List<ItemData> chestItems = new ArrayList<>();
+                for (ItemData item : ItemUtils.getChestItems(MainActivity.this)) {
+                    if (!item.isUseless()) chestItems.add(item);
+                }
+
+                chestAdapter = new ItemAdapter(MainActivity.this, chestItems, true);
+                chest.setAdapter(chestAdapter);
+
+                listener = new Monochrome.OnSomethingHappenedListener() {
+                    @Override
+                    public void onTileChange(TileData tile) {
+                    }
+
+                    @Override
+                    public void onRequestTileKeyChange(TileData tile, int tileKey) {
+                    }
+
+                    @Override
+                    public void onRequestMapChange(String mapKey) {
+                    }
+
+                    @Override
+                    public void onRequestPositionSave() {
+                    }
+
+                    @Override
+                    public void onRequestShake() {
+                    }
+
+                    @Override
+                    public void onOpenChest(MotionEvent event) {
+                    }
+
+                    @Override
+                    public void onItemMoved(ItemData item) {
+                        if (holding != null && chest != null) {
+                            List<ItemData> holdingItems = new ArrayList<>();
+                            for (ItemData holdingItem : ItemUtils.getHoldingItems(MainActivity.this)) {
+                                if (!holdingItem.isUseless()) holdingItems.add(holdingItem);
+                            }
+
+                            holdingAdapter = new ItemAdapter(MainActivity.this, holdingItems, false);
+                            holding.setAdapter(holdingAdapter);
+
+                            List<ItemData> chestItems = new ArrayList<>();
+                            for (ItemData chestItem : ItemUtils.getChestItems(MainActivity.this)) {
+                                if (!chestItem.isUseless()) chestItems.add(chestItem);
+                            }
+
+                            chestAdapter = new ItemAdapter(MainActivity.this, chestItems, true);
+                            chest.setAdapter(chestAdapter);
+                        }
+                    }
+                };
+
+                monochrome.addListener(listener);
+            }
+
+            @Override
+            public void shown() {
+            }
+
+            @Override
+            public void dismissed() {
+                if (listener != null) monochrome.removeListener(listener);
+            }
+        }).with(StaticUtils.getPeekViewOptions(MainActivity.this).setFullScreenPeek(true)).show(MainActivity.this, event);
     }
 
     @Override

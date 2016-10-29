@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
+import android.view.MotionEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +82,12 @@ public class Monochrome extends Application {
         }
     }
 
+    public void onOpenChest(MotionEvent event) {
+        for (OnSomethingHappenedListener listener : listeners) {
+            listener.onOpenChest(event);
+        }
+    }
+
     public void onItemMoved(ItemData item) {
         for (OnSomethingHappenedListener listener : listeners) {
             listener.onItemMoved(item);
@@ -98,7 +105,7 @@ public class Monochrome extends Application {
 
         void onRequestShake();
 
-        void onOpenChest();
+        void onOpenChest(MotionEvent event);
 
         void onItemMoved(ItemData item);
     }
