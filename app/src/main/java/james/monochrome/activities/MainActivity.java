@@ -93,7 +93,7 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
         pauseView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new StartScreenDialog(MainActivity.this).show();
+                new StartScreenDialog(MainActivity.this, getBlurryImage()).show();
             }
         });
 
@@ -113,14 +113,14 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
         itemsView.setOnTouchListener(new OnClickTouchListener() {
             @Override
             public void onClick(View view, MotionEvent event) {
-                new ItemsDialog(MainActivity.this, Blurry.with(MainActivity.this).capture(findViewById(android.R.id.content))).show();
+                new ItemsDialog(MainActivity.this, getBlurryImage()).show();
             }
         });
 
         mapView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new MapDialog(MainActivity.this, mapKey, character.getPosition(), Blurry.with(MainActivity.this).capture(findViewById(android.R.id.content))).show();
+                new MapDialog(MainActivity.this, mapKey, character.getPosition(), getBlurryImage()).show();
             }
         });
 
@@ -167,29 +167,34 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
 
         findViewById(R.id.root).setOnTouchListener(this);
 
-        StartScreenDialog dialog = new StartScreenDialog(this);
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+        findViewById(android.R.id.content).post(new Runnable() {
             @Override
-            public void onDismiss(DialogInterface dialog) {
-                if (!prefs.getBoolean(KEY_READ_TUTORIAL, false)) {
-                    StaticUtils.makeDialog(
-                            MainActivity.this,
-                            null,
-                            getString(R.string.msg_tutorial),
-                            getString(R.string.action_ok),
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    prefs.edit().putBoolean(KEY_READ_TUTORIAL, true).apply();
-                                }
-                            },
-                            null,
-                            null
-                    ).show();
-                }
+            public void run() {
+                StartScreenDialog dialog = new StartScreenDialog(MainActivity.this, getBlurryImage());
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        if (!prefs.getBoolean(KEY_READ_TUTORIAL, false)) {
+                            StaticUtils.makeDialog(
+                                    MainActivity.this,
+                                    null,
+                                    getString(R.string.msg_tutorial),
+                                    getString(R.string.action_ok),
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            prefs.edit().putBoolean(KEY_READ_TUTORIAL, true).apply();
+                                        }
+                                    },
+                                    null,
+                                    null
+                            ).show();
+                        }
+                    }
+                });
+                dialog.show();
             }
         });
-        dialog.show();
     }
 
     @Override
@@ -281,6 +286,10 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
         mapPositions.put(mapKey, character.getPosition());
     }
 
+    private Blurry.ImageComposer getBlurryImage() {
+        return Blurry.with(this).capture(findViewById(android.R.id.content));
+    }
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         switch (event.getAction()) {
@@ -315,16 +324,6 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
     }
 
     @Override
-    public void onRequestTileKeyChange(TileData tile, int tileKey) {
-        int[][][][] map = MapUtils.getMap(MainActivity.this, mapKey);
-        PositionData position = tile.getPosition();
-        map[position.getSceneY()][position.getSceneX()][position.getTileY()][position.getTileX()] = tileKey;
-        MapUtils.saveMap(MainActivity.this, mapKey, map);
-
-        setMap(mapKey);
-    }
-
-    @Override
     public void onRequestMapChange(String mapKey) {
         setMap(mapKey);
     }
@@ -350,7 +349,19 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
 
     @Override
     public void onOpenChest(MotionEvent event) {
-        new ChestDialog(this, Blurry.with(this).capture(findViewById(android.R.id.content))).show();
+        ChestDialog dialog = new ChestDialog(this, getBlurryImage());
+        dialog.addOnDismissListener(new ChestDialog.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                monochrome.onCloseChest();
+            }
+        });
+        dialog.show();
+    }
+
+    @Override
+    public void onCloseChest() {
+
     }
 
     @Override

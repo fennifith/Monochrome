@@ -32,10 +32,21 @@ public class ChestDialog extends AppCompatDialog implements Monochrome.OnSomethi
     private ItemAdapter holdingAdapter, chestAdapter;
 
     private Monochrome monochrome;
+    private List<OnDismissListener> listeners;
 
     public ChestDialog(Context context, Blurry.ImageComposer image) {
         super(context, R.style.AppTheme_Dialog_FullScreen_Fading);
         this.image = image;
+
+        listeners = new ArrayList<>();
+        setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                for (OnDismissListener listener : listeners) {
+                    listener.onDismiss(dialogInterface);
+                }
+            }
+        });
     }
 
     @Override
@@ -83,9 +94,9 @@ public class ChestDialog extends AppCompatDialog implements Monochrome.OnSomethi
         chestAdapter = new ItemAdapter(getContext(), chestItems, true);
         chest.setAdapter(chestAdapter);
 
-        setOnDismissListener(new OnDismissListener() {
+        addOnDismissListener(new OnDismissListener() {
             @Override
-            public void onDismiss(DialogInterface dialogInterface) {
+            public void onDismiss(DialogInterface dialog) {
                 monochrome.removeListener(ChestDialog.this);
             }
         });
@@ -95,32 +106,26 @@ public class ChestDialog extends AppCompatDialog implements Monochrome.OnSomethi
 
     @Override
     public void onTileChange(TileData tile) {
-
-    }
-
-    @Override
-    public void onRequestTileKeyChange(TileData tile, int tileKey) {
-
     }
 
     @Override
     public void onRequestMapChange(String mapKey) {
-
     }
 
     @Override
     public void onRequestPositionSave() {
-
     }
 
     @Override
     public void onRequestShake() {
-
     }
 
     @Override
     public void onOpenChest(MotionEvent event) {
+    }
 
+    @Override
+    public void onCloseChest() {
     }
 
     @Override
@@ -142,5 +147,13 @@ public class ChestDialog extends AppCompatDialog implements Monochrome.OnSomethi
             chestAdapter = new ItemAdapter(getContext(), chestItems, true);
             chest.setAdapter(chestAdapter);
         }
+    }
+
+    public void addOnDismissListener(OnDismissListener listener) {
+        listeners.add(listener);
+    }
+
+    public interface OnDismissListener {
+        void onDismiss(DialogInterface dialog);
     }
 }

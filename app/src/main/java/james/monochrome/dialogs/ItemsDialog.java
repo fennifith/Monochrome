@@ -62,7 +62,7 @@ public class ItemsDialog extends AppCompatDialog {
             if (!item.isUseless()) holdingItems.add(item);
         }
 
-        holdingAdapter = new ItemAdapter(getContext(), holdingItems, false);
+        holdingAdapter = new ItemAdapter(getContext(), holdingItems, null);
         holding.setAdapter(holdingAdapter);
 
         findViewById(R.id.chestLayout).setVisibility(View.GONE);

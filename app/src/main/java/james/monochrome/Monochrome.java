@@ -53,51 +53,49 @@ public class Monochrome extends Application {
     }
 
     public void onTileChange(TileData tile) {
-        for (OnSomethingHappenedListener listener : listeners) {
+        for (OnSomethingHappenedListener listener : new ArrayList<>(listeners)) {
             listener.onTileChange(tile);
         }
     }
 
-    public void requestTileKeyChange(TileData tile, int tileKey) {
-        for (OnSomethingHappenedListener listener : listeners) {
-            listener.onRequestTileKeyChange(tile, tileKey);
-        }
-    }
-
     public void requestMapChange(String mapKey) {
-        for (OnSomethingHappenedListener listener : listeners) {
+        for (OnSomethingHappenedListener listener : new ArrayList<>(listeners)) {
             listener.onRequestMapChange(mapKey);
         }
     }
 
     public void requestPositionSave() {
-        for (OnSomethingHappenedListener listener : listeners) {
+        for (OnSomethingHappenedListener listener : new ArrayList<>(listeners)) {
             listener.onRequestPositionSave();
         }
     }
 
     public void requestShake() {
-        for (OnSomethingHappenedListener listener : listeners) {
+        for (OnSomethingHappenedListener listener : new ArrayList<>(listeners)) {
             listener.onRequestShake();
         }
     }
 
     public void onOpenChest(MotionEvent event) {
-        for (OnSomethingHappenedListener listener : listeners) {
+        for (OnSomethingHappenedListener listener : new ArrayList<>(listeners)) {
             listener.onOpenChest(event);
         }
     }
 
+    public void onCloseChest() {
+        for (OnSomethingHappenedListener listener : new ArrayList<>(listeners)) {
+            listener.onCloseChest();
+        }
+    }
+
     public void onItemMoved(ItemData item) {
-        for (OnSomethingHappenedListener listener : listeners) {
+        for (OnSomethingHappenedListener listener : new ArrayList<>(listeners)) {
             listener.onItemMoved(item);
         }
     }
 
     public interface OnSomethingHappenedListener {
         void onTileChange(TileData tile);
-
-        void onRequestTileKeyChange(TileData tile, int tileKey);
 
         void onRequestMapChange(String mapKey);
 
@@ -106,6 +104,8 @@ public class Monochrome extends Application {
         void onRequestShake();
 
         void onOpenChest(MotionEvent event);
+
+        void onCloseChest();
 
         void onItemMoved(ItemData item);
     }

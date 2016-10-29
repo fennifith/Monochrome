@@ -15,8 +15,13 @@ public class ChestTileData extends TileData {
 
     @Override
     public void onTouch(MotionEvent event) {
-        setTile(TileUtils.TILE_CHEST_OPEN);
         ((Monochrome) getContext().getApplicationContext()).onOpenChest(event);
+        setTile(TileUtils.TILE_CHEST_OPEN);
+    }
+
+    @Override
+    public void onCloseChest() {
+        setTile(TileUtils.TILE_CHEST);
     }
 
     @Override

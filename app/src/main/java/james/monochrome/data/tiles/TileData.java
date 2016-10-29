@@ -5,10 +5,12 @@ import android.view.MotionEvent;
 
 import james.monochrome.Monochrome;
 import james.monochrome.data.PositionData;
+import james.monochrome.data.items.ItemData;
 
-public abstract class TileData {
+public abstract class TileData implements Monochrome.OnSomethingHappenedListener {
 
     private Context context;
+    private Monochrome monochrome;
     private int[][] tile;
     private PositionData position;
 
@@ -16,6 +18,9 @@ public abstract class TileData {
         this.context = context;
         this.tile = tile;
         this.position = position;
+
+        monochrome = (Monochrome) context.getApplicationContext();
+        monochrome.addListener(this);
     }
 
     public Context getContext() {
@@ -28,23 +33,19 @@ public abstract class TileData {
 
     public void setTile(int[][] tile) {
         this.tile = tile;
-        ((Monochrome) getContext().getApplicationContext()).onTileChange(this);
-    }
-
-    void setTileKey(int tileKey) {
-        ((Monochrome) getContext().getApplicationContext()).requestTileKeyChange(this, tileKey);
+        monochrome.onTileChange(this);
     }
 
     void setMap(String mapKey) {
-        ((Monochrome) getContext().getApplicationContext()).requestMapChange(mapKey);
+        monochrome.requestMapChange(mapKey);
     }
 
     void savePosition() {
-        ((Monochrome) getContext().getApplicationContext()).requestPositionSave();
+        monochrome.requestPositionSave();
     }
 
     void shake() {
-        ((Monochrome) getContext().getApplicationContext()).requestShake();
+        monochrome.requestShake();
     }
 
     public PositionData getPosition() {
@@ -58,4 +59,33 @@ public abstract class TileData {
     public abstract  void onExit();
 
     public abstract boolean canEnter();
+
+    @Override
+    public void onCloseChest() {
+    }
+
+    @Override
+    public void onItemMoved(ItemData item) {
+    }
+
+    @Override
+    public void onOpenChest(MotionEvent event) {
+    }
+
+    @Override
+    public void onRequestMapChange(String mapKey) {
+        monochrome.removeListener(this);
+    }
+
+    @Override
+    public void onRequestPositionSave() {
+    }
+
+    @Override
+    public void onRequestShake() {
+    }
+
+    @Override
+    public void onTileChange(TileData tile) {
+    }
 }

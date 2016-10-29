@@ -6,19 +6,23 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatDialog;
 import android.view.View;
+import android.widget.ImageView;
 
 import james.monochrome.R;
 import james.monochrome.activities.AboutActivity;
 import james.monochrome.activities.MainActivity;
 import james.monochrome.activities.SettingsActivity;
+import jp.wasabeef.blurry.Blurry;
 
 public class StartScreenDialog extends AppCompatDialog {
 
     private Activity activity;
+    private Blurry.ImageComposer image;
 
-    public StartScreenDialog(@NonNull Activity context) {
-        super(context, R.style.AppTheme_Dialog_FullScreen);
+    public StartScreenDialog(@NonNull Activity context, Blurry.ImageComposer image) {
+        super(context, R.style.AppTheme_Dialog_FullScreen_Fading);
         activity = context;
+        this.image = image;
         setCancelable(false);
     }
 
@@ -26,6 +30,8 @@ public class StartScreenDialog extends AppCompatDialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_start);
+
+        image.into((ImageView) findViewById(R.id.background));
 
         findViewById(R.id.start).setOnClickListener(new View.OnClickListener() {
             @Override

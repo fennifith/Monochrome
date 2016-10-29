@@ -1,7 +1,6 @@
 package james.monochrome.dialogs;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.GridLayoutManager;
@@ -36,11 +35,9 @@ public class MapDialog extends AppCompatDialog {
 
         if (mapKey == null || position == null) return;
 
-        image.into((ImageView) findViewById(R.id.background));
-
-        View overlay = findViewById(R.id.overlay);
-        overlay.setBackgroundColor(Color.argb(100, 200, 200, 200));
-        overlay.setOnTouchListener(new View.OnTouchListener() {
+        ImageView background = (ImageView) findViewById(R.id.background);
+        image.into(background);
+        background.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) dismiss();
