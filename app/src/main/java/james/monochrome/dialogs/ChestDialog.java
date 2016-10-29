@@ -104,6 +104,11 @@ public class ChestDialog extends AppCompatDialog implements Monochrome.OnSomethi
     }
 
     @Override
+    public void onOpenChest() {
+
+    }
+
+    @Override
     public void onItemMoved(ItemData item) {
         if (holding != null && chest != null) {
             holdingAdapter = new ItemAdapter(getContext(), ItemUtils.getHoldingItems(getContext()), false);

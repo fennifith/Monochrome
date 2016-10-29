@@ -4,21 +4,31 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.util.ArrayMap;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
+import com.klinker.android.peekview.PeekViewActivity;
+import com.klinker.android.peekview.builder.Peek;
+import com.klinker.android.peekview.callback.SimpleOnPeek;
+
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
 import james.monochrome.Monochrome;
 import james.monochrome.R;
+import james.monochrome.adapters.ItemAdapter;
 import james.monochrome.data.PositionData;
 import james.monochrome.data.RowData;
 import james.monochrome.data.SceneryData;
@@ -26,7 +36,6 @@ import james.monochrome.data.characters.CharacterData;
 import james.monochrome.data.items.ItemData;
 import james.monochrome.data.tiles.TileData;
 import james.monochrome.dialogs.MapDialog;
-import james.monochrome.dialogs.ProfileDialog;
 import james.monochrome.dialogs.StartScreenDialog;
 import james.monochrome.utils.ItemUtils;
 import james.monochrome.utils.MapUtils;
@@ -36,7 +45,7 @@ import james.monochrome.views.CharacterView;
 import james.monochrome.views.SceneryView;
 import james.monochrome.views.SquareImageView;
 
-public class MainActivity extends AppCompatActivity implements View.OnTouchListener, Monochrome.OnSomethingHappenedListener {
+public class MainActivity extends PeekViewActivity implements View.OnTouchListener, Monochrome.OnSomethingHappenedListener {
 
     public static final int REQUEST_SETTINGS = 12543;
 
@@ -48,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private SceneryView scenery;
     private CharacterView character;
 
-    private SquareImageView pauseView, soundView, personView, mapView;
+    private SquareImageView pauseView, soundView, itemsView, mapView;
     private boolean isMuted;
 
     private List<RowData> map;
@@ -80,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
         pauseView = (SquareImageView) findViewById(R.id.pause);
         soundView = (SquareImageView) findViewById(R.id.sound);
-        personView = (SquareImageView) findViewById(R.id.person);
+        itemsView = (SquareImageView) findViewById(R.id.items);
         mapView = (SquareImageView) findViewById(R.id.map);
 
         mapPositions = new ArrayMap<>();
@@ -106,11 +115,41 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             }
         });
 
-        personView.setOnClickListener(new View.OnClickListener() {
+        itemsView.setOnTouchListener(new View.OnTouchListener() {
+            private long time;
+
             @Override
-            public void onClick(View v) {
-                //TODO: implement google games stuff
-                new ProfileDialog(MainActivity.this).show();
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        time = Calendar.getInstance().getTimeInMillis();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        if (Calendar.getInstance().getTimeInMillis() - time < 200) {
+                            Peek.into(R.layout.dialog_chest, new SimpleOnPeek() {
+                                @Override
+                                public void onInflated(View rootView) {
+                                    rootView.findViewById(R.id.chestLayout).setVisibility(View.GONE);
+
+                                    Typeface typeface = Typeface.createFromAsset(MainActivity.this.getAssets(), "VT323-Regular.ttf");
+                                    ((TextView) rootView.findViewById(R.id.titleHolding)).setTypeface(typeface);
+                                    ((TextView) rootView.findViewById(R.id.titleChest)).setTypeface(typeface);
+
+                                    RecyclerView recycler = (RecyclerView) rootView.findViewById(R.id.holding);
+                                    recycler.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
+
+                                    List<ItemData> holdingItems = new ArrayList<>();
+                                    List<ItemData> items = ItemUtils.getHoldingItems(MainActivity.this);
+                                    for (ItemData item : items) {
+                                        if (!item.isUseless()) holdingItems.add(item);
+                                    }
+
+                                    recycler.setAdapter(new ItemAdapter(MainActivity.this, holdingItems, null));
+                                }
+                            }).with(StaticUtils.getPeekViewOptions(MainActivity.this)).show(MainActivity.this, event);
+                        }
+                }
+                return true;
             }
         });
 
@@ -343,6 +382,11 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     @Override
     public void onRequestShake() {
         scenery.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+    }
+
+    @Override
+    public void onOpenChest() {
+
     }
 
     @Override

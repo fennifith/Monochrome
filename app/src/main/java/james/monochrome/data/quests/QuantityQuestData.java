@@ -2,6 +2,7 @@ package james.monochrome.data.quests;
 
 import android.content.Context;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import james.monochrome.data.items.ItemData;
@@ -32,9 +33,9 @@ public class QuantityQuestData extends QuestData {
     public void onComplete() {
         super.onComplete();
 
-        List<ItemData> items = ItemUtils.getHoldingItems(getContext());
-        for (ItemData item : items) {
-            if (!item.getKey().equals(itemKey)) items.remove(item);
+        List<ItemData> items = new ArrayList<>();
+        for (ItemData item : ItemUtils.getHoldingItems(getContext())) {
+            if (item.getKey().equals(itemKey)) items.add(item);
         }
 
         for (int i = 0; i < number && i < items.size(); i++) {

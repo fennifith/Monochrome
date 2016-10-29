@@ -47,12 +47,12 @@
             app:srcCompat="@drawable/ic_sound_on" />
 
         <james.monochrome.views.SquareImageView
-            android:id="@+id/person"
+            android:id="@+id/items"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:scaleType="center"
-            app:srcCompat="@drawable/ic_person_pin" />
+            app:srcCompat="@drawable/ic_items" />
 
         <james.monochrome.views.SquareImageView
             android:id="@+id/map"

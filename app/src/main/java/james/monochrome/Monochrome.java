@@ -98,6 +98,8 @@ public class Monochrome extends Application {
 
         void onRequestShake();
 
+        void onOpenChest();
+
         void onItemMoved(ItemData item);
     }
 
