@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         personView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: implement google games stuff, add items view, etc
+                //TODO: implement google games stuff
                 new ProfileDialog(MainActivity.this).show();
             }
         });
@@ -117,6 +117,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 new MapDialog(MainActivity.this, mapKey, character.getPosition()).show();
             }
         });
+
+        if (prefs.getBoolean("dpad", false))
+            findViewById(R.id.buttonLayout).setVisibility(View.VISIBLE);
 
         findViewById(R.id.up).setOnClickListener(new View.OnClickListener() {
             @Override

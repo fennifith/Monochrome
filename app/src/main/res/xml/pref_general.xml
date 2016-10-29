@@ -1,0 +1,14 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:key="reset"
+        android:title="@string/pref_reset"
+        android:summary="@string/pref_desc_reset" />
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="dpad"
+        android:summary="@string/pref_desc_dpad"
+        android:title="@string/pref_dpad" />
+
+</PreferenceScreen>

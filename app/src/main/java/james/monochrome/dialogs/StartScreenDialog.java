@@ -9,6 +9,7 @@ import android.view.View;
 
 import james.monochrome.R;
 import james.monochrome.activities.AboutActivity;
+import james.monochrome.activities.SettingsActivity;
 
 public class StartScreenDialog extends AppCompatDialog {
 
@@ -32,6 +33,7 @@ public class StartScreenDialog extends AppCompatDialog {
         findViewById(R.id.settings).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getContext().startActivity(new Intent(getContext(), SettingsActivity.class));
             }
         });
 
