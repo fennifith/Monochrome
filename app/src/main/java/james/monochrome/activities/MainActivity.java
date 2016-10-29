@@ -4,37 +4,30 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.util.ArrayMap;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.klinker.android.peekview.PeekViewActivity;
-import com.klinker.android.peekview.builder.Peek;
-import com.klinker.android.peekview.callback.OnPeek;
-import com.klinker.android.peekview.callback.SimpleOnPeek;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import james.monochrome.Monochrome;
 import james.monochrome.R;
-import james.monochrome.adapters.ItemAdapter;
 import james.monochrome.data.PositionData;
 import james.monochrome.data.RowData;
 import james.monochrome.data.SceneryData;
 import james.monochrome.data.characters.CharacterData;
 import james.monochrome.data.items.ItemData;
 import james.monochrome.data.tiles.TileData;
+import james.monochrome.dialogs.ChestDialog;
+import james.monochrome.dialogs.ItemsDialog;
 import james.monochrome.dialogs.MapDialog;
 import james.monochrome.dialogs.StartScreenDialog;
 import james.monochrome.utils.ItemUtils;
@@ -45,6 +38,7 @@ import james.monochrome.views.BackgroundView;
 import james.monochrome.views.CharacterView;
 import james.monochrome.views.SceneryView;
 import james.monochrome.views.SquareImageView;
+import jp.wasabeef.blurry.Blurry;
 
 public class MainActivity extends PeekViewActivity implements View.OnTouchListener, Monochrome.OnSomethingHappenedListener {
 
@@ -119,34 +113,14 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
         itemsView.setOnTouchListener(new OnClickTouchListener() {
             @Override
             public void onClick(View view, MotionEvent event) {
-                Peek.into(R.layout.dialog_chest, new SimpleOnPeek() {
-                    @Override
-                    public void onInflated(View rootView) {
-                        rootView.findViewById(R.id.chestLayout).setVisibility(View.GONE);
-
-                        Typeface typeface = Typeface.createFromAsset(MainActivity.this.getAssets(), "VT323-Regular.ttf");
-                        ((TextView) rootView.findViewById(R.id.titleHolding)).setTypeface(typeface);
-                        ((TextView) rootView.findViewById(R.id.titleChest)).setTypeface(typeface);
-
-                        RecyclerView recycler = (RecyclerView) rootView.findViewById(R.id.holding);
-                        recycler.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
-
-                        List<ItemData> holdingItems = new ArrayList<>();
-                        List<ItemData> items = ItemUtils.getHoldingItems(MainActivity.this);
-                        for (ItemData item : items) {
-                            if (!item.isUseless()) holdingItems.add(item);
-                        }
-
-                        recycler.setAdapter(new ItemAdapter(MainActivity.this, holdingItems, null));
-                    }
-                }).with(StaticUtils.getPeekViewOptions(MainActivity.this)).show(MainActivity.this, event);
+                new ItemsDialog(MainActivity.this, Blurry.with(MainActivity.this).capture(findViewById(android.R.id.content))).show();
             }
         });
 
         mapView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new MapDialog(MainActivity.this, mapKey, character.getPosition()).show();
+                new MapDialog(MainActivity.this, mapKey, character.getPosition(), Blurry.with(MainActivity.this).capture(findViewById(android.R.id.content))).show();
             }
         });
 
@@ -376,100 +350,7 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
 
     @Override
     public void onOpenChest(MotionEvent event) {
-        Peek.into(R.layout.dialog_chest, new OnPeek() {
-
-            private RecyclerView holding, chest;
-            private ItemAdapter holdingAdapter, chestAdapter;
-
-            private Monochrome.OnSomethingHappenedListener listener;
-
-            @Override
-            public void onInflated(View rootView) {
-                Typeface typeface = Typeface.createFromAsset(MainActivity.this.getAssets(), "VT323-Regular.ttf");
-                ((TextView) rootView.findViewById(R.id.titleHolding)).setTypeface(typeface);
-                ((TextView) rootView.findViewById(R.id.titleChest)).setTypeface(typeface);
-
-                holding = (RecyclerView) rootView.findViewById(R.id.holding);
-                holding.setLayoutManager(new GridLayoutManager(MainActivity.this, 1));
-
-                List<ItemData> holdingItems = new ArrayList<>();
-                for (ItemData item : ItemUtils.getHoldingItems(MainActivity.this)) {
-                    if (!item.isUseless()) holdingItems.add(item);
-                }
-
-                holdingAdapter = new ItemAdapter(MainActivity.this, holdingItems, false);
-                holding.setAdapter(holdingAdapter);
-
-                chest = (RecyclerView) rootView.findViewById(R.id.chest);
-                chest.setLayoutManager(new GridLayoutManager(MainActivity.this, 1));
-
-                List<ItemData> chestItems = new ArrayList<>();
-                for (ItemData item : ItemUtils.getChestItems(MainActivity.this)) {
-                    if (!item.isUseless()) chestItems.add(item);
-                }
-
-                chestAdapter = new ItemAdapter(MainActivity.this, chestItems, true);
-                chest.setAdapter(chestAdapter);
-
-                listener = new Monochrome.OnSomethingHappenedListener() {
-                    @Override
-                    public void onTileChange(TileData tile) {
-                    }
-
-                    @Override
-                    public void onRequestTileKeyChange(TileData tile, int tileKey) {
-                    }
-
-                    @Override
-                    public void onRequestMapChange(String mapKey) {
-                    }
-
-                    @Override
-                    public void onRequestPositionSave() {
-                    }
-
-                    @Override
-                    public void onRequestShake() {
-                    }
-
-                    @Override
-                    public void onOpenChest(MotionEvent event) {
-                    }
-
-                    @Override
-                    public void onItemMoved(ItemData item) {
-                        if (holding != null && chest != null) {
-                            List<ItemData> holdingItems = new ArrayList<>();
-                            for (ItemData holdingItem : ItemUtils.getHoldingItems(MainActivity.this)) {
-                                if (!holdingItem.isUseless()) holdingItems.add(holdingItem);
-                            }
-
-                            holdingAdapter = new ItemAdapter(MainActivity.this, holdingItems, false);
-                            holding.setAdapter(holdingAdapter);
-
-                            List<ItemData> chestItems = new ArrayList<>();
-                            for (ItemData chestItem : ItemUtils.getChestItems(MainActivity.this)) {
-                                if (!chestItem.isUseless()) chestItems.add(chestItem);
-                            }
-
-                            chestAdapter = new ItemAdapter(MainActivity.this, chestItems, true);
-                            chest.setAdapter(chestAdapter);
-                        }
-                    }
-                };
-
-                monochrome.addListener(listener);
-            }
-
-            @Override
-            public void shown() {
-            }
-
-            @Override
-            public void dismissed() {
-                if (listener != null) monochrome.removeListener(listener);
-            }
-        }).with(StaticUtils.getPeekViewOptions(MainActivity.this).setFullScreenPeek(true)).show(MainActivity.this, event);
+        new ChestDialog(this, Blurry.with(this).capture(findViewById(android.R.id.content))).show();
     }
 
     @Override

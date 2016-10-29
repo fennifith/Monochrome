@@ -21,9 +21,21 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
+    <style name="AppTheme.Dialog.FullScreen.Fading" parent="AppTheme">
+        <item name="android:windowAnimationStyle">@style/FadeAnimation</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/colorDialogFullscreen</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
     <style name="SlideAnimation">
         <item name="android:windowEnterAnimation">@anim/scale_up</item>
         <item name="android:windowExitAnimation">@anim/scale_down</item>
+    </style>
+
+    <style name="FadeAnimation">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
 </resources>
