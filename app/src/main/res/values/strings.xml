@@ -17,8 +17,11 @@
     <string name="action_use_item">Use the %1$s?</string>
 
     <string name="item_apple">Apple</string>
+    <string name="item_apple_desc">This is an edible item that tends to appear near groups of trees.</string>
     <string name="item_pumpkin">Pumpkin</string>
+    <string name="item_pumpkin_desc">A mysterious vegetable, it grows in sections of thick grass.</string>
     <string name="item_key">Key</string>
+    <string name="item_key_desc">Keys are very precious items; they are the only way to unlock a save point in the game - without them you could lose your progress!</string>
     <string name="item_number">x%1$d</string>
 
     <string name="msg_tutorial">Well look at you, fluffy puff ball. Or is it puffy fluff ball? I can\'t remember. You should probably go to the right and read some of those signs.</string>
@@ -40,7 +43,7 @@
     <string name="msg_picked_up_vowel">You picked up an %1$s</string>
     <string name="msg_no_space">You don\'t have enough space to hold this item! Please move some of your items into a chest to make room.</string>
     <string name="msg_quest_incomplete">Please come back when you have finished the quest.</string>
-    <string name="msg_no_quests">It seems you\'ve played all the quests currently available. Check back later for more!</string>
+    <string name="msg_no_quests">It seems you\'ve played all the quests available in the preview. More will be in the official release!</string>
     <string name="msg_no_scenes">This part of the map hasn\'t been finished yet! Lazy developers…</string>
 
     <string name="quest_title_apples">I Really Like Apples</string>
@@ -61,7 +64,7 @@
     </string-array>
 
     <string-array name="contrib_descs">
-        <item>Made the app!</item>
+        <item>Made the app :D</item>
         <item>Helped design a lot of the graphics and user interface.</item>
         <item>Made some weird noises.</item>
     </string-array>

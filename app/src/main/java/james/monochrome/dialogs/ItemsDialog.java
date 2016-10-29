@@ -1,6 +1,5 @@
 package james.monochrome.dialogs;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -11,6 +10,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.klinker.android.peekview.PeekViewActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +24,15 @@ import jp.wasabeef.blurry.Blurry;
 
 public class ItemsDialog extends AppCompatDialog {
 
+    private PeekViewActivity activity;
     private Blurry.ImageComposer image;
 
     private RecyclerView holding;
     private ItemAdapter holdingAdapter;
 
-    public ItemsDialog(Context context, Blurry.ImageComposer image) {
-        super(context, R.style.AppTheme_Dialog_FullScreen_Fading);
+    public ItemsDialog(PeekViewActivity activity, Blurry.ImageComposer image) {
+        super(activity, R.style.AppTheme_Dialog_FullScreen_Fading);
+        this.activity = activity;
         this.image = image;
     }
 
@@ -62,7 +65,7 @@ public class ItemsDialog extends AppCompatDialog {
             if (!item.isUseless()) holdingItems.add(item);
         }
 
-        holdingAdapter = new ItemAdapter(getContext(), holdingItems, null);
+        holdingAdapter = new ItemAdapter(activity, holdingItems, null);
         holding.setAdapter(holdingAdapter);
 
         findViewById(R.id.chestLayout).setVisibility(View.GONE);

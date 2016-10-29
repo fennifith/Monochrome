@@ -54,6 +54,8 @@ public abstract class ItemData extends TileData {
 
     public abstract String getName();
 
+    public abstract String getDescription();
+
     abstract String getId();
 
     public abstract String getKey();

@@ -23,6 +23,11 @@ public class AppleItemData extends ItemData {
     }
 
     @Override
+    public String getDescription() {
+        return getContext().getString(R.string.item_apple_desc);
+    }
+
+    @Override
     String getId() {
         return ItemUtils.KEY_ITEM_APPLE;
     }

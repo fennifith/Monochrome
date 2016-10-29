@@ -2,7 +2,6 @@ package james.monochrome.utils;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -12,8 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.klinker.android.peekview.builder.PeekViewOptions;
 
 import james.monochrome.R;
 import james.monochrome.data.items.ItemData;
@@ -89,11 +86,5 @@ public class StaticUtils {
                 dialog.dismiss();
             }
         });
-    }
-
-    public static PeekViewOptions getPeekViewOptions(Context context) {
-        PeekViewOptions options = new PeekViewOptions();
-        options.setBlurOverlayColor(Color.argb(100, 200, 200, 200));
-        return options;
     }
 }

@@ -20,6 +20,11 @@ public class KeyItemData extends ItemData {
     }
 
     @Override
+    public String getDescription() {
+        return getContext().getString(R.string.item_key_desc);
+    }
+
+    @Override
     String getId() {
         return MapUtils.getTileId(getPosition());
     }

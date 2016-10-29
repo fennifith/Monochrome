@@ -24,6 +24,11 @@ public class PumpkinItemData extends ItemData {
     }
 
     @Override
+    public String getDescription() {
+        return getContext().getString(R.string.item_pumpkin_desc);
+    }
+
+    @Override
     String getId() {
         return MapUtils.getTileId(getPosition());
     }
