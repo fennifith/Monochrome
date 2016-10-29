@@ -13,7 +13,6 @@ import james.monochrome.R;
 import james.monochrome.adapters.ItemAdapter;
 import james.monochrome.data.items.ItemData;
 import james.monochrome.utils.ItemUtils;
-import james.monochrome.utils.MapUtils;
 
 public class ProfileDialog extends AppCompatDialog {
 
@@ -30,9 +29,9 @@ public class ProfileDialog extends AppCompatDialog {
         recycler.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
         List<ItemData> holdingItems = new ArrayList<>();
-        List<ItemData> items = ItemUtils.getItems(getContext(), MapUtils.KEY_MAP_DEFAULT);
+        List<ItemData> items = ItemUtils.getHoldingItems(getContext());
         for (ItemData item : items) {
-            if (item.isHolding() && !item.isUseless()) holdingItems.add(item);
+            if (!item.isUseless()) holdingItems.add(item);
         }
 
         recycler.setAdapter(new ItemAdapter(getContext(), holdingItems, null));

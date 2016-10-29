@@ -1,6 +1,6 @@
 package james.monochrome.dialogs;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,12 +9,16 @@ import android.view.View;
 
 import james.monochrome.R;
 import james.monochrome.activities.AboutActivity;
+import james.monochrome.activities.MainActivity;
 import james.monochrome.activities.SettingsActivity;
 
 public class StartScreenDialog extends AppCompatDialog {
 
-    public StartScreenDialog(@NonNull Context context) {
+    private Activity activity;
+
+    public StartScreenDialog(@NonNull Activity context) {
         super(context, R.style.AppTheme_Dialog_FullScreen);
+        activity = context;
         setCancelable(false);
     }
 
@@ -33,7 +37,7 @@ public class StartScreenDialog extends AppCompatDialog {
         findViewById(R.id.settings).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getContext().startActivity(new Intent(getContext(), SettingsActivity.class));
+                activity.startActivityForResult(new Intent(getContext(), SettingsActivity.class), MainActivity.REQUEST_SETTINGS);
             }
         });
 

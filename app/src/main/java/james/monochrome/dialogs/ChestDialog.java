@@ -54,13 +54,23 @@ public class ChestDialog extends AppCompatDialog implements Monochrome.OnSomethi
         holding = (RecyclerView) findViewById(R.id.holding);
         holding.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
-        holdingAdapter = new ItemAdapter(getContext(), ItemUtils.getHoldingItems(getContext()), false);
+        List<ItemData> holdingItems = new ArrayList<>();
+        for (ItemData item : ItemUtils.getHoldingItems(getContext())) {
+            if (!item.isUseless()) holdingItems.add(item);
+        }
+
+        holdingAdapter = new ItemAdapter(getContext(), holdingItems, false);
         holding.setAdapter(holdingAdapter);
 
         chest = (RecyclerView) findViewById(R.id.chest);
         chest.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
-        chestAdapter = new ItemAdapter(getContext(), ItemUtils.getChestItems(getContext()), true);
+        List<ItemData> chestItems = new ArrayList<>();
+        for (ItemData item : ItemUtils.getChestItems(getContext())) {
+            if (!item.isUseless()) chestItems.add(item);
+        }
+
+        chestAdapter = new ItemAdapter(getContext(), chestItems, true);
         chest.setAdapter(chestAdapter);
 
         addOnDismissListener(new OnDismissListener() {

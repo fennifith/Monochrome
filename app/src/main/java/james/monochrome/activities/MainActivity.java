@@ -1,6 +1,7 @@
 package james.monochrome.activities;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -36,6 +37,8 @@ import james.monochrome.views.SceneryView;
 import james.monochrome.views.SquareImageView;
 
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener, Monochrome.OnSomethingHappenedListener {
+
+    public static final int REQUEST_SETTINGS = 12543;
 
     public static final String
             KEY_READ_TUTORIAL = "tutorialRead",
@@ -190,6 +193,15 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     protected void onDestroy() {
         monochrome.removeListener(this);
         super.onDestroy();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_SETTINGS) {
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
     }
 
     public void setMap(String mapKey) {

@@ -26,9 +26,7 @@ public class ItemUtils {
     public static List<ItemData> getItems(Context context, String mapKey) {
         List<ItemData> items = new ArrayList<>();
 
-        items.add(new KeyItemData(context, new PositionData(MapUtils.KEY_MAP_DEFAULT, 0, 0, 2, 5)));
-
-        items.addAll(getPickedUpItems(context));
+        items.addAll(getConstantItems(context));
 
         Random random = new Random();
 
@@ -63,6 +61,12 @@ public class ItemUtils {
         return items;
     }
 
+    private static List<ItemData> getConstantItems(Context context) {
+        List<ItemData> items = new ArrayList<>();
+        items.add(new KeyItemData(context, new PositionData(MapUtils.KEY_MAP_DEFAULT, 0, 0, 2, 5)));
+        return items;
+    }
+
     public static List<ItemData> getHoldingItems(Context context) {
         List<ItemData> items = new ArrayList<>();
         for (ItemData item : getPickedUpItems(context)) {
@@ -85,6 +89,10 @@ public class ItemUtils {
         List<ItemData> items = new ArrayList<>();
         items.addAll(getItemsOf(context, KEY_ITEM_APPLE));
         items.addAll(getItemsOf(context, KEY_ITEM_PUMPKIN));
+
+        for (ItemData item : getConstantItems(context)) {
+            if (item.hasPickedUp()) items.add(item);
+        }
 
         return items;
     }
