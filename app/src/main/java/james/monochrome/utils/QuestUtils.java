@@ -1,7 +1,6 @@
 package james.monochrome.utils;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,15 +21,6 @@ public class QuestUtils {
         ));
 
         return quests;
-    }
-
-    @Nullable
-    public static QuestData getNextQuest(Context context) {
-        for (QuestData quest : getQuests(context)) {
-            if (!quest.isReallyCompleted()) return quest;
-        }
-
-        return null;
     }
 
 }
