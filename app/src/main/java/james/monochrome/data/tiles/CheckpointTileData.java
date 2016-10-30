@@ -2,7 +2,6 @@ package james.monochrome.data.tiles;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.view.MotionEvent;
 
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
@@ -16,7 +15,7 @@ public class CheckpointTileData extends TileData {
     }
 
     @Override
-    public void onTouch(MotionEvent event) {
+    public void onTouch() {
         StaticUtils.makeDialog(
                 getContext(),
                 getContext().getString(R.string.action_checkpoint),

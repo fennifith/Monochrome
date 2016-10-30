@@ -1,7 +1,6 @@
 package james.monochrome.data.tiles;
 
 import android.content.Context;
-import android.view.MotionEvent;
 
 import james.monochrome.Monochrome;
 import james.monochrome.data.PositionData;
@@ -14,8 +13,8 @@ public class ChestTileData extends TileData {
     }
 
     @Override
-    public void onTouch(MotionEvent event) {
-        ((Monochrome) getContext().getApplicationContext()).onOpenChest(event);
+    public void onTouch() {
+        ((Monochrome) getContext().getApplicationContext()).onOpenChest();
         setTile(TileUtils.TILE_CHEST_OPEN);
     }
 

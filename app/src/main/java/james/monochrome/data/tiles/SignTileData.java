@@ -1,7 +1,6 @@
 package james.monochrome.data.tiles;
 
 import android.content.Context;
-import android.view.MotionEvent;
 
 import james.monochrome.data.PositionData;
 import james.monochrome.utils.MapUtils;
@@ -15,7 +14,7 @@ public class SignTileData extends TileData {
     }
 
     @Override
-    public void onTouch(MotionEvent event) {
+    public void onTouch() {
         StaticUtils.makeToast(getContext(), MapUtils.getMessage(getContext(), getPosition().getMapKey(), MapUtils.getTileId(getPosition()))).show();
     }
 

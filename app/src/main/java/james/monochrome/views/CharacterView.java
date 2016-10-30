@@ -106,7 +106,7 @@ public class CharacterView extends SquareImageView {
         } else {
             performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
             for (TileData tile : tiles) {
-                tile.onTouch(event);
+                tile.onTouch();
             }
         }
 
@@ -131,7 +131,7 @@ public class CharacterView extends SquareImageView {
         } else {
             performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
             for (TileData tile : tiles) {
-                tile.onTouch(event);
+                tile.onTouch();
             }
         }
 
@@ -156,7 +156,7 @@ public class CharacterView extends SquareImageView {
         } else {
             performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
             for (TileData tile : tiles) {
-                tile.onTouch(event);
+                tile.onTouch();
             }
         }
 
@@ -181,7 +181,7 @@ public class CharacterView extends SquareImageView {
         } else {
             performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
             for (TileData tile : tiles) {
-                tile.onTouch(event);
+                tile.onTouch();
             }
         }
 

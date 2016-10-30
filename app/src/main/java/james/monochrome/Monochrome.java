@@ -6,12 +6,12 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
-import android.view.MotionEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import james.monochrome.data.PositionData;
 import james.monochrome.data.items.ItemData;
 import james.monochrome.data.tiles.TileData;
 import james.monochrome.utils.TileUtils;
@@ -64,6 +64,12 @@ public class Monochrome extends Application {
         }
     }
 
+    public void onPositionChange(PositionData position) {
+        for (OnSomethingHappenedListener listener : new ArrayList<>(listeners)) {
+            listener.onPositionChange(position);
+        }
+    }
+
     public void requestPositionSave() {
         for (OnSomethingHappenedListener listener : new ArrayList<>(listeners)) {
             listener.onRequestPositionSave();
@@ -76,9 +82,9 @@ public class Monochrome extends Application {
         }
     }
 
-    public void onOpenChest(MotionEvent event) {
+    public void onOpenChest() {
         for (OnSomethingHappenedListener listener : new ArrayList<>(listeners)) {
-            listener.onOpenChest(event);
+            listener.onOpenChest();
         }
     }
 
@@ -99,11 +105,13 @@ public class Monochrome extends Application {
 
         void onRequestMapChange(String mapKey);
 
+        void onPositionChange(PositionData position);
+
         void onRequestPositionSave();
 
         void onRequestShake();
 
-        void onOpenChest(MotionEvent event);
+        void onOpenChest();
 
         void onCloseChest();
 

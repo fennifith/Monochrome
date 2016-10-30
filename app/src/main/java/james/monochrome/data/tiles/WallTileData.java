@@ -1,7 +1,6 @@
 package james.monochrome.data.tiles;
 
 import android.content.Context;
-import android.view.MotionEvent;
 
 import james.monochrome.data.PositionData;
 
@@ -12,7 +11,7 @@ public class WallTileData extends TileData {
     }
 
     @Override
-    public void onTouch(MotionEvent event) {
+    public void onTouch() {
     }
 
     @Override

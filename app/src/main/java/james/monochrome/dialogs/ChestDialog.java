@@ -19,6 +19,7 @@ import java.util.List;
 import james.monochrome.Monochrome;
 import james.monochrome.R;
 import james.monochrome.adapters.ItemAdapter;
+import james.monochrome.data.PositionData;
 import james.monochrome.data.items.ItemData;
 import james.monochrome.data.tiles.TileData;
 import james.monochrome.utils.ItemUtils;
@@ -113,6 +114,10 @@ public class ChestDialog extends AppCompatDialog implements Monochrome.OnSomethi
     }
 
     @Override
+    public void onPositionChange(PositionData position) {
+    }
+
+    @Override
     public void onRequestPositionSave() {
     }
 
@@ -121,7 +126,7 @@ public class ChestDialog extends AppCompatDialog implements Monochrome.OnSomethi
     }
 
     @Override
-    public void onOpenChest(MotionEvent event) {
+    public void onOpenChest() {
     }
 
     @Override

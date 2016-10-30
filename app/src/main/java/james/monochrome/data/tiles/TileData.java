@@ -1,7 +1,6 @@
 package james.monochrome.data.tiles;
 
 import android.content.Context;
-import android.view.MotionEvent;
 
 import james.monochrome.Monochrome;
 import james.monochrome.data.PositionData;
@@ -52,7 +51,7 @@ public abstract class TileData implements Monochrome.OnSomethingHappenedListener
         return position;
     }
 
-    public abstract void onTouch(MotionEvent event);
+    public abstract void onTouch();
 
     public abstract void onEnter();
 
@@ -69,7 +68,7 @@ public abstract class TileData implements Monochrome.OnSomethingHappenedListener
     }
 
     @Override
-    public void onOpenChest(MotionEvent event) {
+    public void onOpenChest() {
     }
 
     @Override
@@ -79,6 +78,10 @@ public abstract class TileData implements Monochrome.OnSomethingHappenedListener
 
     @Override
     public void onRequestPositionSave() {
+    }
+
+    @Override
+    public void onPositionChange(PositionData position) {
     }
 
     @Override

@@ -3,7 +3,6 @@ package james.monochrome.data.characters;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.Nullable;
-import android.view.MotionEvent;
 
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
@@ -31,7 +30,7 @@ public abstract class CharacterData extends TileData {
     abstract boolean canAccept();
 
     @Override
-    public void onTouch(MotionEvent event) {
+    public void onTouch() {
         if (canAccept()) {
             StaticUtils.makeDialog(
                     getContext(),

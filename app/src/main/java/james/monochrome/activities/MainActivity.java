@@ -253,7 +253,10 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
             setScenery(map.get(sceneY).getScenery(sceneX));
             character.setCharacterPosition(character.getCharacterX(), 9);
         } else character.moveUp(event);
-        mapPositions.put(mapKey, character.getPosition());
+
+        PositionData position = character.getPosition();
+        mapPositions.put(mapKey, position);
+        monochrome.onPositionChange(position);
     }
 
     public void moveDown(MotionEvent event) {
@@ -263,7 +266,10 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
             setScenery(map.get(sceneY).getScenery(sceneX));
             character.setCharacterPosition(character.getCharacterX(), 0);
         } else character.moveDown(event);
-        mapPositions.put(mapKey, character.getPosition());
+
+        PositionData position = character.getPosition();
+        mapPositions.put(mapKey, position);
+        monochrome.onPositionChange(position);
     }
 
     public void moveLeft(MotionEvent event) {
@@ -273,7 +279,10 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
             setScenery(map.get(sceneY).getScenery(sceneX));
             character.setCharacterPosition(9, character.getCharacterY());
         } else character.moveLeft(event);
-        mapPositions.put(mapKey, character.getPosition());
+
+        PositionData position = character.getPosition();
+        mapPositions.put(mapKey, position);
+        monochrome.onPositionChange(position);
     }
 
     public void moveRight(MotionEvent event) {
@@ -283,7 +292,10 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
             setScenery(map.get(sceneY).getScenery(sceneX));
             character.setCharacterPosition(0, character.getCharacterY());
         } else character.moveRight(event);
-        mapPositions.put(mapKey, character.getPosition());
+
+        PositionData position = character.getPosition();
+        mapPositions.put(mapKey, position);
+        monochrome.onPositionChange(position);
     }
 
     private Blurry.ImageComposer getBlurryImage() {
@@ -329,6 +341,10 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
     }
 
     @Override
+    public void onPositionChange(PositionData position) {
+    }
+
+    @Override
     public void onRequestPositionSave() {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(MapUtils.KEY_MAP, mapKey);
@@ -348,7 +364,7 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
     }
 
     @Override
-    public void onOpenChest(MotionEvent event) {
+    public void onOpenChest() {
         ChestDialog dialog = new ChestDialog(this, getBlurryImage());
         dialog.addOnDismissListener(new ChestDialog.OnDismissListener() {
             @Override

@@ -1411,7 +1411,7 @@ public class MapUtils {
         List<CharacterData> characters = new ArrayList<>();
         switch (mapKey) {
             case KEY_MAP_DEFAULT:
-                characters.add(new DialogueCharacterData(context, new PositionData(mapKey, 0, 0, 5, 4), context.getString(R.string.msg_char_tutorial1)));
+                characters.add(new DialogueCharacterData(context, new PositionData(mapKey, 0, 0, 5, 4), "tutorial1", context.getString(R.string.msg_char_tutorial1)));
                 break;
             case KEY_MAP_HOUSE:
                 characters.add(new QuestGiverCharacterData(context, new PositionData(mapKey, 0, 0, 4, 3), QuestUtils.getNextQuest(context)));

@@ -3,7 +3,6 @@ package james.monochrome.data.items;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.view.MotionEvent;
 
 import james.monochrome.Monochrome;
 import james.monochrome.R;
@@ -79,7 +78,7 @@ public abstract class ItemData extends TileData {
     }
 
     @Override
-    public void onTouch(MotionEvent event) {
+    public void onTouch() {
         if (ItemUtils.getFreeVolume(getContext()) >= getVolume()) {
             if (hasConstantPosition()) {
                 PreferenceManager.getDefaultSharedPreferences(getContext())

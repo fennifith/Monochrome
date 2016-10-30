@@ -3,7 +3,6 @@ package james.monochrome.data.tiles;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.preference.PreferenceManager;
-import android.view.MotionEvent;
 
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
@@ -32,7 +31,7 @@ public class HouseTileData extends TileData {
     }
 
     @Override
-    public void onTouch(MotionEvent event) {
+    public void onTouch() {
         if (isLocked) {
             for (ItemData item : ItemUtils.getHoldingItems(getContext())) {
                 if (item instanceof KeyItemData && !item.isUseless()) {
