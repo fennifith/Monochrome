@@ -91,7 +91,7 @@ public class ItemUtils {
         items.addAll(getItemsOf(context, KEY_ITEM_PUMPKIN));
 
         for (ItemData item : getConstantItems(context)) {
-            if (item.hasPickedUp()) items.add(item);
+            if (item.hasPickedUp() && !item.isUseless()) items.add(item);
         }
 
         return items;
@@ -110,14 +110,14 @@ public class ItemUtils {
         List<ItemData> items = new ArrayList<>();
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        int pickedUp = prefs.getInt(ItemData.KEY_PICKED_UP + itemKey, 0), holding = prefs.getInt(ItemData.KEY_HOLDING + itemKey, 0), useless = prefs.getInt(ItemData.KEY_USELESS + itemKey, 0);
+        int pickedUp = prefs.getInt(ItemData.KEY_PICKED_UP + itemKey, 0), holding = prefs.getInt(ItemData.KEY_HOLDING + itemKey, 0);
         for (int i = 0; i < pickedUp; i++) {
             switch (itemKey) {
                 case KEY_ITEM_APPLE:
-                    items.add(new AppleItemData(context, true, i < holding, i < useless));
+                    items.add(new AppleItemData(context, true, i < holding));
                     break;
                 case KEY_ITEM_PUMPKIN:
-                    items.add(new PumpkinItemData(context, true, i < holding, i < useless));
+                    items.add(new PumpkinItemData(context, true, i < holding));
                     break;
             }
         }
@@ -141,9 +141,11 @@ public class ItemUtils {
         prefs.edit().putInt(ItemData.KEY_HOLDING + itemKey, prefs.getInt(ItemData.KEY_HOLDING + itemKey, 0) + 1).apply();
     }
 
-    public static void setUseless(Context context, String itemKey) {
+    public static void setUseless(Context context, ItemData item) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        prefs.edit().putInt(ItemData.KEY_USELESS + itemKey, prefs.getInt(ItemData.KEY_USELESS + itemKey, 0) + 1).apply();
+        prefs.edit().putInt(ItemData.KEY_PICKED_UP + item.getKey(), prefs.getInt(ItemData.KEY_PICKED_UP + item.getKey(), 0) - 1).apply();
+        if (item.isHolding())
+            prefs.edit().putInt(ItemData.KEY_HOLDING + item.getKey(), prefs.getInt(ItemData.KEY_HOLDING + item.getKey(), 0) - 1).apply();
     }
 
 }

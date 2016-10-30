@@ -10,8 +10,8 @@ import james.monochrome.utils.TileUtils;
 
 public class PumpkinItemData extends ItemData {
 
-    public PumpkinItemData(Context context, boolean hasPickedUp, boolean isHolding, boolean isUseless) {
-        super(context, TileUtils.TILE_PUMPKIN, hasPickedUp, isHolding, isUseless);
+    public PumpkinItemData(Context context, boolean hasPickedUp, boolean isHolding) {
+        super(context, TileUtils.TILE_PUMPKIN, hasPickedUp, isHolding);
     }
 
     public PumpkinItemData(Context context, PositionData position) {

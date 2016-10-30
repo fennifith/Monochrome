@@ -18,7 +18,7 @@ import james.monochrome.data.tiles.TileData;
 import james.monochrome.utils.MapUtils;
 import james.monochrome.utils.TileUtils;
 
-public class CharacterView extends SquareImageView {
+public class CharacterView extends DrawingImageView {
 
     private String mapKey;
     private SceneryData scenery;

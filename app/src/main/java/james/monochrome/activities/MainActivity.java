@@ -3,7 +3,6 @@ package james.monochrome.activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.graphics.drawable.VectorDrawableCompat;
@@ -11,7 +10,6 @@ import android.support.v4.util.ArrayMap;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import com.klinker.android.peekview.PeekViewActivity;
 
@@ -124,10 +122,8 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
             }
         });
 
-        if (prefs.getBoolean("dpad", false)) {
-            View buttonLayout = findViewById(R.id.buttonLayout);
-            buttonLayout.setVisibility(View.VISIBLE);
-        }
+        if (prefs.getBoolean("dpad", false))
+            findViewById(R.id.buttonLayout).setVisibility(View.VISIBLE);
 
         findViewById(R.id.up).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,16 +152,6 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
                 moveRight();
             }
         });
-
-        FrameLayout buttonLayout = (FrameLayout) findViewById(R.id.buttonLayout);
-
-        Point size = new Point();
-        getWindowManager().getDefaultDisplay().getSize(size);
-
-        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) buttonLayout.getLayoutParams();
-        layoutParams.width = Math.abs(size.x - size.y) / 2;
-        layoutParams.height = Math.abs(size.x - size.y) / 2;
-        findViewById(R.id.buttonLayout).setLayoutParams(layoutParams);
 
         findViewById(R.id.root).setOnTouchListener(this);
 

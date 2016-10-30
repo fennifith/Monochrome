@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import james.monochrome.Monochrome;
 import james.monochrome.utils.MapUtils;
 
-public class BackgroundView extends SquareImageView {
+public class BackgroundView extends DrawingImageView {
 
     private String mapKey;
     private Paint paint;

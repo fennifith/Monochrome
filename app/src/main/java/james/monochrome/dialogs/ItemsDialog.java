@@ -13,12 +13,8 @@ import android.widget.TextView;
 
 import com.klinker.android.peekview.PeekViewActivity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import james.monochrome.R;
 import james.monochrome.adapters.ItemAdapter;
-import james.monochrome.data.items.ItemData;
 import james.monochrome.utils.ItemUtils;
 import jp.wasabeef.blurry.Blurry;
 
@@ -60,12 +56,7 @@ public class ItemsDialog extends AppCompatDialog {
         holding = (RecyclerView) findViewById(R.id.holding);
         holding.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
-        List<ItemData> holdingItems = new ArrayList<>();
-        for (ItemData item : ItemUtils.getHoldingItems(getContext())) {
-            if (!item.isUseless()) holdingItems.add(item);
-        }
-
-        holdingAdapter = new ItemAdapter(activity, holdingItems, null);
+        holdingAdapter = new ItemAdapter(activity, ItemUtils.getHoldingItems(getContext()), null);
         holding.setAdapter(holdingAdapter);
 
         findViewById(R.id.chestLayout).setVisibility(View.GONE);

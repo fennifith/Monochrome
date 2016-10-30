@@ -9,8 +9,8 @@ import james.monochrome.utils.TileUtils;
 
 public class AppleItemData extends ItemData {
 
-    public AppleItemData(Context context, boolean hasPickedUp, boolean isHolding, boolean isUseless) {
-        super(context, TileUtils.TILE_APPLE, hasPickedUp, isHolding, isUseless);
+    public AppleItemData(Context context, boolean hasPickedUp, boolean isHolding) {
+        super(context, TileUtils.TILE_APPLE, hasPickedUp, isHolding);
     }
 
     public AppleItemData(Context context, PositionData position) {

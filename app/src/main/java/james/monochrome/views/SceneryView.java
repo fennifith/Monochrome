@@ -13,7 +13,7 @@ import james.monochrome.data.SceneryData;
 import james.monochrome.data.items.ItemData;
 import james.monochrome.data.tiles.TileData;
 
-public class SceneryView extends SquareImageView {
+public class SceneryView extends DrawingImageView {
 
     private String mapKey;
     private SceneryData scenery;

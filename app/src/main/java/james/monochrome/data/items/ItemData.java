@@ -15,7 +15,7 @@ public abstract class ItemData extends TileData {
 
     public static final String KEY_PICKED_UP = "pickedUp";
     public static final String KEY_HOLDING = "holding";
-    public static final String KEY_USELESS = "useless";
+    private static final String KEY_USELESS = "useless";
     private static final String VOWELS = "aeiou";
 
     private PositionData position;
@@ -23,11 +23,10 @@ public abstract class ItemData extends TileData {
     private boolean isHolding;
     private boolean isUseless;
 
-    public ItemData(Context context, int[][] tile, boolean hasPickedUp, boolean isHolding, boolean isUseless) {
+    public ItemData(Context context, int[][] tile, boolean hasPickedUp, boolean isHolding) {
         super(context, tile, null);
         this.hasPickedUp = hasPickedUp;
         this.isHolding = isHolding;
-        this.isUseless = isUseless;
     }
 
     public ItemData(Context context, int[][] tile, PositionData position) {
@@ -124,7 +123,7 @@ public abstract class ItemData extends TileData {
     public void setUseless() {
         if (hasConstantPosition())
             PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean(KEY_USELESS + getKey() + getId(), true).apply();
-        else ItemUtils.setUseless(getContext(), getKey());
+        else ItemUtils.setUseless(getContext(), this);
         ((Monochrome) getContext().getApplicationContext()).onItemMoved(this);
 
         isUseless = true;

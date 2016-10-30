@@ -76,23 +76,13 @@ public class ChestDialog extends AppCompatDialog implements Monochrome.OnSomethi
         holding = (RecyclerView) findViewById(R.id.holding);
         holding.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
-        List<ItemData> holdingItems = new ArrayList<>();
-        for (ItemData item : ItemUtils.getHoldingItems(getContext())) {
-            if (!item.isUseless()) holdingItems.add(item);
-        }
-
-        holdingAdapter = new ItemAdapter(getContext(), holdingItems, false);
+        holdingAdapter = new ItemAdapter(getContext(), ItemUtils.getHoldingItems(getContext()), false);
         holding.setAdapter(holdingAdapter);
 
         chest = (RecyclerView) findViewById(R.id.chest);
         chest.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
-        List<ItemData> chestItems = new ArrayList<>();
-        for (ItemData item : ItemUtils.getChestItems(getContext())) {
-            if (!item.isUseless()) chestItems.add(item);
-        }
-
-        chestAdapter = new ItemAdapter(getContext(), chestItems, true);
+        chestAdapter = new ItemAdapter(getContext(), ItemUtils.getChestItems(getContext()), true);
         chest.setAdapter(chestAdapter);
 
         addOnDismissListener(new OnDismissListener() {
@@ -136,20 +126,10 @@ public class ChestDialog extends AppCompatDialog implements Monochrome.OnSomethi
     @Override
     public void onItemMoved(ItemData item) {
         if (holding != null && chest != null) {
-            List<ItemData> holdingItems = new ArrayList<>();
-            for (ItemData holdingItem : ItemUtils.getHoldingItems(getContext())) {
-                if (!holdingItem.isUseless()) holdingItems.add(holdingItem);
-            }
-
-            holdingAdapter = new ItemAdapter(getContext(), holdingItems, false);
+            holdingAdapter = new ItemAdapter(getContext(), ItemUtils.getHoldingItems(getContext()), false);
             holding.setAdapter(holdingAdapter);
 
-            List<ItemData> chestItems = new ArrayList<>();
-            for (ItemData chestItem : ItemUtils.getChestItems(getContext())) {
-                if (!chestItem.isUseless()) chestItems.add(chestItem);
-            }
-
-            chestAdapter = new ItemAdapter(getContext(), chestItems, true);
+            chestAdapter = new ItemAdapter(getContext(), ItemUtils.getChestItems(getContext()), true);
             chest.setAdapter(chestAdapter);
         }
     }
