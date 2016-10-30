@@ -18,8 +18,11 @@ public class QuestGiverCharacterData extends CharacterData {
 
     @Override
     String getTitle() {
-        if (quest != null)
-            return String.format(getContext().getString(R.string.action_quest), quest.getName());
+        if (quest != null) {
+            if (quest.isCompleted()) return getContext().getString(R.string.msg_quest_complete);
+            else
+                return String.format(getContext().getString(R.string.action_quest), quest.getName());
+        }
         else return null;
     }
 

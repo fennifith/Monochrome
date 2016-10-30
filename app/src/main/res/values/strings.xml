@@ -32,6 +32,8 @@
     <string name="msg_sign_tutorial3">I get distracted a lot.</string>
     <string name="msg_sign_tutorial4">You should probably go to the right before I get distracted any more.</string>
 
+    <string name="msg_quest_complete">Quest Complete!</string>
+
     <string name="msg_char_tutorial1">What is that thing to the left you say? Well, I shall tell you a story that has been passed down through generations. It is a house. They are locked by default, but once you acquire a mystical key item you can gain access to them. Once inside, you have the ability to save the progress of your game using the ominous checkpoint flag and store items such as apples or pumpkins in a magically teleporting chest.</string>
 
     <string name="msg_save">Would you like to save the game?</string>
@@ -49,6 +51,15 @@
     <string name="quest_title_apples">I Really Like Apples</string>
     <string name="quest_desc_apples">I want to eat a lot of apples. Could you go around and pick up about 10 apples for me?</string>
     <string name="quest_complete_apples">Thanks for getting me apples! Om nom nom nom nom.</string>
+
+    <string name="quest_title_more_apples">Gimme More Apples</string>
+    <string name="quest_desc_more_apples">Some of my friends could use some apples as well. Could you go and get about 15 for us?</string>
+    <string name="quest_complete_more_apples">These apples are good.</string>
+
+    <string name="quest_title_pumpkins">Pumpkins</string>
+    <string name="quest_desc_pumpkins">I happened to notice this delicious looking patch of pumpkins the other day. Would you mind getting 4 of them for me?</string>
+    <string name="quest_complete_pumpkins">I might make a pie with these…</string>
+
 
     <string name="title_chest">Chest</string>
     <string name="title_holding">Holding</string>
