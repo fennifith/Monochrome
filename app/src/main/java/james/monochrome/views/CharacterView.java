@@ -6,7 +6,6 @@ import android.graphics.Paint;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.HapticFeedbackConstants;
-import android.view.MotionEvent;
 
 import java.util.List;
 
@@ -92,7 +91,7 @@ public class CharacterView extends SquareImageView {
         return new PositionData(mapKey, (scenery.getX() * 10) + characterX, (scenery.getY() * 10) + characterY);
     }
 
-    public void moveUp(MotionEvent event) {
+    public void moveUp() {
         List<TileData> tiles = MapUtils.getTilesAt(mapKey, scenery, characters, items, characterX, characterY - 1);
 
         if (MapUtils.isValidPosition(mapKey, scenery, characters, items, characterX, characterY - 1)) {
@@ -117,7 +116,7 @@ public class CharacterView extends SquareImageView {
         handler.postDelayed(runnable, 3000);
     }
 
-    public void moveDown(MotionEvent event) {
+    public void moveDown() {
         List<TileData> tiles = MapUtils.getTilesAt(mapKey, scenery, characters, items, characterX, characterY + 1);
 
         if (MapUtils.isValidPosition(mapKey, scenery, characters, items, characterX, characterY + 1)) {
@@ -142,7 +141,7 @@ public class CharacterView extends SquareImageView {
         handler.postDelayed(runnable, 3000);
     }
 
-    public void moveLeft(MotionEvent event) {
+    public void moveLeft() {
         List<TileData> tiles = MapUtils.getTilesAt(mapKey, scenery, characters, items, characterX - 1, characterY);
 
         if (MapUtils.isValidPosition(mapKey, scenery, characters, items, characterX - 1, characterY)) {
@@ -167,7 +166,7 @@ public class CharacterView extends SquareImageView {
         handler.postDelayed(runnable, 3000);
     }
 
-    public void moveRight(MotionEvent event) {
+    public void moveRight() {
         List<TileData> tiles = MapUtils.getTilesAt(mapKey, scenery, characters, items, characterX + 1, characterY);
 
         if (MapUtils.isValidPosition(mapKey, scenery, characters, items, characterX + 1, characterY)) {

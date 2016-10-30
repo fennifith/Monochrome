@@ -24,16 +24,17 @@
     <string name="item_key_desc">Keys are very precious items; they are the only way to unlock a save point in the game - without them you could lose your progress!</string>
     <string name="item_number">x%1$d</string>
 
-    <string name="msg_tutorial">Well look at you, fluffy puff ball. Or is it puffy fluff ball? I can\'t remember. You should probably go to the right and read some of those signs.</string>
+    <string name="msg_tutorial">Well look at you, fluffy puff ball. Or is it puffy fluff ball? I can\'t remember. You should probably read some of those signs.</string>
     <string name="msg_tutorial_move">You can move by swiping left, right, up, or down. Swipe towards an object to interact with it.</string>
 
     <string name="msg_sign_tutorial1">Yay. You can read signs. Good job.</string>
-    <string name="msg_sign_tutorial2">Yes, keep reading the signs. READ ALL THE SIGNS. THE SIGNS CONTROL YOUR LIFE.</string>
-    <string name="msg_sign_tutorial3">I get distracted a lot.</string>
-    <string name="msg_sign_tutorial4">You should probably go to the right before I get distracted any more.</string>
+    <string name="msg_sign_tutorial2">This app is a small preview of the official release.</string>
+    <string name="msg_sign_tutorial3">It is designed only to show the basic functions of the game.</string>
+    <string name="msg_sign_tutorial4">Because of this, only 5 sections of the map (and 3 quests) are available.</string>
 
     <string name="msg_quest_complete">Quest Complete!</string>
 
+    <string name="title_char_tutorial1">Part 1: Tutorial</string>
     <string name="msg_char_tutorial1">What is that thing to the left you say? Well, I shall tell you a story that has been passed down through generations. It is a house. They are locked by default, but once you acquire a mystical key item you can gain access to them. Once inside, you have the ability to save the progress of your game using the ominous checkpoint flag and store items such as apples or pumpkins in a magically teleporting chest.</string>
 
     <string name="msg_save">Would you like to save the game?</string>

@@ -12,17 +12,18 @@ public class DialogueCharacterData extends CharacterData {
 
     private static final String KEY_READ = "read";
 
-    private String key, message;
+    private String key, title, message;
 
-    public DialogueCharacterData(Context context, PositionData position, String key, String message) {
+    public DialogueCharacterData(Context context, PositionData position, String key, String title, String message) {
         super(context, TileUtils.TILE_PERSON_3, position);
         this.key = key;
+        this.title = title;
         this.message = message;
     }
 
     @Override
     String getTitle() {
-        return null;
+        return title;
     }
 
     @Override

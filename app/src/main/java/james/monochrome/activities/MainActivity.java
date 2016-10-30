@@ -124,34 +124,36 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
             }
         });
 
-        if (prefs.getBoolean("dpad", false))
-            findViewById(R.id.buttonLayout).setVisibility(View.VISIBLE);
+        if (prefs.getBoolean("dpad", false)) {
+            View buttonLayout = findViewById(R.id.buttonLayout);
+            buttonLayout.setVisibility(View.VISIBLE);
+        }
 
-        findViewById(R.id.up).setOnTouchListener(new OnClickTouchListener() {
+        findViewById(R.id.up).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view, MotionEvent event) {
-                moveUp(event);
+            public void onClick(View view) {
+                moveUp();
             }
         });
 
-        findViewById(R.id.down).setOnTouchListener(new OnClickTouchListener() {
+        findViewById(R.id.down).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view, MotionEvent event) {
-                moveDown(event);
+            public void onClick(View view) {
+                moveDown();
             }
         });
 
-        findViewById(R.id.left).setOnTouchListener(new OnClickTouchListener() {
+        findViewById(R.id.left).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view, MotionEvent event) {
-                moveLeft(event);
+            public void onClick(View view) {
+                moveLeft();
             }
         });
 
-        findViewById(R.id.right).setOnTouchListener(new OnClickTouchListener() {
+        findViewById(R.id.right).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view, MotionEvent event) {
-                moveRight(event);
+            public void onClick(View view) {
+                moveRight();
             }
         });
 
@@ -246,52 +248,52 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
         scenery.setScenery(mapKey, data, items);
     }
 
-    public void moveUp(MotionEvent event) {
+    public void moveUp() {
         if (character.getCharacterY() == 0 && sceneY > 0) {
             sceneY -= 1;
 
             setScenery(map.get(sceneY).getScenery(sceneX));
             character.setCharacterPosition(character.getCharacterX(), 9);
-        } else character.moveUp(event);
+        } else character.moveUp();
 
         PositionData position = character.getPosition();
         mapPositions.put(mapKey, position);
         monochrome.onPositionChange(position);
     }
 
-    public void moveDown(MotionEvent event) {
+    public void moveDown() {
         if (character.getCharacterY() == 9 && sceneY < map.size() - 1) {
             sceneY += 1;
 
             setScenery(map.get(sceneY).getScenery(sceneX));
             character.setCharacterPosition(character.getCharacterX(), 0);
-        } else character.moveDown(event);
+        } else character.moveDown();
 
         PositionData position = character.getPosition();
         mapPositions.put(mapKey, position);
         monochrome.onPositionChange(position);
     }
 
-    public void moveLeft(MotionEvent event) {
+    public void moveLeft() {
         if (character.getCharacterX() == 0 && sceneX > 0) {
             sceneX -= 1;
 
             setScenery(map.get(sceneY).getScenery(sceneX));
             character.setCharacterPosition(9, character.getCharacterY());
-        } else character.moveLeft(event);
+        } else character.moveLeft();
 
         PositionData position = character.getPosition();
         mapPositions.put(mapKey, position);
         monochrome.onPositionChange(position);
     }
 
-    public void moveRight(MotionEvent event) {
+    public void moveRight() {
         if (character.getCharacterX() == 9 && sceneX < map.get(sceneY).getRow().size() - 1) {
             sceneX += 1;
 
             setScenery(map.get(sceneY).getScenery(sceneX));
             character.setCharacterPosition(0, character.getCharacterY());
-        } else character.moveRight(event);
+        } else character.moveRight();
 
         PositionData position = character.getPosition();
         mapPositions.put(mapKey, position);
@@ -315,12 +317,12 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
                 float dy = downY - event.getY();
 
                 if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 100) {
-                    if (dx < 0) moveRight(event);
-                    else moveLeft(event);
+                    if (dx < 0) moveRight();
+                    else moveLeft();
                     prefs.edit().putBoolean(KEY_SWIPED, true).apply();
                 } else if (Math.abs(dy) > 100) {
-                    if (dy < 0) moveDown(event);
-                    else moveUp(event);
+                    if (dy < 0) moveDown();
+                    else moveUp();
                     prefs.edit().putBoolean(KEY_SWIPED, true).apply();
                 } else if (!prefs.getBoolean(KEY_SWIPED, false))
                     StaticUtils.makeToast(this, getString(R.string.msg_tutorial_move)).show();

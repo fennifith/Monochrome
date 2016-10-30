@@ -69,7 +69,6 @@
         android:layout_width="126dp"
         android:layout_height="126dp"
         android:layout_gravity="bottom|end"
-        android:background="#42FFFFFF"
         android:padding="8dp"
         android:visibility="gone">
 
