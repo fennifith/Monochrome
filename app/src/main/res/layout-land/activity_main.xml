@@ -47,7 +47,8 @@
             android:layout_height="match_parent"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:scaleType="center"
-            app:srcCompat="@drawable/ic_sound_on" />
+            app:srcCompat="@drawable/ic_sound_on"
+            android:visibility="gone" />
 
         <james.monochrome.views.SquareImageView
             android:id="@+id/items"
