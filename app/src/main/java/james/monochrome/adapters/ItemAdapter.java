@@ -18,6 +18,7 @@ import james.monochrome.Monochrome;
 import james.monochrome.R;
 import james.monochrome.data.items.ItemData;
 import james.monochrome.dialogs.ItemDialog;
+import james.monochrome.utils.StaticUtils;
 import james.monochrome.views.TileView;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
@@ -48,7 +49,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             else itemTypes.add(new ItemTypeData(item));
         }
 
-        typeface = Typeface.createFromAsset(context.getAssets(), "VT323-Regular.ttf");
+        typeface = StaticUtils.getTypeface(context);
     }
 
     @Override

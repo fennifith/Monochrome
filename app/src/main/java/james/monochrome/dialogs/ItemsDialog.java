@@ -16,6 +16,7 @@ import com.klinker.android.peekview.PeekViewActivity;
 import james.monochrome.R;
 import james.monochrome.adapters.ItemAdapter;
 import james.monochrome.utils.ItemUtils;
+import james.monochrome.utils.StaticUtils;
 import jp.wasabeef.blurry.Blurry;
 
 public class ItemsDialog extends AppCompatDialog {
@@ -49,7 +50,7 @@ public class ItemsDialog extends AppCompatDialog {
             }
         });
 
-        Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), "VT323-Regular.ttf");
+        Typeface typeface = StaticUtils.getTypeface(getContext());
         ((TextView) findViewById(R.id.titleHolding)).setTypeface(typeface);
         ((TextView) findViewById(R.id.titleChest)).setTypeface(typeface);
 

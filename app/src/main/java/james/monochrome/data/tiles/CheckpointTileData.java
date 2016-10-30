@@ -1,11 +1,14 @@
 package james.monochrome.data.tiles;
 
 import android.content.Context;
-import android.content.DialogInterface;
+import android.support.annotation.NonNull;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+
+import james.monochrome.Monochrome;
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
-import james.monochrome.utils.StaticUtils;
 import james.monochrome.utils.TileUtils;
 
 public class CheckpointTileData extends TileData {
@@ -16,22 +19,22 @@ public class CheckpointTileData extends TileData {
 
     @Override
     public void onTouch() {
-        StaticUtils.makeDialog(
+        ((Monochrome) getContext().getApplicationContext()).makeDialog(
                 getContext(),
                 getContext().getString(R.string.action_checkpoint),
                 getContext().getString(R.string.msg_save),
                 getContext().getString(R.string.action_save),
-                new DialogInterface.OnClickListener() {
+                new MaterialDialog.SingleButtonCallback() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         savePosition();
                         dialog.dismiss();
                     }
                 },
                 getContext().getString(R.string.action_cancel),
-                new DialogInterface.OnClickListener() {
+                new MaterialDialog.SingleButtonCallback() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         dialog.dismiss();
                     }
                 }

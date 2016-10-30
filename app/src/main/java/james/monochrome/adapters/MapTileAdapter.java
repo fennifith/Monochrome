@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
+import james.monochrome.utils.StaticUtils;
 
 public class MapTileAdapter extends RecyclerView.Adapter<MapTileAdapter.ViewHolder> {
 
@@ -21,7 +22,7 @@ public class MapTileAdapter extends RecyclerView.Adapter<MapTileAdapter.ViewHold
         this.data = data;
         this.lengthX = lengthX;
         this.lengthY = lengthY;
-        typeface = Typeface.createFromAsset(context.getAssets(), "VT323-Regular.ttf");
+        typeface = StaticUtils.getTypeface(context);
     }
 
     @Override

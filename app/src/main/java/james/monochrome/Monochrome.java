@@ -1,11 +1,14 @@
 package james.monochrome;
 
 import android.app.Application;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
+
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +23,7 @@ public class Monochrome extends Application {
 
     private Map<int[][], Bitmap> bitmaps;
     private List<OnSomethingHappenedListener> listeners;
+    private DialogListener dialogListener;
 
     @Override
     public void onCreate() {
@@ -50,6 +54,10 @@ public class Monochrome extends Application {
 
     public void removeListener(OnSomethingHappenedListener listener) {
         listeners.remove(listener);
+    }
+
+    public void setDialogListener(DialogListener listener) {
+        dialogListener = listener;
     }
 
     public void onTileChange(TileData tile) {
@@ -100,6 +108,16 @@ public class Monochrome extends Application {
         }
     }
 
+    public void makeDialog(Context context, @Nullable String title, @Nullable String message, String primaryText, MaterialDialog.SingleButtonCallback primaryListener, @Nullable String secondaryText, @Nullable MaterialDialog.SingleButtonCallback secondaryListener) {
+        if (dialogListener != null)
+            dialogListener.makeDialog(context, title, message, primaryText, primaryListener, secondaryText, secondaryListener);
+    }
+
+    public void makeItemConfirmationDialog(Context context, ItemData item, String message, MaterialDialog.SingleButtonCallback confirmationListener) {
+        if (dialogListener != null)
+            dialogListener.makeItemConfirmationDialog(context, item, message, confirmationListener);
+    }
+
     public interface OnSomethingHappenedListener {
         void onTileChange(TileData tile);
 
@@ -116,6 +134,12 @@ public class Monochrome extends Application {
         void onCloseChest();
 
         void onItemMoved(ItemData item);
+    }
+
+    public interface DialogListener {
+        void makeDialog(Context context, @Nullable String title, @Nullable String message, String primaryText, MaterialDialog.SingleButtonCallback primaryListener, @Nullable String secondaryText, @Nullable MaterialDialog.SingleButtonCallback secondaryListener);
+
+        void makeItemConfirmationDialog(Context context, ItemData item, String message, MaterialDialog.SingleButtonCallback confirmationListener);
     }
 
 }

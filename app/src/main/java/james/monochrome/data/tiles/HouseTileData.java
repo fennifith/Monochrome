@@ -1,9 +1,13 @@
 package james.monochrome.data.tiles;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+
+import james.monochrome.Monochrome;
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
 import james.monochrome.data.items.ItemData;
@@ -41,16 +45,16 @@ public class HouseTileData extends TileData {
             }
 
             if (key != null) {
-                StaticUtils.makeItemConfirmationDialog(getContext(), key, getContext().getString(R.string.msg_unlock_house), new DialogInterface.OnClickListener() {
+                ((Monochrome) getContext().getApplicationContext()).makeItemConfirmationDialog(getContext(), key, getContext().getString(R.string.msg_unlock_house), new MaterialDialog.SingleButtonCallback() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         if (key != null) {
                             dialog.dismiss();
                             key.setUseless();
                             setLocked(false);
                         }
                     }
-                }).show();
+                });
             } else
                 StaticUtils.makeToast(getContext(), getContext().getString(R.string.msg_locked_house)).show();
         } else setMap(MapUtils.KEY_MAP_HOUSE);

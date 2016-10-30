@@ -1,9 +1,13 @@
 package james.monochrome.data.characters;
 
 import android.content.Context;
-import android.content.DialogInterface;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+
+import james.monochrome.Monochrome;
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
 import james.monochrome.data.tiles.TileData;
@@ -32,14 +36,14 @@ public abstract class CharacterData extends TileData {
     @Override
     public void onTouch() {
         if (canAccept()) {
-            StaticUtils.makeDialog(
+            ((Monochrome) getContext().getApplicationContext()).makeDialog(
                     getContext(),
                     getTitle(),
                     getMessage(),
                     getContext().getString(R.string.action_yes),
-                    new DialogInterface.OnClickListener() {
+                    new MaterialDialog.SingleButtonCallback() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                             onAccept();
 
                             String message = getAcceptedMessage();
@@ -49,31 +53,30 @@ public abstract class CharacterData extends TileData {
                         }
                     },
                     getContext().getString(R.string.action_no),
-                    new DialogInterface.OnClickListener() {
+                    new MaterialDialog.SingleButtonCallback() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                             String message = getCancelledMessage();
                             if (message != null)
                                 StaticUtils.makeToast(getContext(), message).show();
                             dialog.dismiss();
                         }
-                    }
-            ).show();
+                    });
         } else {
-            StaticUtils.makeDialog(
+            ((Monochrome) getContext().getApplicationContext()).makeDialog(
                     getContext(),
                     getTitle(),
                     getMessage(),
                     getContext().getString(R.string.action_ok),
-                    new DialogInterface.OnClickListener() {
+                    new MaterialDialog.SingleButtonCallback() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                             dialog.dismiss();
                         }
                     },
                     null,
                     null
-            ).show();
+            );
         }
     }
 

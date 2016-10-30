@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+
 import james.monochrome.data.PositionData;
 import james.monochrome.utils.TileUtils;
 
@@ -29,6 +31,12 @@ public class DialogueCharacterData extends CharacterData {
     @Override
     String getMessage() {
         return message;
+    }
+
+    @Override
+    public void onTouch() {
+        PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean(KEY_READ + key, true).apply();
+        super.onTouch();
     }
 
     @Nullable
@@ -57,7 +65,12 @@ public class DialogueCharacterData extends CharacterData {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         if (position.getMapKey().equals(getPosition().getMapKey()) && position.getTileX() == getPosition().getTileX() && position.getTileY() == getPosition().getTileY() + 1 && !prefs.getBoolean(KEY_READ + key, false)) {
             prefs.edit().putBoolean(KEY_READ + key, true).apply();
-            onTouch();
+
+            try {
+                onTouch();
+            } catch (MaterialDialog.DialogException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

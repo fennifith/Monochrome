@@ -1,16 +1,22 @@
 package james.monochrome.activities;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.util.ArrayMap;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.klinker.android.peekview.PeekViewActivity;
 
 import java.util.List;
@@ -38,7 +44,7 @@ import james.monochrome.views.SceneryView;
 import james.monochrome.views.SquareImageView;
 import jp.wasabeef.blurry.Blurry;
 
-public class MainActivity extends PeekViewActivity implements View.OnTouchListener, Monochrome.OnSomethingHappenedListener {
+public class MainActivity extends PeekViewActivity implements View.OnTouchListener, Monochrome.OnSomethingHappenedListener, Monochrome.DialogListener {
 
     public static final int REQUEST_SETTINGS = 12543;
 
@@ -75,6 +81,7 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         monochrome = (Monochrome) getApplicationContext();
         monochrome.addListener(this);
+        monochrome.setDialogListener(this);
 
         background = (BackgroundView) findViewById(R.id.background);
         scenery = (SceneryView) findViewById(R.id.scenery);
@@ -163,26 +170,38 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
                     @Override
                     public void onDismiss(DialogInterface dialog) {
                         if (!prefs.getBoolean(KEY_READ_TUTORIAL, false)) {
-                            StaticUtils.makeDialog(
+                            monochrome.makeDialog(
                                     MainActivity.this,
                                     null,
                                     getString(R.string.msg_tutorial),
                                     getString(R.string.action_ok),
-                                    new DialogInterface.OnClickListener() {
+                                    new MaterialDialog.SingleButtonCallback() {
                                         @Override
-                                        public void onClick(DialogInterface dialog, int which) {
+                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                             prefs.edit().putBoolean(KEY_READ_TUTORIAL, true).apply();
                                         }
                                     },
                                     null,
                                     null
-                            ).show();
+                            );
                         }
                     }
                 });
                 dialog.show();
             }
         });
+    }
+
+    @Override
+    public void onPause() {
+        monochrome.setDialogListener(null);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        monochrome.setDialogListener(this);
+        super.onResume();
     }
 
     @Override
@@ -371,5 +390,36 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
     @Override
     public void onItemMoved(ItemData item) {
 
+    }
+
+    @Override
+    public void makeDialog(Context context, @Nullable String title, @Nullable String message, String primaryText, MaterialDialog.SingleButtonCallback primaryListener, @Nullable String secondaryText, @Nullable MaterialDialog.SingleButtonCallback secondaryListener) {
+        Typeface typeface = StaticUtils.getTypeface(context);
+
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(context)
+                .typeface(typeface, typeface);
+
+        if (title != null) builder.title(title);
+        if (message != null) builder.content(message);
+
+        builder.positiveText(primaryText);
+        builder.onPositive(primaryListener);
+
+        if (secondaryText != null && secondaryListener != null) {
+            builder.negativeText(secondaryText);
+            builder.onNegative(secondaryListener);
+        }
+
+        builder.show();
+    }
+
+    @Override
+    public void makeItemConfirmationDialog(Context context, ItemData item, String message, MaterialDialog.SingleButtonCallback confirmationListener) {
+        makeDialog(context, String.format(context.getString(R.string.action_use_item), item.getName()), message, context.getString(R.string.action_ok), confirmationListener, context.getString(R.string.action_cancel), new MaterialDialog.SingleButtonCallback() {
+            @Override
+            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                dialog.dismiss();
+            }
+        });
     }
 }

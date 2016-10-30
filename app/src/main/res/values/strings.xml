@@ -90,16 +90,19 @@
     <string-array name="library_names">
         <item>Android 3D Touch - PeekView</item>
         <item>Blurry</item>
+        <item>Material Dialogs</item>
     </string-array>
 
     <string-array name="library_descs">
         <item>This library aims to create a simple and powerful API to enable 3D Touch style "Peeking" on Android.</item>
         <item>Blurry is an easy blur library for Android.</item>
+        <item>A beautiful, fluid, and customizable dialogs API.</item>
     </string-array>
 
     <string-array name="library_urls">
         <item>https://github.com/klinker24/Android-3DTouch-PeekView</item>
         <item>https://github.com/wasabeef/Blurry</item>
+        <item>https://github.com/afollestad/material-dialogs</item>
     </string-array>
 
     <string name="pref_confirm">%1$s?</string>

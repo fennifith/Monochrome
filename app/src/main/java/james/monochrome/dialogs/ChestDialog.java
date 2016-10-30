@@ -23,6 +23,7 @@ import james.monochrome.data.PositionData;
 import james.monochrome.data.items.ItemData;
 import james.monochrome.data.tiles.TileData;
 import james.monochrome.utils.ItemUtils;
+import james.monochrome.utils.StaticUtils;
 import jp.wasabeef.blurry.Blurry;
 
 public class ChestDialog extends AppCompatDialog implements Monochrome.OnSomethingHappenedListener {
@@ -69,7 +70,7 @@ public class ChestDialog extends AppCompatDialog implements Monochrome.OnSomethi
             }
         });
 
-        Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), "VT323-Regular.ttf");
+        Typeface typeface = StaticUtils.getTypeface(getContext());
         ((TextView) findViewById(R.id.titleHolding)).setTypeface(typeface);
         ((TextView) findViewById(R.id.titleChest)).setTypeface(typeface);
 
