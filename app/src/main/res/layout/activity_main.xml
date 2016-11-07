@@ -3,28 +3,28 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/two">
+    android:background="@color/nine">
 
     <james.monochrome.views.BackgroundView
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+        android:layout_gravity="center" />
 
     <james.monochrome.views.SceneryView
         android:id="@+id/scenery"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+        android:layout_gravity="center" />
 
     <james.monochrome.views.CharacterView
         android:id="@+id/character"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+        android:layout_gravity="center" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,6 +38,7 @@
             android:layout_height="match_parent"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:scaleType="center"
+            android:tint="@android:color/white"
             app:srcCompat="@drawable/ic_map" />
 
         <james.monochrome.views.SquareImageView
@@ -46,6 +47,7 @@
             android:layout_height="match_parent"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:scaleType="center"
+            android:tint="@android:color/white"
             app:srcCompat="@drawable/ic_items" />
 
         <james.monochrome.views.SquareImageView
@@ -54,6 +56,7 @@
             android:layout_height="match_parent"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:scaleType="center"
+            android:tint="@android:color/white"
             android:visibility="gone"
             app:srcCompat="@drawable/ic_sound_on" />
 
@@ -63,6 +66,7 @@
             android:layout_height="match_parent"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:scaleType="center"
+            android:tint="@android:color/white"
             app:srcCompat="@drawable/ic_pause" />
 
     </LinearLayout>
@@ -71,10 +75,10 @@
         android:id="@+id/buttonLayout"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_below="@id/scenery"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/scenery"
         android:layout_gravity="bottom|end"
         android:padding="8dp"
         android:visibility="gone">
@@ -83,42 +87,46 @@
             android:id="@+id/up"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:scaleType="center"
+            android:tint="@android:color/white"
             app:srcCompat="@drawable/ic_up" />
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/down"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:scaleType="center"
+            android:tint="@android:color/white"
             app:srcCompat="@drawable/ic_down" />
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/left"
             android:layout_width="36dp"
             android:layout_height="36dp"
+            android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/up"
             android:layout_toStartOf="@id/up"
-            android:layout_centerVertical="true"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:scaleType="center"
+            android:tint="@android:color/white"
             app:srcCompat="@drawable/ic_left" />
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/right"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:layout_toRightOf="@id/up"
-            android:layout_toEndOf="@id/up"
             android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/up"
+            android:layout_toRightOf="@id/up"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:scaleType="center"
+            android:tint="@android:color/white"
             app:srcCompat="@drawable/ic_right" />
 
     </RelativeLayout>
