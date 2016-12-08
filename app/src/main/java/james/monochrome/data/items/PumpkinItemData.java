@@ -5,7 +5,6 @@ import android.content.Context;
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
 import james.monochrome.utils.ItemUtils;
-import james.monochrome.utils.MapUtils;
 import james.monochrome.utils.TileUtils;
 
 public class PumpkinItemData extends ItemData {
@@ -30,7 +29,7 @@ public class PumpkinItemData extends ItemData {
 
     @Override
     String getId() {
-        return MapUtils.getTileId(getPosition());
+        return ItemUtils.KEY_ITEM_PUMPKIN;
     }
 
     @Override

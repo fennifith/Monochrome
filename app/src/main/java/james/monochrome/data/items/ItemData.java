@@ -1,8 +1,6 @@
 package james.monochrome.data.items;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import james.monochrome.Monochrome;
 import james.monochrome.R;
@@ -33,11 +31,15 @@ public abstract class ItemData extends TileData {
         this.position = position;
 
         if (hasConstantPosition()) {
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-            hasPickedUp = prefs.getBoolean(KEY_PICKED_UP + getKey() + getId(), false);
-            isHolding = prefs.getBoolean(KEY_HOLDING + getKey() + getId(), false);
-            isUseless = prefs.getBoolean(KEY_USELESS + getKey() + getId(), false);
+            hasPickedUp = getBoolean(KEY_PICKED_UP, false);
+            isHolding = getBoolean(KEY_HOLDING, false);
+            isUseless = getBoolean(KEY_USELESS, false);
         }
+    }
+
+    @Override
+    public String getKey(String key) {
+        return getKey() + getId() + key;
     }
 
     public void setPosition(PositionData position) {
@@ -79,11 +81,8 @@ public abstract class ItemData extends TileData {
     public void onTouch() {
         if (ItemUtils.getFreeVolume(getContext()) >= getVolume()) {
             if (hasConstantPosition()) {
-                PreferenceManager.getDefaultSharedPreferences(getContext())
-                        .edit()
-                        .putBoolean(KEY_PICKED_UP + getKey() + getId(), true)
-                        .putBoolean(KEY_HOLDING + getKey() + getId(), true)
-                        .apply();
+                putBoolean(KEY_PICKED_UP, true);
+                putBoolean(KEY_HOLDING, true);
             } else ItemUtils.addToHolding(getContext(), getKey());
 
             hasPickedUp = true;
@@ -100,7 +99,7 @@ public abstract class ItemData extends TileData {
 
     public void moveToChest() {
         if (hasConstantPosition())
-            PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean(KEY_HOLDING + getKey() + getId(), false).apply();
+            putBoolean(KEY_HOLDING, false);
         else ItemUtils.moveToChest(getContext(), getKey());
         ((Monochrome) getContext().getApplicationContext()).onItemMoved(this);
 
@@ -110,7 +109,7 @@ public abstract class ItemData extends TileData {
     public void moveToHolding() {
         if (ItemUtils.getFreeVolume(getContext()) > getVolume()) {
             if (hasConstantPosition())
-                PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean(KEY_HOLDING + getKey() + getId(), true).apply();
+                putBoolean(KEY_HOLDING, true);
             else ItemUtils.moveToHolding(getContext(), getKey());
             ((Monochrome) getContext().getApplicationContext()).onItemMoved(this);
 
@@ -121,7 +120,7 @@ public abstract class ItemData extends TileData {
 
     public void setUseless() {
         if (hasConstantPosition())
-            PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean(KEY_USELESS + getKey() + getId(), true).apply();
+            putBoolean(KEY_USELESS, true);
         else ItemUtils.setUseless(getContext(), this);
         ((Monochrome) getContext().getApplicationContext()).onItemMoved(this);
 
