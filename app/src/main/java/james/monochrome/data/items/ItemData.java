@@ -9,7 +9,6 @@ import james.monochrome.R;
 import james.monochrome.data.PositionData;
 import james.monochrome.data.tiles.TileData;
 import james.monochrome.utils.ItemUtils;
-import james.monochrome.utils.StaticUtils;
 
 public abstract class ItemData extends TileData {
 
@@ -91,12 +90,12 @@ public abstract class ItemData extends TileData {
             isHolding = true;
 
             String name = getName();
-            StaticUtils.makeToast(getContext(), String.format(getContext().getString(VOWELS.indexOf(Character.toLowerCase(name.charAt(0))) == -1 ? R.string.msg_picked_up : R.string.msg_picked_up_vowel), name)).show();
+            ((Monochrome) getContext().getApplicationContext()).makeToast(String.format(getContext().getString(VOWELS.indexOf(Character.toLowerCase(name.charAt(0))) == -1 ? R.string.msg_picked_up : R.string.msg_picked_up_vowel), name));
             ((Monochrome) getContext().getApplicationContext()).onItemMoved(this);
 
             setTile(getTile());
         } else
-            StaticUtils.makeToast(getContext(), getContext().getString(R.string.msg_no_space)).show();
+            ((Monochrome) getContext().getApplicationContext()).makeToast(getContext().getString(R.string.msg_no_space));
     }
 
     public void moveToChest() {
@@ -117,7 +116,7 @@ public abstract class ItemData extends TileData {
 
             isHolding = true;
         } else
-            StaticUtils.makeToast(getContext(), getContext().getString(R.string.msg_no_space)).show();
+            ((Monochrome) getContext().getApplicationContext()).makeToast(getContext().getString(R.string.msg_no_space));
     }
 
     public void setUseless() {

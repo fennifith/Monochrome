@@ -3,8 +3,8 @@ package james.monochrome.data.quests;
 import android.content.Context;
 import android.preference.PreferenceManager;
 
+import james.monochrome.Monochrome;
 import james.monochrome.R;
-import james.monochrome.utils.StaticUtils;
 
 public abstract class QuestData {
 
@@ -63,7 +63,7 @@ public abstract class QuestData {
 
     public void onAccept() {
         PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean(KEY_ACCEPTED + getId(), true).apply();
-        StaticUtils.makeToast(getContext(), String.format(getContext().getString(R.string.action_quest_accepted), getName())).show();
+        ((Monochrome) getContext().getApplicationContext()).makeToast(String.format(getContext().getString(R.string.action_quest_accepted), getName()));
     }
 
     public abstract float getProgress();

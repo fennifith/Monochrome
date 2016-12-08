@@ -108,6 +108,11 @@ public class Monochrome extends Application {
         }
     }
 
+    public void makeToast(String message) {
+        if (dialogListener != null)
+            dialogListener.makeToast(message);
+    }
+
     public void makeDialog(Context context, @Nullable String title, @Nullable String message, String primaryText, MaterialDialog.SingleButtonCallback primaryListener, @Nullable String secondaryText, @Nullable MaterialDialog.SingleButtonCallback secondaryListener) {
         if (dialogListener != null)
             dialogListener.makeDialog(context, title, message, primaryText, primaryListener, secondaryText, secondaryListener);
@@ -137,6 +142,8 @@ public class Monochrome extends Application {
     }
 
     public interface DialogListener {
+        void makeToast(String message);
+
         void makeDialog(Context context, @Nullable String title, @Nullable String message, String primaryText, MaterialDialog.SingleButtonCallback primaryListener, @Nullable String secondaryText, @Nullable MaterialDialog.SingleButtonCallback secondaryListener);
 
         void makeItemConfirmationDialog(Context context, ItemData item, String message, MaterialDialog.SingleButtonCallback confirmationListener);

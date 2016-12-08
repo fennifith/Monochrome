@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.util.ArrayMap;
 import android.view.HapticFeedbackConstants;
@@ -52,6 +54,8 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
             KEY_READ_TUTORIAL = "tutorialRead",
             KEY_SWIPED = "tutorialSwiped";
 
+    private CoordinatorLayout root;
+
     private BackgroundView background;
     private SceneryView scenery;
     private CharacterView character;
@@ -83,6 +87,7 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
         monochrome.addListener(this);
         monochrome.setDialogListener(this);
 
+        root = (CoordinatorLayout) findViewById(R.id.root);
         background = (BackgroundView) findViewById(R.id.background);
         scenery = (SceneryView) findViewById(R.id.scenery);
         character = (CharacterView) findViewById(R.id.character);
@@ -160,7 +165,7 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
             }
         });
 
-        findViewById(R.id.root).setOnTouchListener(this);
+        root.setOnTouchListener(this);
 
         findViewById(android.R.id.content).post(new Runnable() {
             @Override
@@ -330,7 +335,7 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
                     else moveUp();
                     prefs.edit().putBoolean(KEY_SWIPED, true).apply();
                 } else if (!prefs.getBoolean(KEY_SWIPED, false))
-                    StaticUtils.makeToast(this, getString(R.string.msg_tutorial_move)).show();
+                    makeToast(getString(R.string.msg_tutorial_move));
                 break;
         }
         return false;
@@ -390,6 +395,11 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
     @Override
     public void onItemMoved(ItemData item) {
 
+    }
+
+    @Override
+    public void makeToast(String message) {
+        Snackbar.make(root, message, message.length() > 20 ? Snackbar.LENGTH_LONG : Snackbar.LENGTH_SHORT).show();
     }
 
     @Override

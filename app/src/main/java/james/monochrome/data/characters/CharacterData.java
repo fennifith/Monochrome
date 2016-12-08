@@ -11,7 +11,6 @@ import james.monochrome.Monochrome;
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
 import james.monochrome.data.tiles.TileData;
-import james.monochrome.utils.StaticUtils;
 
 public abstract class CharacterData extends TileData {
 
@@ -48,7 +47,7 @@ public abstract class CharacterData extends TileData {
 
                             String message = getAcceptedMessage();
                             if (message != null)
-                                StaticUtils.makeToast(getContext(), message).show();
+                                ((Monochrome) getContext().getApplicationContext()).makeToast(message);
                             dialog.dismiss();
                         }
                     },
@@ -58,7 +57,7 @@ public abstract class CharacterData extends TileData {
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                             String message = getCancelledMessage();
                             if (message != null)
-                                StaticUtils.makeToast(getContext(), message).show();
+                                ((Monochrome) getContext().getApplicationContext()).makeToast(message);
                             dialog.dismiss();
                         }
                     });

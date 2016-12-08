@@ -14,7 +14,6 @@ import james.monochrome.data.items.ItemData;
 import james.monochrome.data.items.KeyItemData;
 import james.monochrome.utils.ItemUtils;
 import james.monochrome.utils.MapUtils;
-import james.monochrome.utils.StaticUtils;
 import james.monochrome.utils.TileUtils;
 
 public class HouseTileData extends TileData {
@@ -56,7 +55,7 @@ public class HouseTileData extends TileData {
                     }
                 });
             } else
-                StaticUtils.makeToast(getContext(), getContext().getString(R.string.msg_locked_house)).show();
+                ((Monochrome) getContext().getApplicationContext()).makeToast(getContext().getString(R.string.msg_locked_house));
         } else setMap(MapUtils.KEY_MAP_HOUSE);
     }
 
