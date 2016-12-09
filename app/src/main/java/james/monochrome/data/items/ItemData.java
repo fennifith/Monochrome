@@ -2,7 +2,6 @@ package james.monochrome.data.items;
 
 import android.content.Context;
 
-import james.monochrome.Monochrome;
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
 import james.monochrome.data.tiles.TileData;
@@ -37,11 +36,6 @@ public abstract class ItemData extends TileData {
         }
     }
 
-    @Override
-    public String getKey(String key) {
-        return getKey() + getId() + key;
-    }
-
     public void setPosition(PositionData position) {
         this.position = position;
     }
@@ -57,6 +51,7 @@ public abstract class ItemData extends TileData {
 
     abstract String getId();
 
+    @Override
     public abstract String getKey();
 
     public abstract int getVolume();
@@ -79,6 +74,10 @@ public abstract class ItemData extends TileData {
 
     @Override
     public void onTouch() {
+        pickUp();
+    }
+
+    public void pickUp() {
         if (ItemUtils.getFreeVolume(getContext()) >= getVolume()) {
             if (hasConstantPosition()) {
                 putBoolean(KEY_PICKED_UP, true);
@@ -89,19 +88,38 @@ public abstract class ItemData extends TileData {
             isHolding = true;
 
             String name = getName();
-            ((Monochrome) getContext().getApplicationContext()).makeToast(String.format(getContext().getString(VOWELS.indexOf(Character.toLowerCase(name.charAt(0))) == -1 ? R.string.msg_picked_up : R.string.msg_picked_up_vowel), name));
-            ((Monochrome) getContext().getApplicationContext()).onItemMoved(this);
+            getMonochrome().makeToast(String.format(getContext().getString(VOWELS.indexOf(Character.toLowerCase(name.charAt(0))) == -1 ? R.string.msg_picked_up : R.string.msg_picked_up_vowel), name));
+            getMonochrome().onItemMoved(this);
 
             setTile(getTile());
         } else
-            ((Monochrome) getContext().getApplicationContext()).makeToast(getContext().getString(R.string.msg_no_space));
+            getMonochrome().makeToast(getContext().getString(R.string.msg_no_space));
+    }
+
+    public void forcePickUp() {
+        if (hasConstantPosition()) {
+            putBoolean(KEY_PICKED_UP, true);
+            putBoolean(KEY_HOLDING, ItemUtils.getFreeVolume(getContext()) >= getVolume());
+        } else ItemUtils.addToHolding(getContext(), getKey());
+
+        hasPickedUp = true;
+        isHolding = true;
+
+        String name = getName();
+        if (ItemUtils.getFreeVolume(getContext()) >= getVolume())
+            getMonochrome().makeToast(String.format(getContext().getString(VOWELS.indexOf(Character.toLowerCase(name.charAt(0))) == -1 ? R.string.msg_picked_up : R.string.msg_picked_up_vowel), name));
+        else getMonochrome().makeToast(getContext().getString(R.string.msg_moved_chest));
+
+        getMonochrome().onItemMoved(this);
+
+        setTile(getTile());
     }
 
     public void moveToChest() {
         if (hasConstantPosition())
             putBoolean(KEY_HOLDING, false);
         else ItemUtils.moveToChest(getContext(), getKey());
-        ((Monochrome) getContext().getApplicationContext()).onItemMoved(this);
+        getMonochrome().onItemMoved(this);
 
         isHolding = false;
     }
@@ -111,18 +129,18 @@ public abstract class ItemData extends TileData {
             if (hasConstantPosition())
                 putBoolean(KEY_HOLDING, true);
             else ItemUtils.moveToHolding(getContext(), getKey());
-            ((Monochrome) getContext().getApplicationContext()).onItemMoved(this);
+            getMonochrome().onItemMoved(this);
 
             isHolding = true;
         } else
-            ((Monochrome) getContext().getApplicationContext()).makeToast(getContext().getString(R.string.msg_no_space));
+            getMonochrome().makeToast(getContext().getString(R.string.msg_no_space));
     }
 
     public void setUseless() {
         if (hasConstantPosition())
             putBoolean(KEY_USELESS, true);
         else ItemUtils.setUseless(getContext(), this);
-        ((Monochrome) getContext().getApplicationContext()).onItemMoved(this);
+        getMonochrome().onItemMoved(this);
 
         isUseless = true;
     }

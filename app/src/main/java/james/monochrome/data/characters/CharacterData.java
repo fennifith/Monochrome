@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
-import james.monochrome.Monochrome;
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
 import james.monochrome.data.tiles.TileData;
@@ -35,7 +34,7 @@ public abstract class CharacterData extends TileData {
     @Override
     public void onTouch() {
         if (canAccept()) {
-            ((Monochrome) getContext().getApplicationContext()).makeDialog(
+            getMonochrome().makeDialog(
                     getContext(),
                     getTitle(),
                     getMessage(),
@@ -47,7 +46,7 @@ public abstract class CharacterData extends TileData {
 
                             String message = getAcceptedMessage();
                             if (message != null)
-                                ((Monochrome) getContext().getApplicationContext()).makeToast(message);
+                                getMonochrome().makeToast(message);
                             dialog.dismiss();
                         }
                     },
@@ -57,12 +56,12 @@ public abstract class CharacterData extends TileData {
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                             String message = getCancelledMessage();
                             if (message != null)
-                                ((Monochrome) getContext().getApplicationContext()).makeToast(message);
+                                getMonochrome().makeToast(message);
                             dialog.dismiss();
                         }
                     });
         } else {
-            ((Monochrome) getContext().getApplicationContext()).makeDialog(
+            getMonochrome().makeDialog(
                     getContext(),
                     getTitle(),
                     getMessage(),

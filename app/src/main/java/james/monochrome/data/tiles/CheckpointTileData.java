@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
-import james.monochrome.Monochrome;
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
 import james.monochrome.utils.TileUtils;
@@ -19,7 +18,7 @@ public class CheckpointTileData extends TileData {
 
     @Override
     public void onTouch() {
-        ((Monochrome) getContext().getApplicationContext()).makeDialog(
+        getMonochrome().makeDialog(
                 getContext(),
                 getContext().getString(R.string.action_checkpoint),
                 getContext().getString(R.string.msg_save),

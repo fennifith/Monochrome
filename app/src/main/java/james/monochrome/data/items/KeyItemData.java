@@ -5,7 +5,6 @@ import android.content.Context;
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
 import james.monochrome.utils.ItemUtils;
-import james.monochrome.utils.MapUtils;
 import james.monochrome.utils.TileUtils;
 
 public class KeyItemData extends ItemData {
@@ -26,7 +25,7 @@ public class KeyItemData extends ItemData {
 
     @Override
     String getId() {
-        return MapUtils.getTileId(getPosition());
+        return ItemUtils.KEY_ITEM_KEY;
     }
 
     @Override
@@ -46,5 +45,11 @@ public class KeyItemData extends ItemData {
 
     @Override
     public void onUse() {
+    }
+
+    @Override
+    public void setUseless() {
+        putBoolean(KEY_PICKED_UP, false);
+        getMonochrome().onItemMoved(this);
     }
 }

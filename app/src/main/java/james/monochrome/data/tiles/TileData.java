@@ -28,6 +28,10 @@ public abstract class TileData implements Monochrome.OnSomethingHappenedListener
         return context;
     }
 
+    public Monochrome getMonochrome() {
+        return monochrome;
+    }
+
     public int[][] getTile() {
         return tile;
     }
@@ -86,7 +90,11 @@ public abstract class TileData implements Monochrome.OnSomethingHappenedListener
     }
 
     public String getKey(String key) {
-        return position.getMapKey() + MapUtils.getTileId(position) + key;
+        return getKey() + key;
+    }
+
+    public String getKey() {
+        return position.getMapKey() + MapUtils.getTileId(position);
     }
 
     @Override

@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
-import james.monochrome.Monochrome;
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
 import james.monochrome.data.items.ItemData;
@@ -43,7 +42,7 @@ public class HouseTileData extends TileData {
             }
 
             if (key != null) {
-                ((Monochrome) getContext().getApplicationContext()).makeItemConfirmationDialog(getContext(), key, getContext().getString(R.string.msg_unlock_house), new MaterialDialog.SingleButtonCallback() {
+                getMonochrome().makeItemConfirmationDialog(getContext(), key, getContext().getString(R.string.msg_unlock_house), new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         if (key != null) {
@@ -54,7 +53,7 @@ public class HouseTileData extends TileData {
                     }
                 });
             } else
-                ((Monochrome) getContext().getApplicationContext()).makeToast(getContext().getString(R.string.msg_locked_house));
+                getMonochrome().makeToast(getContext().getString(R.string.msg_locked_house));
         } else setMap(MapUtils.KEY_MAP_HOUSE);
     }
 

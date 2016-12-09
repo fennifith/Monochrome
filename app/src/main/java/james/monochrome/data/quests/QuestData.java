@@ -5,6 +5,7 @@ import android.preference.PreferenceManager;
 
 import james.monochrome.Monochrome;
 import james.monochrome.R;
+import james.monochrome.data.items.ItemData;
 
 public abstract class QuestData {
 
@@ -14,11 +15,22 @@ public abstract class QuestData {
     private Context context;
     private String name, description, message;
 
+    private ItemData reward;
+
     public QuestData(Context context, String name, String description, String message) {
         this.context = context;
         this.name = name;
         this.description = description;
         this.message = message;
+    }
+
+    public QuestData setReward(ItemData reward) {
+        this.reward = reward;
+        return this;
+    }
+
+    public ItemData getReward() {
+        return reward;
     }
 
     Context getContext() {
@@ -50,21 +62,50 @@ public abstract class QuestData {
     }
 
     public boolean isReallyCompleted() {
-        return PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(KEY_COMPLETED + getId(), false);
+        return getBoolean(KEY_COMPLETED, false);
     }
 
     public void onComplete() {
-        PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean(KEY_COMPLETED + getId(), true).apply();
+        putBoolean(KEY_COMPLETED, true);
+        if (reward != null) reward.forcePickUp();
     }
 
     public boolean isAccepted() {
-        return PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(KEY_ACCEPTED + getId(), false);
+        return getBoolean(KEY_ACCEPTED, false);
     }
 
     public void onAccept() {
-        PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean(KEY_ACCEPTED + getId(), true).apply();
+        putBoolean(KEY_ACCEPTED, true);
         ((Monochrome) getContext().getApplicationContext()).makeToast(String.format(getContext().getString(R.string.action_quest_accepted), getName()));
     }
 
     public abstract float getProgress();
+
+    public final void putBoolean(String key, boolean value) {
+        PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean(getKey(key), value).apply();
+    }
+
+    public final void putInteger(String key, int value) {
+        PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putInt(getKey(key), value).apply();
+    }
+
+    public final void putString(String key, String value) {
+        PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putString(getKey(key), value).apply();
+    }
+
+    public final boolean getBoolean(String key, boolean defaultValue) {
+        return PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(getKey(key), defaultValue);
+    }
+
+    public final int getInt(String key, int defaultValue) {
+        return PreferenceManager.getDefaultSharedPreferences(getContext()).getInt(getKey(key), defaultValue);
+    }
+
+    public final String getString(String key, String defaultValue) {
+        return PreferenceManager.getDefaultSharedPreferences(getContext()).getString(getKey(key), defaultValue);
+    }
+
+    public String getKey(String key) {
+        return getId() + key;
+    }
 }

@@ -48,6 +48,7 @@
     <string name="msg_quest_incomplete">Please come back when you have finished the quest.</string>
     <string name="msg_no_quests">It seems you\'ve played all the quests available in the preview. More will be in the official release!</string>
     <string name="msg_no_scenes">This part of the map hasn\'t been finished yet! Lazy developers…</string>
+    <string name="msg_moved_chest">Moved to Chest</string>
 
     <string name="quest_title_apples">I Really Like Apples</string>
     <string name="quest_desc_apples">I want to eat a lot of apples. Could you go around and pick up about 10 apples for me?</string>

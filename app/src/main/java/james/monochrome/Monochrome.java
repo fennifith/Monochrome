@@ -1,7 +1,6 @@
 package james.monochrome;
 
 import android.app.Application;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -113,14 +112,14 @@ public class Monochrome extends Application {
             dialogListener.makeToast(message);
     }
 
-    public void makeDialog(Context context, @Nullable String title, @Nullable String message, String primaryText, MaterialDialog.SingleButtonCallback primaryListener, @Nullable String secondaryText, @Nullable MaterialDialog.SingleButtonCallback secondaryListener) {
+    public void makeDialog(@Nullable String title, @Nullable String message, String primaryText, MaterialDialog.SingleButtonCallback primaryListener, @Nullable String secondaryText, @Nullable MaterialDialog.SingleButtonCallback secondaryListener) {
         if (dialogListener != null)
-            dialogListener.makeDialog(context, title, message, primaryText, primaryListener, secondaryText, secondaryListener);
+            dialogListener.makeDialog(title, message, primaryText, primaryListener, secondaryText, secondaryListener);
     }
 
-    public void makeItemConfirmationDialog(Context context, ItemData item, String message, MaterialDialog.SingleButtonCallback confirmationListener) {
+    public void makeItemConfirmationDialog(ItemData item, String message, MaterialDialog.SingleButtonCallback confirmationListener) {
         if (dialogListener != null)
-            dialogListener.makeItemConfirmationDialog(context, item, message, confirmationListener);
+            dialogListener.makeItemConfirmationDialog(item, message, confirmationListener);
     }
 
     public interface OnSomethingHappenedListener {
@@ -144,9 +143,9 @@ public class Monochrome extends Application {
     public interface DialogListener {
         void makeToast(String message);
 
-        void makeDialog(Context context, @Nullable String title, @Nullable String message, String primaryText, MaterialDialog.SingleButtonCallback primaryListener, @Nullable String secondaryText, @Nullable MaterialDialog.SingleButtonCallback secondaryListener);
+        void makeDialog(@Nullable String title, @Nullable String message, String primaryText, MaterialDialog.SingleButtonCallback primaryListener, @Nullable String secondaryText, @Nullable MaterialDialog.SingleButtonCallback secondaryListener);
 
-        void makeItemConfirmationDialog(Context context, ItemData item, String message, MaterialDialog.SingleButtonCallback confirmationListener);
+        void makeItemConfirmationDialog(ItemData item, String message, MaterialDialog.SingleButtonCallback confirmationListener);
     }
 
 }

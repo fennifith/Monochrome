@@ -1,9 +1,9 @@
 package james.monochrome.activities;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -60,13 +60,12 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
     private SceneryView scenery;
     private CharacterView character;
 
-    private SquareImageView pauseView, soundView, itemsView, mapView;
+    private SquareImageView soundView;
     private boolean isMuted;
 
     private List<RowData> map;
     private String mapKey;
 
-    private SceneryData sceneryData;
     private List<CharacterData> characters;
     private List<ItemData> items;
     private int sceneX, sceneY;
@@ -92,10 +91,10 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
         scenery = (SceneryView) findViewById(R.id.scenery);
         character = (CharacterView) findViewById(R.id.character);
 
-        pauseView = (SquareImageView) findViewById(R.id.pause);
+        SquareImageView pauseView = (SquareImageView) findViewById(R.id.pause);
         soundView = (SquareImageView) findViewById(R.id.sound);
-        itemsView = (SquareImageView) findViewById(R.id.items);
-        mapView = (SquareImageView) findViewById(R.id.map);
+        SquareImageView itemsView = (SquareImageView) findViewById(R.id.items);
+        SquareImageView mapView = (SquareImageView) findViewById(R.id.map);
 
         mapPositions = new ArrayMap<>();
         setMap(prefs.getString(MapUtils.KEY_MAP, MapUtils.KEY_MAP_DEFAULT));
@@ -176,7 +175,6 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
                     public void onDismiss(DialogInterface dialog) {
                         if (!prefs.getBoolean(KEY_READ_TUTORIAL, false)) {
                             monochrome.makeDialog(
-                                    MainActivity.this,
                                     null,
                                     getString(R.string.msg_tutorial),
                                     getString(R.string.action_ok),
@@ -252,8 +250,6 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
     }
 
     public void setScenery(SceneryData data) {
-        sceneryData = data;
-
         character.setScenery(mapKey, data, characters, items);
         scenery.setScenery(mapKey, data, items);
     }
@@ -403,10 +399,10 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
     }
 
     @Override
-    public void makeDialog(Context context, @Nullable String title, @Nullable String message, String primaryText, MaterialDialog.SingleButtonCallback primaryListener, @Nullable String secondaryText, @Nullable MaterialDialog.SingleButtonCallback secondaryListener) {
-        Typeface typeface = StaticUtils.getTypeface(context);
+    public void makeDialog(@Nullable String title, @Nullable String message, String primaryText, MaterialDialog.SingleButtonCallback primaryListener, @Nullable String secondaryText, @Nullable MaterialDialog.SingleButtonCallback secondaryListener) {
+        Typeface typeface = StaticUtils.getTypeface(this);
 
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(context)
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
                 .typeface(typeface, typeface);
 
         if (title != null) builder.title(title);
@@ -420,12 +416,14 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
             builder.onNegative(secondaryListener);
         }
 
+        builder.negativeColor(Color.BLACK).neutralColor(Color.BLACK).positiveColor(Color.BLACK);
+
         builder.show();
     }
 
     @Override
-    public void makeItemConfirmationDialog(Context context, ItemData item, String message, MaterialDialog.SingleButtonCallback confirmationListener) {
-        makeDialog(context, String.format(context.getString(R.string.action_use_item), item.getName()), message, context.getString(R.string.action_ok), confirmationListener, context.getString(R.string.action_cancel), new MaterialDialog.SingleButtonCallback() {
+    public void makeItemConfirmationDialog(ItemData item, String message, MaterialDialog.SingleButtonCallback confirmationListener) {
+        makeDialog(String.format(getString(R.string.action_use_item), item.getName()), message, getString(R.string.action_ok), confirmationListener, getString(R.string.action_cancel), new MaterialDialog.SingleButtonCallback() {
             @Override
             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                 dialog.dismiss();
