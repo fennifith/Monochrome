@@ -10,8 +10,16 @@ import james.monochrome.utils.TileUtils;
 
 public class KeyItemData extends ItemData {
 
+    private String id;
+
     public KeyItemData(Context context, PositionData position) {
         super(context, TileUtils.TILE_KEY, position);
+        if (position != null) id = MapUtils.getTileId(position);
+    }
+
+    public KeyItemData(Context context, String id) {
+        super(context, TileUtils.TILE_KEY, null);
+        this.id = id;
     }
 
     @Override
@@ -51,13 +59,12 @@ public class KeyItemData extends ItemData {
     @Override
     public void setUseless() {
         putBoolean(KEY_PICKED_UP, false);
-        if (getPosition() != null)
-            putBoolean(MapUtils.getTileId(getPosition()) + KEY_USELESS, true);
+        if (id != null) putBoolean(id + KEY_USELESS, true);
         getMonochrome().onItemMoved(this);
     }
 
     @Override
     public boolean isUseless() {
-        return getPosition() != null && getBoolean(MapUtils.getTileId(getPosition()) + KEY_USELESS, false);
+        return id != null && getBoolean(id + KEY_USELESS, false);
     }
 }

@@ -27,7 +27,8 @@ public class ItemUtils {
         List<ItemData> items = new ArrayList<>();
 
         for (ItemData item : getConstantItems(context)) {
-            if (!item.isUseless() && item.getPosition().getMapKey().equals(mapKey)) items.add(item);
+            if (!item.isUseless() && item.getPosition() != null && item.getPosition().getMapKey().equals(mapKey))
+                items.add(item);
         }
 
         Random random = new Random();
@@ -65,8 +66,21 @@ public class ItemUtils {
 
     private static List<ItemData> getConstantItems(Context context) {
         List<ItemData> items = new ArrayList<>();
-        items.add(new KeyItemData(context, new PositionData(MapUtils.KEY_MAP_DEFAULT, 0, 0, 2, 5)));
+        for (KeyItemData key : getKeys(context)) {
+            if (!key.isUseless()) {
+                items.add(key);
+                break;
+            }
+        }
+
         return items;
+    }
+
+    private static List<KeyItemData> getKeys(Context context) {
+        List<KeyItemData> keys = new ArrayList<>();
+        keys.add(new KeyItemData(context, new PositionData(MapUtils.KEY_MAP_DEFAULT, 0, 0, 2, 5)));
+        keys.add(new KeyItemData(context, "finishTutorial"));
+        return keys;
     }
 
     public static List<ItemData> getHoldingItems(Context context) {
