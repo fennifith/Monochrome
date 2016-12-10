@@ -146,23 +146,23 @@ public class TileUtils {
                     new int[]{0, 0, 9, 0, 0, 0, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             },
+            TILE_NOTHING = new int[][]{
+                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
+                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
+                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
+                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
+                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
+                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
+                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
+                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
+                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
+                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9}
+            },
             TILE_WALL = new int[][]{
                     new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
                     new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
                     new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
                     new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9}
-            },
-            TILE_WALL_TOP = new int[][]{
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -170,43 +170,7 @@ public class TileUtils {
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
             },
-            TILE_WALL_BOTTOM = new int[][]{
-                    new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9}
-            },
-            TILE_WALL_LEFT = new int[][]{
-                    new int[]{9, 9, 9, 9, 0, 0, 0, 0, 0, 0},
-                    new int[]{9, 9, 9, 9, 0, 0, 0, 0, 0, 0},
-                    new int[]{9, 9, 9, 9, 0, 0, 0, 0, 0, 0},
-                    new int[]{9, 9, 9, 9, 0, 0, 0, 0, 0, 0},
-                    new int[]{9, 9, 9, 9, 0, 0, 0, 0, 0, 0},
-                    new int[]{9, 9, 9, 9, 0, 0, 0, 0, 0, 0},
-                    new int[]{9, 9, 9, 9, 0, 0, 0, 0, 0, 0},
-                    new int[]{9, 9, 9, 9, 0, 0, 0, 0, 0, 0},
-                    new int[]{9, 9, 9, 9, 0, 0, 0, 0, 0, 0},
-                    new int[]{9, 9, 9, 9, 0, 0, 0, 0, 0, 0}
-            },
-            TILE_WALL_RIGHT = new int[][]{
-                    new int[]{0, 0, 0, 0, 0, 0, 9, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 9, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 9, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 9, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 9, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 9, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 9, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 9, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 9, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 9, 9, 9, 9}
-            },
-            TILE_WALL_CORNER_TOP_LEFT = new int[][]{
+            TILE_WALL_CORNER = new int[][]{
                     new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
                     new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
                     new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
@@ -218,43 +182,7 @@ public class TileUtils {
                     new int[]{9, 9, 9, 9, 0, 0, 0, 0, 0, 0},
                     new int[]{9, 9, 9, 9, 0, 0, 0, 0, 0, 0}
             },
-            TILE_WALL_CORNER_TOP_RIGHT = new int[][]{
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 9, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 9, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 9, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 9, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 9, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 9, 9, 9, 9}
-            },
-            TILE_WALL_CORNER_BOTTOM_LEFT = new int[][]{
-                    new int[]{9, 9, 9, 9, 0, 0, 0, 0, 0, 0},
-                    new int[]{9, 9, 9, 9, 0, 0, 0, 0, 0, 0},
-                    new int[]{9, 9, 9, 9, 0, 0, 0, 0, 0, 0},
-                    new int[]{9, 9, 9, 9, 0, 0, 0, 0, 0, 0},
-                    new int[]{9, 9, 9, 9, 0, 0, 0, 0, 0, 0},
-                    new int[]{9, 9, 9, 9, 0, 0, 0, 0, 0, 0},
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9}
-            },
-            TILE_WALL_CORNER_BOTTOM_RIGHT = new int[][]{
-                    new int[]{0, 0, 0, 0, 0, 0, 9, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 9, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 9, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 9, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 9, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 9, 9, 9, 9},
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9}
-            },
-            TILE_WALL_DOOR_TOP = new int[][]{
+            TILE_DOOR_WALL = new int[][]{
                     new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
                     new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
                     new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
@@ -265,42 +193,6 @@ public class TileUtils {
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-            },
-            TILE_WALL_DOOR_BOTTOM = new int[][]{
-                    new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    new int[]{9, 9, 0, 0, 0, 0, 0, 0, 9, 9},
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
-                    new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9}
-            },
-            TILE_WALL_DOOR_LEFT = new int[][]{
-                    new int[]{9, 9, 9, 9, 0, 0, 0, 0, 0, 0},
-                    new int[]{9, 9, 9, 0, 0, 0, 0, 0, 0, 0},
-                    new int[]{9, 9, 9, 0, 0, 0, 0, 0, 0, 0},
-                    new int[]{9, 9, 9, 0, 0, 0, 0, 0, 0, 0},
-                    new int[]{9, 9, 9, 0, 0, 0, 0, 0, 0, 0},
-                    new int[]{9, 9, 9, 0, 0, 0, 0, 0, 0, 0},
-                    new int[]{9, 9, 9, 0, 0, 0, 0, 0, 0, 0},
-                    new int[]{9, 9, 9, 0, 0, 0, 0, 0, 0, 0},
-                    new int[]{9, 9, 9, 0, 0, 0, 0, 0, 0, 0},
-                    new int[]{9, 9, 9, 9, 0, 0, 0, 0, 0, 0}
-            },
-            TILE_WALL_DOOR_RIGHT = new int[][]{
-                    new int[]{0, 0, 0, 0, 0, 0, 9, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 0, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 0, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 0, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 0, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 0, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 0, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 0, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 0, 9, 9, 9},
-                    new int[]{0, 0, 0, 0, 0, 0, 9, 9, 9, 9}
             },
             TILE_CHEST = new int[][]{
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -410,7 +302,7 @@ public class TileUtils {
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
             },
-            TILE_BARRIER_HORZ = new int[][]{
+            TILE_BARRIER = new int[][]{
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -422,17 +314,17 @@ public class TileUtils {
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
             },
-            TILE_BARRIER_VERT = new int[][]{
-                    new int[]{0, 0, 0, 9, 4, 4, 9, 0, 0, 0},
-                    new int[]{0, 0, 0, 9, 4, 7, 9, 0, 0, 0},
-                    new int[]{0, 0, 0, 9, 7, 4, 9, 0, 0, 0},
-                    new int[]{0, 0, 0, 9, 4, 4, 9, 0, 0, 0},
-                    new int[]{0, 0, 0, 9, 4, 7, 9, 0, 0, 0},
-                    new int[]{0, 0, 0, 9, 7, 4, 9, 0, 0, 0},
-                    new int[]{0, 0, 0, 9, 4, 4, 9, 0, 0, 0},
-                    new int[]{0, 0, 0, 9, 4, 7, 9, 0, 0, 0},
-                    new int[]{0, 0, 0, 9, 7, 4, 9, 0, 0, 0},
-                    new int[]{0, 0, 0, 9, 4, 4, 9, 0, 0, 0}
+            TILE_DOOR_OUTSIDE = new int[][]{
+                    new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    new int[]{0, 0, 0, 0, 9, 9, 0, 0, 0, 0},
+                    new int[]{0, 0, 0, 9, 8, 7, 9, 0, 0, 0},
+                    new int[]{0, 0, 9, 6, 8, 7, 8, 9, 0, 0},
+                    new int[]{0, 0, 9, 6, 8, 7, 8, 9, 0, 0},
+                    new int[]{0, 9, 7, 6, 8, 7, 8, 6, 9, 0},
+                    new int[]{0, 9, 7, 6, 8, 7, 8, 6, 9, 0},
+                    new int[]{0, 9, 7, 6, 8, 7, 8, 6, 9, 0},
+                    new int[]{0, 9, 7, 6, 8, 7, 8, 6, 9, 0},
+                    new int[]{0, 9, 9, 9, 9, 9, 9, 9, 9, 0}
             };
 
     public static int[][] getRandomGrass(int min, int max) {
@@ -459,6 +351,40 @@ public class TileUtils {
             tileList.add(rowList);
         }
         return tileList;
+    }
+
+    public static int[][] rotateTile(int[][] tile, int rotation) {
+        int[][] newTile = new int[][]{
+                new int[10],
+                new int[10],
+                new int[10],
+                new int[10],
+                new int[10],
+                new int[10],
+                new int[10],
+                new int[10],
+                new int[10],
+                new int[10]
+        };
+
+        for (int row = 0; row < tile.length; row++) {
+            for (int column = 0; column < tile[row].length; column++) {
+                int id = tile[row][column];
+                switch (rotation % 4) {
+                    case 1:
+                        newTile[column][9 - row] = id;
+                        break;
+                    case 2:
+                        newTile[9 - row][9 - column] = id;
+                        break;
+                    case 3:
+                        newTile[9 - column][row] = id;
+                        break;
+                }
+            }
+        }
+
+        return newTile;
     }
 
     public static void drawTile(Context context, Canvas canvas, Paint paint, int pixelSize, List<List<Integer>> tile) {

@@ -45,7 +45,7 @@ public class MapDialog extends AppCompatDialog {
             }
         });
 
-        int[][][][] map = MapUtils.getMap(getContext(), mapKey);
+        int[][][][] map = MapUtils.getMap(mapKey);
         int lengthY = map.length, lengthX = map[0].length;
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);

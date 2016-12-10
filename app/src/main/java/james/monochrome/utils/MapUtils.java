@@ -1,8 +1,6 @@
 package james.monochrome.utils;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,19 +47,9 @@ public class MapUtils {
     private static final int TILE_HOUSE = 3;
     private static final int TILE_SIGN = 5;
     private static final int TILE_CHECKPOINT = 8;
-    private static final int TILE_WALL = 23;
-    private static final int TILE_WALL_TOP = 9;
-    private static final int TILE_WALL_BOTTOM = 10;
-    private static final int TILE_WALL_LEFT = 11;
-    private static final int TILE_WALL_RIGHT = 12;
-    private static final int TILE_WALL_CORNER_TOP_RIGHT = 13;
-    private static final int TILE_WALL_CORNER_BOTTOM_RIGHT = 14;
-    private static final int TILE_WALL_CORNER_TOP_LEFT = 15;
-    private static final int TILE_WALL_CORNER_BOTTOM_LEFT = 16;
-    private static final int TILE_WALL_DOOR_TOP = 17;
-    private static final int TILE_WALL_DOOR_BOTTOM = 18;
-    private static final int TILE_WALL_DOOR_LEFT = 19;
-    private static final int TILE_WALL_DOOR_RIGHT = 20;
+    private static final int TILE_WALL = 9;
+    private static final int TILE_NOTHING = 10;
+    private static final int TILE_DOOR = 17;
     private static final int TILE_CHEST = 21;
 
     private static final int[][][][] MAP_DEFAULT = new int[][][][]{
@@ -184,16 +172,16 @@ public class MapUtils {
     private static final int[][][][] MAP_HOUSE = new int[][][][]{
             new int[][][]{
                     new int[][]{
-                            new int[]{23, 23, 23, 23, 23, 23, 23, 23, 23, 23},
-                            new int[]{23, 23, 23, 23, 23, 23, 23, 23, 23, 23},
-                            new int[]{23, 23, 15, 9, 9, 9, 9, 13, 23, 23},
-                            new int[]{23, 23, 11, 0, 0, 0, 21, 12, 23, 23},
-                            new int[]{23, 23, 11, 0, 0, 0, 0, 12, 23, 23},
-                            new int[]{23, 23, 11, 8, 0, 0, 0, 12, 23, 23},
-                            new int[]{23, 23, 11, 0, 0, 0, 0, 12, 23, 23},
-                            new int[]{23, 23, 16, 10, 10, 18, 10, 14, 23, 23},
-                            new int[]{23, 23, 23, 23, 23, 23, 23, 23, 23, 23},
-                            new int[]{23, 23, 23, 23, 23, 23, 23, 23, 23, 23}
+                            new int[]{10, 10, 10, 10, 10, 10, 10, 10, 10, 10},
+                            new int[]{10, 10, 10, 10, 10, 10, 10, 10, 10, 10},
+                            new int[]{10, 10, 9, 9, 9, 9, 9, 9, 10, 10},
+                            new int[]{10, 10, 9, 0, 0, 0, 21, 9, 10, 10},
+                            new int[]{10, 10, 9, 0, 0, 0, 0, 9, 10, 10},
+                            new int[]{10, 10, 9, 8, 0, 0, 0, 9, 10, 10},
+                            new int[]{10, 10, 9, 0, 0, 0, 0, 9, 10, 10},
+                            new int[]{10, 10, 9, 9, 9, 17, 9, 9, 10, 10},
+                            new int[]{10, 10, 10, 10, 10, 10, 10, 10, 10, 10},
+                            new int[]{10, 10, 10, 10, 10, 10, 10, 10, 10, 10}
                     }
             }
     };
@@ -207,8 +195,15 @@ public class MapUtils {
         }
     }
 
+    public static String getDoorMapKey(PositionData doorPosition) {
+        if (doorPosition.getMapKey().equals(KEY_MAP_HOUSE))
+            return KEY_MAP_DEFAULT;
+
+        return null;
+    }
+
     public static List<RowData> getMapList(Context context, String key) {
-        int[][][][] map = getMap(context, key);
+        int[][][][] map = getMap(key);
 
         List<RowData> rows = new ArrayList<>();
         for (int i = 0; i < map.length; i++) {
@@ -248,43 +243,13 @@ public class MapUtils {
                                 tileRow.add(new CheckpointTileData(context, position));
                                 break;
                             case TILE_WALL:
-                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL, position));
+                                tileRow.add(new WallTileData(context, position));
                                 break;
-                            case TILE_WALL_TOP:
-                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_TOP, position));
+                            case TILE_NOTHING:
+                                tileRow.add(new FloorTileData(context, TileUtils.TILE_NOTHING, position));
                                 break;
-                            case TILE_WALL_BOTTOM:
-                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_BOTTOM, position));
-                                break;
-                            case TILE_WALL_LEFT:
-                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_LEFT, position));
-                                break;
-                            case TILE_WALL_RIGHT:
-                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_RIGHT, position));
-                                break;
-                            case TILE_WALL_CORNER_BOTTOM_LEFT:
-                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_CORNER_BOTTOM_LEFT, position));
-                                break;
-                            case TILE_WALL_CORNER_BOTTOM_RIGHT:
-                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_CORNER_BOTTOM_RIGHT, position));
-                                break;
-                            case TILE_WALL_CORNER_TOP_LEFT:
-                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_CORNER_TOP_LEFT, position));
-                                break;
-                            case TILE_WALL_CORNER_TOP_RIGHT:
-                                tileRow.add(new WallTileData(context, TileUtils.TILE_WALL_CORNER_TOP_RIGHT, position));
-                                break;
-                            case TILE_WALL_DOOR_TOP:
-                                tileRow.add(new DoorTileData(context, TileUtils.TILE_WALL_DOOR_TOP, KEY_MAP_DEFAULT, position));
-                                break;
-                            case TILE_WALL_DOOR_BOTTOM:
-                                tileRow.add(new DoorTileData(context, TileUtils.TILE_WALL_DOOR_BOTTOM, KEY_MAP_DEFAULT, position));
-                                break;
-                            case TILE_WALL_DOOR_LEFT:
-                                tileRow.add(new DoorTileData(context, TileUtils.TILE_WALL_DOOR_LEFT, KEY_MAP_DEFAULT, position));
-                                break;
-                            case TILE_WALL_DOOR_RIGHT:
-                                tileRow.add(new DoorTileData(context, TileUtils.TILE_WALL_DOOR_RIGHT, KEY_MAP_DEFAULT, position));
+                            case TILE_DOOR:
+                                tileRow.add(new DoorTileData(context, position));
                                 break;
                             case TILE_CHEST:
                                 tileRow.add(new ChestTileData(context, position));
@@ -439,45 +404,12 @@ public class MapUtils {
         return tiles;
     }
 
-    public static void saveMap(Context context, String key, int[][][][] map) {
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-        editor.putBoolean(KEY_MAP + key, true);
-        for (int i = 0; i < 10; i++) {
-            for (int i2 = 0; i2 < 10; i2++) {
-                for (int i3 = 0; i3 < 10; i3++) {
-                    for (int i4 = 0; i4 < 10; i4++) {
-                        editor.putInt(KEY_MAP + key + i + i2 + i3 + i4, map[i][i2][i3][i4]);
-                    }
-                }
-            }
-        }
-        editor.apply();
-    }
-
-    public static int[][][][] getMap(Context context, String key) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        if (prefs.contains(KEY_MAP + key)) {
-            int[][][][] map = new int[10][][][];
-            for (int i = 0; i < 10; i++) {
-                map[i] = new int[10][][];
-                for (int i2 = 0; i2 < 10; i2++) {
-                    map[i][i2] = new int[10][];
-                    for (int i3 = 0; i3 < 10; i3++) {
-                        map[i][i2][i3] = new int[10];
-                        for (int i4 = 0; i4 < 10; i4++) {
-                            map[i][i2][i3][i4] = prefs.getInt(KEY_MAP + key + i + i2 + i3 + i4, 0);
-                        }
-                    }
-                }
-            }
-            return map;
-        } else {
-            switch (key) {
-                case KEY_MAP_HOUSE:
-                    return MAP_HOUSE;
-                default:
-                    return MAP_DEFAULT;
-            }
+    public static int[][][][] getMap(String key) {
+        switch (key) {
+            case KEY_MAP_HOUSE:
+                return MAP_HOUSE;
+            default:
+                return MAP_DEFAULT;
         }
     }
 }

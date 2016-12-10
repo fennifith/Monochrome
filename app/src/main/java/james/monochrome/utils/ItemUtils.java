@@ -33,7 +33,7 @@ public class ItemUtils {
 
         Random random = new Random();
 
-        int[][][][] map = MapUtils.getMap(context, mapKey);
+        int[][][][] map = MapUtils.getMap(mapKey);
         List<RowData> mapList = MapUtils.getMapList(context, mapKey);
         List<CharacterData> characters = MapUtils.getCharacters(context, mapKey);
         for (int i = 0; i < map.length; i++) {
