@@ -1,5 +1,7 @@
 package james.monochrome.activities;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -344,8 +346,54 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
     }
 
     @Override
-    public void onRequestMapChange(String mapKey) {
-        setMap(mapKey);
+    public void onRequestMapChange(final String mapKey) {
+        ValueAnimator animator = ValueAnimator.ofFloat(1, 0);
+        animator.setDuration(500);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                float alpha = (float) valueAnimator.getAnimatedValue();
+                background.setAlpha(alpha);
+                scenery.setAlpha(alpha);
+                character.setAlpha(alpha);
+            }
+        });
+        animator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                setMap(mapKey);
+
+                ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1);
+                valueAnimator.setDuration(500);
+                valueAnimator.setStartDelay(100);
+                valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                        float alpha = (float) valueAnimator.getAnimatedValue();
+                        background.setAlpha(alpha);
+                        scenery.setAlpha(alpha);
+                        character.setAlpha(alpha);
+                    }
+                });
+                valueAnimator.start();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
+        animator.start();
     }
 
     @Override
