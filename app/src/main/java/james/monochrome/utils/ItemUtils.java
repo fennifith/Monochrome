@@ -1,13 +1,12 @@
 package james.monochrome.utils;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import james.monochrome.Monochrome;
 import james.monochrome.data.PositionData;
 import james.monochrome.data.RowData;
 import james.monochrome.data.SceneryData;
@@ -125,8 +124,8 @@ public class ItemUtils {
     private static List<ItemData> getItemsOf(Context context, String itemKey) {
         List<ItemData> items = new ArrayList<>();
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        int pickedUp = prefs.getInt(ItemData.KEY_PICKED_UP + itemKey, 0), holding = prefs.getInt(ItemData.KEY_HOLDING + itemKey, 0);
+        Monochrome monochrome = (Monochrome) context.getApplicationContext();
+        int pickedUp = monochrome.getInt(ItemData.KEY_PICKED_UP + itemKey, 0), holding = monochrome.getInt(ItemData.KEY_HOLDING + itemKey, 0);
         for (int i = 0; i < pickedUp; i++) {
             switch (itemKey) {
                 case KEY_ITEM_APPLE:
@@ -142,26 +141,27 @@ public class ItemUtils {
     }
 
     public static void addToHolding(Context context, String itemKey) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        prefs.edit().putInt(ItemData.KEY_PICKED_UP + itemKey, prefs.getInt(ItemData.KEY_PICKED_UP + itemKey, 0) + 1).apply();
-        prefs.edit().putInt(ItemData.KEY_HOLDING + itemKey, prefs.getInt(ItemData.KEY_HOLDING + itemKey, 0) + 1).apply();
+        ;
+        Monochrome monochrome = (Monochrome) context.getApplicationContext();
+        monochrome.putInt(ItemData.KEY_PICKED_UP + itemKey, monochrome.getInt(ItemData.KEY_PICKED_UP + itemKey, 0) + 1);
+        monochrome.putInt(ItemData.KEY_HOLDING + itemKey, monochrome.getInt(ItemData.KEY_HOLDING + itemKey, 0) + 1);
     }
 
     public static void moveToChest(Context context, String itemKey) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        prefs.edit().putInt(ItemData.KEY_HOLDING + itemKey, prefs.getInt(ItemData.KEY_HOLDING + itemKey, 0) - 1).apply();
+        Monochrome monochrome = (Monochrome) context.getApplicationContext();
+        monochrome.putInt(ItemData.KEY_HOLDING + itemKey, monochrome.getInt(ItemData.KEY_HOLDING + itemKey, 0) - 1);
     }
 
     public static void moveToHolding(Context context, String itemKey) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        prefs.edit().putInt(ItemData.KEY_HOLDING + itemKey, prefs.getInt(ItemData.KEY_HOLDING + itemKey, 0) + 1).apply();
+        Monochrome monochrome = (Monochrome) context.getApplicationContext();
+        monochrome.putInt(ItemData.KEY_HOLDING + itemKey, monochrome.getInt(ItemData.KEY_HOLDING + itemKey, 0) + 1);
     }
 
     public static void setUseless(Context context, ItemData item) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        prefs.edit().putInt(ItemData.KEY_PICKED_UP + item.getKey(), prefs.getInt(ItemData.KEY_PICKED_UP + item.getKey(), 0) - 1).apply();
+        Monochrome monochrome = (Monochrome) context.getApplicationContext();
+        monochrome.putInt(ItemData.KEY_PICKED_UP + item.getKey(), monochrome.getInt(ItemData.KEY_PICKED_UP + item.getKey(), 0) - 1);
         if (item.isHolding())
-            prefs.edit().putInt(ItemData.KEY_HOLDING + item.getKey(), prefs.getInt(ItemData.KEY_HOLDING + item.getKey(), 0) - 1).apply();
+            monochrome.putInt(ItemData.KEY_HOLDING + item.getKey(), monochrome.getInt(ItemData.KEY_HOLDING + item.getKey(), 0) - 1);
     }
 
 }

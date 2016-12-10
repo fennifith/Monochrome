@@ -1,9 +1,11 @@
 package james.monochrome;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
 
@@ -24,11 +26,15 @@ public class Monochrome extends Application {
     private List<OnSomethingHappenedListener> listeners;
     private DialogListener dialogListener;
 
+    Map<String, Object> preferences;
+
     @Override
     public void onCreate() {
         super.onCreate();
         bitmaps = new ArrayMap<>();
         listeners = new ArrayList<>();
+
+        preferences = (Map<String, Object>) PreferenceManager.getDefaultSharedPreferences(this).getAll();
     }
 
     public Bitmap getBitmap(int[][] tile, @Nullable Integer tileSize, Paint paint) {
@@ -45,6 +51,30 @@ public class Monochrome extends Application {
         TileUtils.drawTile(this, canvas, paint, tileSize / 10, TileUtils.getTile(tile));
         bitmaps.put(tile, bitmap);
         return bitmap;
+    }
+
+    public boolean getBoolean(String key, boolean defaultValue) {
+        return preferences.containsKey(key) ? (Boolean) preferences.get(key) : defaultValue;
+    }
+
+    public int getInt(String key, int defaultValue) {
+        return preferences.containsKey(key) ? (Integer) preferences.get(key) : defaultValue;
+    }
+
+    public String getString(String key, String defaultValue) {
+        return preferences.containsKey(key) ? (String) preferences.get(key) : defaultValue;
+    }
+
+    public void putBoolean(String key, boolean value) {
+        preferences.put(key, value);
+    }
+
+    public void putInt(String key, int value) {
+        preferences.put(key, value);
+    }
+
+    public void putString(String key, String value) {
+        preferences.put(key, value);
     }
 
     public void addListener(OnSomethingHappenedListener listener) {
@@ -77,10 +107,23 @@ public class Monochrome extends Application {
         }
     }
 
-    public void requestPositionSave() {
+    public void requestSave() {
         for (OnSomethingHappenedListener listener : new ArrayList<>(listeners)) {
-            listener.onRequestPositionSave();
+            listener.onRequestSave();
         }
+
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+        for (String key : preferences.keySet()) {
+            Object value = preferences.get(key);
+            if (value instanceof Boolean) {
+                editor.putBoolean(key, (Boolean) value);
+            } else if (value instanceof Integer) {
+                editor.putInt(key, (Integer) value);
+            } else if (value instanceof String) {
+                editor.putString(key, (String) value);
+            }
+        }
+        editor.apply();
     }
 
     public void requestShake() {
@@ -129,7 +172,7 @@ public class Monochrome extends Application {
 
         void onPositionChange(PositionData position);
 
-        void onRequestPositionSave();
+        void onRequestSave();
 
         void onRequestShake();
 

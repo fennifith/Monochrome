@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -75,7 +74,6 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
     private Map<String, PositionData> mapPositions;
     private float downX, downY;
 
-    private SharedPreferences prefs;
     private Monochrome monochrome;
 
     @Override
@@ -83,7 +81,6 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         monochrome = (Monochrome) getApplicationContext();
         monochrome.addListener(this);
         monochrome.setDialogListener(this);
@@ -99,7 +96,7 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
         SquareImageView mapView = (SquareImageView) findViewById(R.id.map);
 
         mapPositions = new ArrayMap<>();
-        setMap(prefs.getString(MapUtils.KEY_MAP, MapUtils.KEY_MAP_DEFAULT));
+        setMap(monochrome.getString(MapUtils.KEY_MAP, MapUtils.KEY_MAP_DEFAULT));
 
         pauseView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,7 +132,7 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
             }
         });
 
-        if (prefs.getBoolean("dpad", false))
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("dpad", false))
             findViewById(R.id.buttonLayout).setVisibility(View.VISIBLE);
 
         findViewById(R.id.up).setOnClickListener(new View.OnClickListener() {
@@ -175,7 +172,7 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
                 dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        if (!prefs.getBoolean(KEY_READ_TUTORIAL, false)) {
+                        if (!monochrome.getBoolean(KEY_READ_TUTORIAL, false)) {
                             monochrome.makeDialog(
                                     null,
                                     getString(R.string.msg_tutorial),
@@ -183,12 +180,12 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
                                     new MaterialDialog.SingleButtonCallback() {
                                         @Override
                                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            prefs.edit().putBoolean(KEY_READ_TUTORIAL, true).apply();
                                         }
                                     },
                                     null,
                                     null
                             );
+                            monochrome.putBoolean(KEY_READ_TUTORIAL, true);
                         }
                     }
                 });
@@ -237,10 +234,10 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
             characterX = position.getTileX();
             characterY = position.getTileY();
         } else {
-            sceneX = prefs.getInt(MapUtils.KEY_SCENE_X + mapKey, 0);
-            sceneY = prefs.getInt(MapUtils.KEY_SCENE_Y + mapKey, 0);
-            characterX = prefs.getInt(MapUtils.KEY_CHARACTER_X + mapKey, 0);
-            characterY = prefs.getInt(MapUtils.KEY_CHARACTER_Y + mapKey, 0);
+            sceneX = monochrome.getInt(MapUtils.KEY_SCENE_X + mapKey, 0);
+            sceneY = monochrome.getInt(MapUtils.KEY_SCENE_Y + mapKey, 0);
+            characterX = monochrome.getInt(MapUtils.KEY_CHARACTER_X + mapKey, 0);
+            characterY = monochrome.getInt(MapUtils.KEY_CHARACTER_Y + mapKey, 0);
         }
 
         characters = MapUtils.getCharacters(this, mapKey);
@@ -327,12 +324,12 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
                 if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 100) {
                     if (dx < 0) moveRight();
                     else moveLeft();
-                    prefs.edit().putBoolean(KEY_SWIPED, true).apply();
+                    monochrome.putBoolean(KEY_SWIPED, true);
                 } else if (Math.abs(dy) > 100) {
                     if (dy < 0) moveDown();
                     else moveUp();
-                    prefs.edit().putBoolean(KEY_SWIPED, true).apply();
-                } else if (!prefs.getBoolean(KEY_SWIPED, false))
+                    monochrome.putBoolean(KEY_SWIPED, true);
+                } else if (!monochrome.getBoolean(KEY_SWIPED, false))
                     makeToast(getString(R.string.msg_tutorial_move));
                 break;
         }
@@ -401,17 +398,15 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
     }
 
     @Override
-    public void onRequestPositionSave() {
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(MapUtils.KEY_MAP, mapKey);
+    public void onRequestSave() {
+        monochrome.putString(MapUtils.KEY_MAP, mapKey);
         for (String mapKey : mapPositions.keySet()) {
             PositionData position = mapPositions.get(mapKey);
-            editor.putInt(MapUtils.KEY_SCENE_X + mapKey, position.getSceneX());
-            editor.putInt(MapUtils.KEY_SCENE_Y + mapKey, position.getSceneY());
-            editor.putInt(MapUtils.KEY_CHARACTER_X + mapKey, position.getTileX());
-            editor.putInt(MapUtils.KEY_CHARACTER_Y + mapKey, position.getTileY());
+            monochrome.putInt(MapUtils.KEY_SCENE_X + mapKey, position.getSceneX());
+            monochrome.putInt(MapUtils.KEY_SCENE_Y + mapKey, position.getSceneY());
+            monochrome.putInt(MapUtils.KEY_CHARACTER_X + mapKey, position.getTileX());
+            monochrome.putInt(MapUtils.KEY_CHARACTER_Y + mapKey, position.getTileY());
         }
-        editor.apply();
     }
 
     @Override

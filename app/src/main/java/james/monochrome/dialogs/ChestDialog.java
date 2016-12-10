@@ -109,7 +109,7 @@ public class ChestDialog extends AppCompatDialog implements Monochrome.OnSomethi
     }
 
     @Override
-    public void onRequestPositionSave() {
+    public void onRequestSave() {
     }
 
     @Override
