@@ -35,7 +35,6 @@ public abstract class CharacterData extends TileData {
     public void onTouch() {
         if (canAccept()) {
             getMonochrome().makeDialog(
-                    getContext(),
                     getTitle(),
                     getMessage(),
                     getContext().getString(R.string.action_yes),
@@ -62,7 +61,6 @@ public abstract class CharacterData extends TileData {
                     });
         } else {
             getMonochrome().makeDialog(
-                    getContext(),
                     getTitle(),
                     getMessage(),
                     getContext().getString(R.string.action_ok),

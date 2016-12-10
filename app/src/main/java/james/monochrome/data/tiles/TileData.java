@@ -94,7 +94,7 @@ public abstract class TileData implements Monochrome.OnSomethingHappenedListener
     }
 
     public String getKey() {
-        return position.getMapKey() + MapUtils.getTileId(position);
+        return MapUtils.getTileId(position);
     }
 
     @Override

@@ -42,7 +42,7 @@ public class HouseTileData extends TileData {
             }
 
             if (key != null) {
-                getMonochrome().makeItemConfirmationDialog(getContext(), key, getContext().getString(R.string.msg_unlock_house), new MaterialDialog.SingleButtonCallback() {
+                getMonochrome().makeItemConfirmationDialog(key, getContext().getString(R.string.msg_unlock_house), new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         if (key != null) {

@@ -19,7 +19,6 @@ public class CheckpointTileData extends TileData {
     @Override
     public void onTouch() {
         getMonochrome().makeDialog(
-                getContext(),
                 getContext().getString(R.string.action_checkpoint),
                 getContext().getString(R.string.msg_save),
                 getContext().getString(R.string.action_save),

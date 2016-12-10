@@ -26,7 +26,9 @@ public class ItemUtils {
     public static List<ItemData> getItems(Context context, String mapKey) {
         List<ItemData> items = new ArrayList<>();
 
-        items.addAll(getConstantItems(context));
+        for (ItemData item : getConstantItems(context)) {
+            if (!item.isUseless() && item.getPosition().getMapKey().equals(mapKey)) items.add(item);
+        }
 
         Random random = new Random();
 

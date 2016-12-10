@@ -315,28 +315,19 @@ public class MapUtils {
     }
 
     public static String getTileId(PositionData position) {
-        return position.getSceneX() + "," + position.getSceneY() + "," + position.getTileX() + "," + position.getTileY();
+        return position.getMapKey() + position.getSceneX() + "," + position.getSceneY() + "," + position.getTileX() + "," + position.getTileY();
     }
 
-    public static String getMessage(Context context, String mapKey, String tileId) {
-        switch (mapKey) {
-            case KEY_MAP_DEFAULT:
-                switch (tileId) {
-                    case "0,0,2,0":
-                        return context.getString(R.string.msg_sign_tutorial1);
-                    case "0,0,3,0":
-                        return context.getString(R.string.msg_sign_tutorial2);
-                    case "0,0,4,0":
-                        return context.getString(R.string.msg_sign_tutorial3);
-                    case "0,0,5,0":
-                        return context.getString(R.string.msg_sign_tutorial4);
-                    case "2,1,5,7":
-                        return context.getString(R.string.msg_no_scenes);
-                }
-                break;
-        }
-
-        if (BuildConfig.DEBUG) return tileId;
+    public static String getMessage(Context context, String tileId) {
+        if (tileId.equals(getTileId(new PositionData(KEY_MAP_DEFAULT, 0, 0, 2, 0))))
+            return context.getString(R.string.msg_sign_tutorial1);
+        else if (tileId.equals(getTileId(new PositionData(KEY_MAP_DEFAULT, 0, 0, 3, 0))))
+            return context.getString(R.string.msg_sign_tutorial2);
+        else if (tileId.equals(getTileId(new PositionData(KEY_MAP_DEFAULT, 0, 0, 4, 0))))
+            return context.getString(R.string.msg_sign_tutorial3);
+        else if (tileId.equals(getTileId(new PositionData(KEY_MAP_DEFAULT, 0, 0, 5, 0))))
+            return context.getString(R.string.msg_sign_tutorial4);
+        else if (BuildConfig.DEBUG) return tileId;
         else return "";
     }
 

@@ -11,7 +11,7 @@ public abstract class ItemData extends TileData {
 
     public static final String KEY_PICKED_UP = "pickedUp";
     public static final String KEY_HOLDING = "holding";
-    private static final String KEY_USELESS = "useless";
+    public static final String KEY_USELESS = "useless";
     private static final String VOWELS = "aeiou";
 
     private PositionData position;
