@@ -110,9 +110,15 @@ public class Monochrome extends Application {
         putString(KEY_EXITS + to.getMapKey(), MapUtils.getTileId(from));
     }
 
+    private void requestMapChange(PositionData to) {
+        for (OnSomethingHappenedListener listener : new ArrayList<>(listeners)) {
+            listener.onRequestMapChange(to);
+        }
+    }
+
     public void exitMap(PositionData from) {
         if (preferences.containsKey(KEY_EXITS + from.getMapKey())) {
-            requestMapChange(MapUtils.getTilePosition(getString(KEY_EXITS + from.getMapKey(), null)), from);
+            requestMapChange(MapUtils.getTilePosition(getString(KEY_EXITS + from.getMapKey(), null)));
         }
     }
 

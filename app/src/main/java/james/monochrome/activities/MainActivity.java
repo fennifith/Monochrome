@@ -63,6 +63,7 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
 
     private SquareImageView soundView;
     private boolean isMuted;
+    private boolean isEnabled = true;
 
     private List<RowData> map;
     private String mapKey;
@@ -221,6 +222,10 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
         }
     }
 
+    private void setEnabled(boolean isEnabled) {
+        this.isEnabled = isEnabled;
+    }
+
     public void setMap(String mapKey) {
         this.mapKey = mapKey;
         map = MapUtils.getMapList(this, mapKey);
@@ -254,55 +259,63 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
     }
 
     public void moveUp() {
-        if (character.getCharacterY() == 0 && sceneY > 0) {
-            sceneY -= 1;
+        if (isEnabled) {
+            if (character.getCharacterY() == 0 && sceneY > 0) {
+                sceneY -= 1;
 
-            setScenery(map.get(sceneY).getScenery(sceneX));
-            character.setCharacterPosition(character.getCharacterX(), 9);
-        } else character.moveUp();
+                setScenery(map.get(sceneY).getScenery(sceneX));
+                character.setCharacterPosition(character.getCharacterX(), 9);
+            } else character.moveUp();
 
-        PositionData position = character.getPosition();
-        mapPositions.put(mapKey, position);
-        monochrome.onPositionChange(position);
+            PositionData position = character.getPosition();
+            mapPositions.put(mapKey, position);
+            monochrome.onPositionChange(position);
+        }
     }
 
     public void moveDown() {
-        if (character.getCharacterY() == 9 && sceneY < map.size() - 1) {
-            sceneY += 1;
+        if (isEnabled) {
+            if (character.getCharacterY() == 9 && sceneY < map.size() - 1) {
+                sceneY += 1;
 
-            setScenery(map.get(sceneY).getScenery(sceneX));
-            character.setCharacterPosition(character.getCharacterX(), 0);
-        } else character.moveDown();
+                setScenery(map.get(sceneY).getScenery(sceneX));
+                character.setCharacterPosition(character.getCharacterX(), 0);
+            } else character.moveDown();
 
-        PositionData position = character.getPosition();
-        mapPositions.put(mapKey, position);
-        monochrome.onPositionChange(position);
+            PositionData position = character.getPosition();
+            mapPositions.put(mapKey, position);
+            monochrome.onPositionChange(position);
+        }
     }
 
     public void moveLeft() {
-        if (character.getCharacterX() == 0 && sceneX > 0) {
-            sceneX -= 1;
+        if (isEnabled) {
+            if (character.getCharacterX() == 0 && sceneX > 0) {
+                sceneX -= 1;
 
-            setScenery(map.get(sceneY).getScenery(sceneX));
-            character.setCharacterPosition(9, character.getCharacterY());
-        } else character.moveLeft();
+                setScenery(map.get(sceneY).getScenery(sceneX));
+                character.setCharacterPosition(9, character.getCharacterY());
+            } else character.moveLeft();
 
-        PositionData position = character.getPosition();
-        mapPositions.put(mapKey, position);
-        monochrome.onPositionChange(position);
+            PositionData position = character.getPosition();
+            mapPositions.put(mapKey, position);
+            monochrome.onPositionChange(position);
+        }
     }
 
     public void moveRight() {
-        if (character.getCharacterX() == 9 && sceneX < map.get(sceneY).getRow().size() - 1) {
-            sceneX += 1;
+        if (isEnabled) {
+            if (character.getCharacterX() == 9 && sceneX < map.get(sceneY).getRow().size() - 1) {
+                sceneX += 1;
 
-            setScenery(map.get(sceneY).getScenery(sceneX));
-            character.setCharacterPosition(0, character.getCharacterY());
-        } else character.moveRight();
+                setScenery(map.get(sceneY).getScenery(sceneX));
+                character.setCharacterPosition(0, character.getCharacterY());
+            } else character.moveRight();
 
-        PositionData position = character.getPosition();
-        mapPositions.put(mapKey, position);
-        monochrome.onPositionChange(position);
+            PositionData position = character.getPosition();
+            mapPositions.put(mapKey, position);
+            monochrome.onPositionChange(position);
+        }
     }
 
     private Blurry.ImageComposer getBlurryImage() {
@@ -358,7 +371,7 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
         animator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animator) {
-
+                setEnabled(false);
             }
 
             @Override
@@ -376,6 +389,24 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
                         background.setAlpha(alpha);
                         scenery.setAlpha(alpha);
                         character.setAlpha(alpha);
+                    }
+                });
+                valueAnimator.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animator) {
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animator) {
+                        setEnabled(true);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animator) {
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animator) {
                     }
                 });
                 valueAnimator.start();
