@@ -50,7 +50,6 @@ public class MapUtils {
     private static final int TILE_WALL = 9;
     private static final int TILE_NOTHING = 10;
     private static final int TILE_DOOR = 17;
-    private static final int TILE_DOOR_LOCKED = 18;
     private static final int TILE_CHEST = 21;
 
     private static final int[][][][] MAP_DEFAULT = new int[][][][]{
@@ -268,7 +267,7 @@ public class MapUtils {
                                 tileRow.add(new TreeTileData(context, position));
                                 break;
                             case TILE_HOUSE:
-                                tileRow.add(new DoorTileData(context, position, TileUtils.TILE_HOUSE, true));
+                                tileRow.add(new DoorTileData(context, position, TileUtils.TILE_HOUSE));
                                 break;
                             case TILE_SIGN:
                                 tileRow.add(new SignTileData(context, position));
@@ -283,10 +282,7 @@ public class MapUtils {
                                 tileRow.add(new FloorTileData(context, TileUtils.TILE_NOTHING, position));
                                 break;
                             case TILE_DOOR:
-                                tileRow.add(new DoorTileData(context, position, key.equals(KEY_MAP_HOUSE) ? TileUtils.TILE_DOOR_WALL : TileUtils.TILE_DOOR_OUTSIDE, false));
-                                break;
-                            case TILE_DOOR_LOCKED:
-                                tileRow.add(new DoorTileData(context, position, TileUtils.TILE_DOOR_OUTSIDE, true));
+                                tileRow.add(new DoorTileData(context, position, key.equals(KEY_MAP_HOUSE) ? TileUtils.TILE_DOOR_WALL : TileUtils.TILE_DOOR_OUTSIDE));
                                 break;
                             case TILE_CHEST:
                                 tileRow.add(new ChestTileData(context, position));

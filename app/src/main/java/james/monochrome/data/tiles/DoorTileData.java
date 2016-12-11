@@ -22,10 +22,10 @@ public class DoorTileData extends TileData {
     private boolean isLocked;
     private KeyItemData key;
 
-    public DoorTileData(Context context, PositionData position, int[][] tile, boolean isLocked) {
+    public DoorTileData(Context context, PositionData position, int[][] tile) {
         super(context, tile, position);
         this.doorPosition = MapUtils.getDoorPosition(position);
-        this.isLocked = getBoolean(KEY_LOCKED, isLocked);
+        this.isLocked = getBoolean(KEY_LOCKED, true);
 
         if (Math.abs(4.5 - position.getTileX()) > Math.abs(4.5 - position.getTileY())) {
             if (position.getTileX() > 4.5)
@@ -45,7 +45,7 @@ public class DoorTileData extends TileData {
 
     @Override
     public void onTouch() {
-        if (isLocked) {
+        if (isLocked && doorPosition != null) {
             for (ItemData item : ItemUtils.getHoldingItems(getContext())) {
                 if (item instanceof KeyItemData && !item.isUseless()) {
                     key = (KeyItemData) item;
@@ -70,6 +70,11 @@ public class DoorTileData extends TileData {
             if (doorPosition != null) setMap(doorPosition);
             else getMonochrome().exitMap(getPosition());
         }
+    }
+
+    @Override
+    public String getKey(String key) {
+        return doorPosition != null ? doorPosition.getMapKey() : super.getKey(key);
     }
 
     @Override
