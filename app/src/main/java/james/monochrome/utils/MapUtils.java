@@ -225,17 +225,13 @@ public class MapUtils {
         }
     }
 
-    public static String getDoorMapKey(PositionData doorPosition) {
-        if (doorPosition.getMapKey().equals(KEY_MAP_HOUSE))
-            return KEY_MAP_DEFAULT;
-        else if (doorPosition.equals(new PositionData(KEY_MAP_DEFAULT, 0, 0, 4, 4)))
-            return KEY_MAP_HOUSE;
+    public static PositionData getDoorPosition(PositionData doorPosition) {
+        if (doorPosition.equals(new PositionData(KEY_MAP_DEFAULT, 0, 0, 4, 4)))
+            return new PositionData(KEY_MAP_HOUSE, 0, 0, 5, 7);
         else if (doorPosition.equals(new PositionData(KEY_MAP_DEFAULT, 2, 2, 9, 5)))
-            return KEY_MAP_GRASSY;
-        else if (doorPosition.equals(new PositionData(KEY_MAP_GRASSY, 0, 0, 0, 5)))
-            return KEY_MAP_DEFAULT;
+            return new PositionData(KEY_MAP_GRASSY, 0, 0, 1, 5);
         else if (doorPosition.equals(new PositionData(KEY_MAP_GRASSY, 0, 0, 5, 2)))
-            return KEY_MAP_HOUSE;
+            return new PositionData(KEY_MAP_HOUSE, 0, 0, 5, 7);
 
         return null;
     }
@@ -321,7 +317,13 @@ public class MapUtils {
     }
 
     public static String getTileId(PositionData position) {
-        return position.getMapKey() + position.getSceneX() + "," + position.getSceneY() + "," + position.getTileX() + "," + position.getTileY();
+        return position.getMapKey() + "-" + position.getSceneX() + "," + position.getSceneY() + "," + position.getTileX() + "," + position.getTileY();
+    }
+
+    public static PositionData getTilePosition(String tileId) {
+        String[] positions = tileId.split("-");
+        String[] coordinates = positions[1].split(",");
+        return new PositionData(positions[0], Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), Integer.parseInt(coordinates[2]), Integer.parseInt(coordinates[3]));
     }
 
     public static String getMessage(Context context, PositionData position) {

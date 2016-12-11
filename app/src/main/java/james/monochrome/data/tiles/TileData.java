@@ -40,8 +40,8 @@ public abstract class TileData implements Monochrome.OnSomethingHappenedListener
         monochrome.onTileChange(this);
     }
 
-    void setMap(String mapKey) {
-        monochrome.requestMapChange(mapKey);
+    void setMap(PositionData position) {
+        monochrome.requestMapChange(position, getPosition());
     }
 
     void savePosition() {
@@ -109,7 +109,7 @@ public abstract class TileData implements Monochrome.OnSomethingHappenedListener
     }
 
     @Override
-    public void onRequestMapChange(String mapKey) {
+    public void onRequestMapChange(PositionData position) {
         monochrome.removeListener(this);
     }
 

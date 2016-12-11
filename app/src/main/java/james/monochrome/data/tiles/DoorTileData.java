@@ -18,13 +18,13 @@ public class DoorTileData extends TileData {
 
     private static final String KEY_LOCKED = "locked";
 
-    private String mapKey;
+    private PositionData doorPosition;
     private boolean isLocked;
     private KeyItemData key;
 
     public DoorTileData(Context context, PositionData position, int[][] tile, boolean isLocked) {
         super(context, tile, position);
-        this.mapKey = MapUtils.getDoorMapKey(position);
+        this.doorPosition = MapUtils.getDoorPosition(position);
         this.isLocked = getBoolean(KEY_LOCKED, isLocked);
 
         if (Math.abs(4.5 - position.getTileX()) > Math.abs(4.5 - position.getTileY())) {
@@ -66,7 +66,10 @@ public class DoorTileData extends TileData {
                 });
             } else
                 getMonochrome().makeToast(getContext().getString(R.string.msg_locked));
-        } else setMap(mapKey);
+        } else {
+            if (doorPosition != null) setMap(doorPosition);
+            else getMonochrome().exitMap(getPosition());
+        }
     }
 
     @Override

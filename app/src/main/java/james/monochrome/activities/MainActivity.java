@@ -343,7 +343,7 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
     }
 
     @Override
-    public void onRequestMapChange(final String mapKey) {
+    public void onRequestMapChange(final PositionData position) {
         ValueAnimator animator = ValueAnimator.ofFloat(1, 0);
         animator.setDuration(500);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -363,7 +363,8 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                setMap(mapKey);
+                mapPositions.put(position.getMapKey(), position);
+                setMap(position.getMapKey());
 
                 ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1);
                 valueAnimator.setDuration(500);

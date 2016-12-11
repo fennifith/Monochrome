@@ -101,7 +101,7 @@ public class ChestDialog extends AppCompatDialog implements Monochrome.OnSomethi
     }
 
     @Override
-    public void onRequestMapChange(String mapKey) {
+    public void onRequestMapChange(PositionData position) {
     }
 
     @Override

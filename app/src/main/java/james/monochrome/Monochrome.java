@@ -18,9 +18,12 @@ import java.util.Map;
 import james.monochrome.data.PositionData;
 import james.monochrome.data.items.ItemData;
 import james.monochrome.data.tiles.TileData;
+import james.monochrome.utils.MapUtils;
 import james.monochrome.utils.TileUtils;
 
 public class Monochrome extends Application {
+
+    private static final String KEY_EXITS = "exits";
 
     private Map<int[][], Bitmap> bitmaps;
     private List<OnSomethingHappenedListener> listeners;
@@ -100,9 +103,16 @@ public class Monochrome extends Application {
         }
     }
 
-    public void requestMapChange(String mapKey) {
+    public void requestMapChange(PositionData to, PositionData from) {
         for (OnSomethingHappenedListener listener : new ArrayList<>(listeners)) {
-            listener.onRequestMapChange(mapKey);
+            listener.onRequestMapChange(to);
+        }
+        putString(KEY_EXITS + to.getMapKey(), MapUtils.getTileId(from));
+    }
+
+    public void exitMap(PositionData from) {
+        if (preferences.containsKey(KEY_EXITS + from.getMapKey())) {
+            requestMapChange(MapUtils.getTilePosition(getString(KEY_EXITS + from.getMapKey(), null)), from);
         }
     }
 
@@ -173,7 +183,7 @@ public class Monochrome extends Application {
     public interface OnSomethingHappenedListener {
         void onTileChange(TileData tile);
 
-        void onRequestMapChange(String mapKey);
+        void onRequestMapChange(PositionData position);
 
         void onPositionChange(PositionData position);
 
