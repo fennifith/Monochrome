@@ -21,7 +21,6 @@ import james.monochrome.data.tiles.DoorTileData;
 import james.monochrome.data.tiles.EmptyTileData;
 import james.monochrome.data.tiles.FloorTileData;
 import james.monochrome.data.tiles.GrassTileData;
-import james.monochrome.data.tiles.HouseTileData;
 import james.monochrome.data.tiles.SignTileData;
 import james.monochrome.data.tiles.TileData;
 import james.monochrome.data.tiles.TreeTileData;
@@ -37,6 +36,7 @@ public class MapUtils {
     public static final String KEY_MAP = "map";
     public static final String KEY_MAP_DEFAULT = "default";
     public static final String KEY_MAP_HOUSE = "house";
+    public static final String KEY_MAP_GRASSY = "grassy";
 
     private static final int TILE_EMPTY = 0;
     private static final int TILE_GRASS = 6;
@@ -50,6 +50,7 @@ public class MapUtils {
     private static final int TILE_WALL = 9;
     private static final int TILE_NOTHING = 10;
     private static final int TILE_DOOR = 17;
+    private static final int TILE_DOOR_LOCKED = 18;
     private static final int TILE_CHEST = 21;
 
     private static final int[][][][] MAP_DEFAULT = new int[][][][]{
@@ -59,9 +60,9 @@ public class MapUtils {
                             new int[]{2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                             new int[]{2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                             new int[]{2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
-                            new int[]{2, 0, 0, 3, 0, 0, 0, 0, 0, 0},
+                            new int[]{2, 0, 0, 0, 3, 0, 0, 0, 0, 0},
                             new int[]{2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            new int[]{2, 0, 0, 0, 1, 1, 1, 1, 0, 0},
+                            new int[]{2, 0, 0, 0, 0, 1, 1, 1, 0, 0},
                             new int[]{2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                             new int[]{2, 0, 0, 0, 0, 7, 7, 7, 0, 0},
                             new int[]{2, 0, 0, 0, 0, 0, 7, 7, 0, 0}
@@ -186,6 +187,35 @@ public class MapUtils {
             }
     };
 
+    private static final int[][][][] MAP_GRASSY = new int[][][][]{
+            new int[][][]{
+                    new int[][]{
+                            new int[]{2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+                            new int[]{2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                            new int[]{2, 0, 0, 0, 0, 3, 0, 0, 0, 0},
+                            new int[]{2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                            new int[]{2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                            new int[]{17, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                            new int[]{2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                            new int[]{2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                            new int[]{2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                            new int[]{2, 2, 2, 2, 2, 2, 2, 2, 2, 2}
+                    },
+                    new int[][]{
+                            new int[]{2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+                            new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+                            new int[]{2, 2, 2, 2, 2, 2, 2, 2, 2, 2}
+                    }
+            }
+    };
+
     public static int[][] getBackground(String key) {
         switch (key) {
             case KEY_MAP_HOUSE:
@@ -198,6 +228,14 @@ public class MapUtils {
     public static String getDoorMapKey(PositionData doorPosition) {
         if (doorPosition.getMapKey().equals(KEY_MAP_HOUSE))
             return KEY_MAP_DEFAULT;
+        else if (doorPosition.equals(new PositionData(KEY_MAP_DEFAULT, 0, 0, 4, 4)))
+            return KEY_MAP_HOUSE;
+        else if (doorPosition.equals(new PositionData(KEY_MAP_DEFAULT, 2, 2, 9, 5)))
+            return KEY_MAP_GRASSY;
+        else if (doorPosition.equals(new PositionData(KEY_MAP_GRASSY, 0, 0, 0, 5)))
+            return KEY_MAP_DEFAULT;
+        else if (doorPosition.equals(new PositionData(KEY_MAP_GRASSY, 0, 0, 5, 2)))
+            return KEY_MAP_HOUSE;
 
         return null;
     }
@@ -214,7 +252,7 @@ public class MapUtils {
                     List<TileData> tileRow = new ArrayList<>();
                     for (int i4 = 0; i4 < map[i][i2][i3].length; i4++) {
                         PositionData position = new PositionData(key, i2, i, i4, i3);
-                        switch(map[i][i2][i3][i4]) {
+                        switch (map[i][i2][i3][i4]) {
                             case TILE_EMPTY:
                                 tileRow.add(new EmptyTileData(context, position));
                                 break;
@@ -234,7 +272,7 @@ public class MapUtils {
                                 tileRow.add(new TreeTileData(context, position));
                                 break;
                             case TILE_HOUSE:
-                                tileRow.add(new HouseTileData(context, position));
+                                tileRow.add(new DoorTileData(context, position, TileUtils.TILE_HOUSE, true));
                                 break;
                             case TILE_SIGN:
                                 tileRow.add(new SignTileData(context, position));
@@ -249,7 +287,10 @@ public class MapUtils {
                                 tileRow.add(new FloorTileData(context, TileUtils.TILE_NOTHING, position));
                                 break;
                             case TILE_DOOR:
-                                tileRow.add(new DoorTileData(context, position));
+                                tileRow.add(new DoorTileData(context, position, key.equals(KEY_MAP_HOUSE) ? TileUtils.TILE_DOOR_WALL : TileUtils.TILE_DOOR_OUTSIDE, false));
+                                break;
+                            case TILE_DOOR_LOCKED:
+                                tileRow.add(new DoorTileData(context, position, TileUtils.TILE_DOOR_OUTSIDE, true));
                                 break;
                             case TILE_CHEST:
                                 tileRow.add(new ChestTileData(context, position));
@@ -270,7 +311,7 @@ public class MapUtils {
         List<CharacterData> characters = new ArrayList<>();
         switch (mapKey) {
             case KEY_MAP_DEFAULT:
-                characters.add(new DialogueCharacterData(context, new PositionData(mapKey, 0, 0, 5, 4), "tutorial1", context.getString(R.string.title_char_tutorial1), context.getString(R.string.msg_char_tutorial1)));
+                characters.add(new DialogueCharacterData(context, new PositionData(mapKey, 0, 0, 6, 4), "tutorial1", context.getString(R.string.title_char_tutorial1), context.getString(R.string.msg_char_tutorial1)));
                 break;
             case KEY_MAP_HOUSE:
                 characters.add(new QuestGiverCharacterData(context, new PositionData(mapKey, 0, 0, 4, 3), QuestUtils.getQuests(context)));
@@ -283,16 +324,16 @@ public class MapUtils {
         return position.getMapKey() + position.getSceneX() + "," + position.getSceneY() + "," + position.getTileX() + "," + position.getTileY();
     }
 
-    public static String getMessage(Context context, String tileId) {
-        if (tileId.equals(getTileId(new PositionData(KEY_MAP_DEFAULT, 0, 0, 2, 0))))
+    public static String getMessage(Context context, PositionData position) {
+        if (position.equals(new PositionData(KEY_MAP_DEFAULT, 0, 0, 2, 0)))
             return context.getString(R.string.msg_sign_tutorial1);
-        else if (tileId.equals(getTileId(new PositionData(KEY_MAP_DEFAULT, 0, 0, 3, 0))))
+        else if (position.equals(new PositionData(KEY_MAP_DEFAULT, 0, 0, 3, 0)))
             return context.getString(R.string.msg_sign_tutorial2);
-        else if (tileId.equals(getTileId(new PositionData(KEY_MAP_DEFAULT, 0, 0, 4, 0))))
+        else if (position.equals(new PositionData(KEY_MAP_DEFAULT, 0, 0, 4, 0)))
             return context.getString(R.string.msg_sign_tutorial3);
-        else if (tileId.equals(getTileId(new PositionData(KEY_MAP_DEFAULT, 0, 0, 5, 0))))
+        else if (position.equals(new PositionData(KEY_MAP_DEFAULT, 0, 0, 5, 0)))
             return context.getString(R.string.msg_sign_tutorial4);
-        else if (BuildConfig.DEBUG) return tileId;
+        else if (BuildConfig.DEBUG) return getTileId(position);
         else return "";
     }
 
@@ -408,6 +449,8 @@ public class MapUtils {
         switch (key) {
             case KEY_MAP_HOUSE:
                 return MAP_HOUSE;
+            case KEY_MAP_GRASSY:
+                return MAP_GRASSY;
             default:
                 return MAP_DEFAULT;
         }

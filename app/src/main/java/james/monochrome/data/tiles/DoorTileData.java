@@ -1,28 +1,31 @@
 package james.monochrome.data.tiles;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+
+import james.monochrome.R;
 import james.monochrome.data.PositionData;
+import james.monochrome.data.items.ItemData;
+import james.monochrome.data.items.KeyItemData;
+import james.monochrome.utils.ItemUtils;
 import james.monochrome.utils.MapUtils;
 import james.monochrome.utils.TileUtils;
 
 public class DoorTileData extends TileData {
 
+    private static final String KEY_LOCKED = "locked";
+
     private String mapKey;
+    private boolean isLocked;
+    private KeyItemData key;
 
-    public DoorTileData(Context context, PositionData position) {
-        super(context, TileUtils.TILE_EMPTY, position);
+    public DoorTileData(Context context, PositionData position, int[][] tile, boolean isLocked) {
+        super(context, tile, position);
         this.mapKey = MapUtils.getDoorMapKey(position);
-
-        int[][] tile;
-        switch (position.getMapKey()) {
-            case MapUtils.KEY_MAP_DEFAULT:
-                tile = TileUtils.TILE_DOOR_OUTSIDE;
-                break;
-            default:
-                tile = TileUtils.TILE_DOOR_WALL;
-                break;
-        }
+        this.isLocked = getBoolean(KEY_LOCKED, isLocked);
 
         if (Math.abs(4.5 - position.getTileX()) > Math.abs(4.5 - position.getTileY())) {
             if (position.getTileX() > 4.5)
@@ -35,9 +38,35 @@ public class DoorTileData extends TileData {
         }
     }
 
+    private void setLocked(boolean isLocked) {
+        putBoolean(KEY_LOCKED, isLocked);
+        this.isLocked = isLocked;
+    }
+
     @Override
     public void onTouch() {
-        setMap(mapKey);
+        if (isLocked) {
+            for (ItemData item : ItemUtils.getHoldingItems(getContext())) {
+                if (item instanceof KeyItemData && !item.isUseless()) {
+                    key = (KeyItemData) item;
+                    break;
+                }
+            }
+
+            if (key != null) {
+                getMonochrome().makeItemConfirmationDialog(key, getContext().getString(R.string.msg_unlock), new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        if (key != null) {
+                            dialog.dismiss();
+                            key.setUseless();
+                            setLocked(false);
+                        }
+                    }
+                });
+            } else
+                getMonochrome().makeToast(getContext().getString(R.string.msg_locked));
+        } else setMap(mapKey);
     }
 
     @Override

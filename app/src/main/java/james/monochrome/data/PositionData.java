@@ -1,5 +1,7 @@
 package james.monochrome.data;
 
+import james.monochrome.utils.MapUtils;
+
 public class PositionData {
 
     private String mapKey;
@@ -43,5 +45,10 @@ public class PositionData {
 
     public int getTileY() {
         return y % 10;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj) || (obj != null && obj instanceof PositionData && MapUtils.getTileId(this).equals(MapUtils.getTileId((PositionData) obj)));
     }
 }

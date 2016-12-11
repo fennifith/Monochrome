@@ -14,7 +14,7 @@ public class SignTileData extends TileData {
 
     @Override
     public void onTouch() {
-        getMonochrome().makeToast(MapUtils.getMessage(getContext(), MapUtils.getTileId(getPosition())));
+        getMonochrome().makeToast(MapUtils.getMessage(getContext(), getPosition()));
     }
 
     @Override

@@ -18,6 +18,7 @@ import android.view.MenuItem;
 
 import java.util.List;
 
+import james.monochrome.Monochrome;
 import james.monochrome.R;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
@@ -97,7 +98,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     new AlertDialog.Builder(getActivity()).setTitle(String.format(getString(R.string.pref_confirm), getString(R.string.pref_reset))).setMessage(R.string.pref_confirm_reset).setPositiveButton(R.string.action_ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().clear().apply();
+                            ((Monochrome) getActivity().getApplicationContext()).clearPreferences();
                             dialogInterface.dismiss();
                         }
                     }).setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {

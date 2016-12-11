@@ -77,6 +77,11 @@ public class Monochrome extends Application {
         preferences.put(key, value);
     }
 
+    public void clearPreferences() {
+        PreferenceManager.getDefaultSharedPreferences(this).edit().clear().apply();
+        preferences.clear();
+    }
+
     public void addListener(OnSomethingHappenedListener listener) {
         listeners.add(listener);
     }

@@ -40,8 +40,8 @@
     <string name="msg_save">Would you like to save the game?</string>
     <string name="msg_enter_house">Enter the house?</string>
     <string name="msg_door">Go through the door?</string>
-    <string name="msg_locked_house">The house is locked.</string>
-    <string name="msg_unlock_house">Do you want to use a key to unlock this house? This action cannot be undone.</string>
+    <string name="msg_locked">The door is locked.</string>
+    <string name="msg_unlock">Do you want to use a key to unlock the door? This action cannot be undone.</string>
     <string name="msg_picked_up">You picked up a %1$s</string>
     <string name="msg_picked_up_vowel">You picked up an %1$s</string>
     <string name="msg_no_space">You don\'t have enough space to hold this item! Please move some of your items into a chest to make room.</string>
