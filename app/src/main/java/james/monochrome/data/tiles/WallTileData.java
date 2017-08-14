@@ -47,4 +47,9 @@ public class WallTileData extends TileData {
     public boolean canEnter() {
         return false;
     }
+
+    @Override
+    public int getMaxLight() {
+        return 1;
+    }
 }

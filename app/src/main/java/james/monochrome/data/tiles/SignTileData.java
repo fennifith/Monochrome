@@ -29,4 +29,9 @@ public class SignTileData extends TileData {
     public boolean canEnter() {
         return false;
     }
+
+    @Override
+    public int getLight() {
+        return 1;
+    }
 }

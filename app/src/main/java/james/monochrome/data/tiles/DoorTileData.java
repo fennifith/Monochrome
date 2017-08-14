@@ -89,4 +89,10 @@ public class DoorTileData extends TileData {
     public boolean canEnter() {
         return false;
     }
+
+
+    @Override
+    public int getLight() {
+        return 2;
+    }
 }

@@ -224,6 +224,19 @@ public class MapUtils {
         }
     }
 
+    public static int getBaseLight(String key) {
+        switch (key) {
+            case KEY_MAP_DEFAULT:
+                return 0;
+            case KEY_MAP_GRASSY:
+                return 1;
+            case KEY_MAP_HOUSE:
+                return 8;
+            default:
+                return 10;
+        }
+    }
+
     public static PositionData getDoorPosition(PositionData doorPosition) {
         if (doorPosition.equals(new PositionData(KEY_MAP_DEFAULT, 0, 0, 4, 4)))
             return new PositionData(KEY_MAP_HOUSE, 0, 0, 5, 7);

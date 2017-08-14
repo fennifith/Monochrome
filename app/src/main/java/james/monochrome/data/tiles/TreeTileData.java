@@ -27,4 +27,9 @@ public class TreeTileData extends TileData {
     public boolean canEnter() {
         return false;
     }
+
+    @Override
+    public int getMaxLight() {
+        return 1;
+    }
 }

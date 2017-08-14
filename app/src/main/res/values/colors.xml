@@ -8,13 +8,13 @@
 
     <color name="zero">#FAFAFA</color>
     <color name="one">#F5F5F5</color>
-    <color name="two">#EEEEEE</color>
-    <color name="three">#E0E0E0</color>
-    <color name="four">#BDBDBD</color>
-    <color name="five">#9E9E9E</color>
-    <color name="six">#757575</color>
-    <color name="seven">#616161</color>
-    <color name="eight">#424242</color>
-    <color name="nine">#212121</color>
+    <color name="two">#E0E0E0</color>
+    <color name="three">#BDBDBD</color>
+    <color name="four">#9E9E9E</color>
+    <color name="five">#757575</color>
+    <color name="six">#616161</color>
+    <color name="seven">#424242</color>
+    <color name="eight">#212121</color>
+    <color name="nine">#000000</color>
 
 </resources>

@@ -96,6 +96,14 @@ public abstract class TileData implements Monochrome.OnSomethingHappenedListener
         return MapUtils.getTileId(position);
     }
 
+    public int getLight() {
+        return 0;
+    }
+
+    public int getMaxLight() {
+        return 10;
+    }
+
     @Override
     public void onCloseChest() {
     }
