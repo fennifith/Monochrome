@@ -3,8 +3,6 @@ package james.monochrome.data.characters;
 import android.content.Context;
 import android.support.annotation.Nullable;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-
 import james.monochrome.data.PositionData;
 import james.monochrome.utils.TileUtils;
 
@@ -70,7 +68,7 @@ public class DialogueCharacterData extends CharacterData {
 
             try {
                 onTouch();
-            } catch (MaterialDialog.DialogException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
