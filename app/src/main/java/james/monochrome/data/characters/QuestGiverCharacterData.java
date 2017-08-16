@@ -17,7 +17,7 @@ public class QuestGiverCharacterData extends CharacterData {
     private QuestData quest;
 
     public QuestGiverCharacterData(Context context, PositionData position, List<QuestData> quests) {
-        super(context, TileUtils.TILE_PERSON_2, position);
+        super(context, TileUtils.TILE_GUIDE, position);
         this.quests = quests;
 
         for (QuestData quest : quests) {
@@ -29,7 +29,7 @@ public class QuestGiverCharacterData extends CharacterData {
     }
 
     public QuestGiverCharacterData(Context context, PositionData position, QuestData... quests) {
-        super(context, TileUtils.TILE_PERSON_2, position);
+        super(context, TileUtils.TILE_GUIDE, position);
         this.quests = new ArrayList<>(Arrays.asList(quests));
 
         for (QuestData quest : quests) {
