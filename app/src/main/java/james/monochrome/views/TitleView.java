@@ -59,7 +59,7 @@ public class TitleView extends AppCompatImageView {
             public void run() {
                 if (!isFinished()) {
                     invalidate();
-                    handler.postDelayed(this, 50);
+                    handler.postDelayed(this, 10);
                 }
             }
         }, 250);
