@@ -54,7 +54,7 @@ public class ItemsDialog extends AppCompatDialog {
         ((TextView) findViewById(R.id.titleHolding)).setTypeface(typeface);
         ((TextView) findViewById(R.id.titleChest)).setTypeface(typeface);
 
-        holding = (RecyclerView) findViewById(R.id.holding);
+        holding = findViewById(R.id.holding);
         holding.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
         holdingAdapter = new ItemAdapter(activity, ItemUtils.getHoldingItems(getContext()), null);

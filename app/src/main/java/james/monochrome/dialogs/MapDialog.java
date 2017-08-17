@@ -35,7 +35,7 @@ public class MapDialog extends AppCompatDialog {
 
         if (mapKey == null || position == null) return;
 
-        ImageView background = (ImageView) findViewById(R.id.background);
+        ImageView background = findViewById(R.id.background);
         image.into(background);
         background.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -48,7 +48,7 @@ public class MapDialog extends AppCompatDialog {
         int[][][][] map = MapUtils.getMap(mapKey);
         int lengthY = map.length, lengthX = map[0].length;
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
+        RecyclerView recyclerView = findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), lengthX));
         recyclerView.setAdapter(new MapTileAdapter(getContext(), position, lengthX, lengthY));
     }

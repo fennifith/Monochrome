@@ -24,13 +24,12 @@
     <string name="item_key_desc">Keys are very precious items; they are the only way to unlock a save point in the game - without them you could lose your progress!</string>
     <string name="item_number">x%1$d</string>
 
-    <string name="msg_tutorial">Well look at you, fluffy puff ball. Or is it puffy fluff ball? I can\'t remember. You should probably read some of those signs.</string>
+    <string name="msg_tutorial">You should probably read some of those signs.</string>
     <string name="msg_tutorial_move">You can move by swiping left, right, up, or down. Swipe towards an object to interact with it.</string>
 
-    <string name="msg_sign_tutorial1">Yay. You can read signs. Good job.</string>
-    <string name="msg_sign_tutorial2">This app is a small preview of the official release.</string>
-    <string name="msg_sign_tutorial3">It is designed only to show the basic functions of the game.</string>
-    <string name="msg_sign_tutorial4">Because of this, only 5 sections of the map (and 3 quests) are available.</string>
+    <string name="msg_sign_tutorial1">A single valiant hero, alone in a vast forest.</string>
+    <string name="msg_sign_tutorial2">He remembers none of his past.</string>
+    <string name="msg_sign_tutorial3">In front of him, there is a key.</string>
 
     <string name="msg_quest_complete">Quest Complete!</string>
 

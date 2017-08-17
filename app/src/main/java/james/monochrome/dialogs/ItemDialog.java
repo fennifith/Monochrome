@@ -25,10 +25,10 @@ public class ItemDialog extends AlertDialog {
 
         ((TileView) findViewById(R.id.tile)).setTile(item.getTile());
 
-        TextView title = (TextView) findViewById(R.id.title);
+        TextView title = findViewById(R.id.title);
         title.setText(item.getName());
 
-        TextView description = (TextView) findViewById(R.id.description);
+        TextView description = findViewById(R.id.description);
         description.setText(item.getDescription());
     }
 }

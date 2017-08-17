@@ -55,7 +55,7 @@ public class MapUtils {
     private static final int[][][][] MAP_DEFAULT = new int[][][][]{
             new int[][][]{
                     new int[][]{
-                            new int[]{2, 2, 5, 5, 5, 5, 2, 2, 2, 2},
+                            new int[]{2, 2, 5, 5, 5, 2, 2, 2, 2, 2},
                             new int[]{2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                             new int[]{2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                             new int[]{2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
@@ -342,8 +342,6 @@ public class MapUtils {
             return context.getString(R.string.msg_sign_tutorial2);
         else if (position.equals(new PositionData(KEY_MAP_DEFAULT, 0, 0, 4, 0)))
             return context.getString(R.string.msg_sign_tutorial3);
-        else if (position.equals(new PositionData(KEY_MAP_DEFAULT, 0, 0, 5, 0)))
-            return context.getString(R.string.msg_sign_tutorial4);
         else if (BuildConfig.DEBUG) return getTileId(position);
         else return "";
     }

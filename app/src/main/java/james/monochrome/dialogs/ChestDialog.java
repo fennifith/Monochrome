@@ -74,13 +74,13 @@ public class ChestDialog extends AppCompatDialog implements Monochrome.OnSomethi
         ((TextView) findViewById(R.id.titleHolding)).setTypeface(typeface);
         ((TextView) findViewById(R.id.titleChest)).setTypeface(typeface);
 
-        holding = (RecyclerView) findViewById(R.id.holding);
+        holding = findViewById(R.id.holding);
         holding.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         holdingAdapter = new ItemAdapter(getContext(), ItemUtils.getHoldingItems(getContext()), false);
         holding.setAdapter(holdingAdapter);
 
-        chest = (RecyclerView) findViewById(R.id.chest);
+        chest = findViewById(R.id.chest);
         chest.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         chestAdapter = new ItemAdapter(getContext(), ItemUtils.getChestItems(getContext()), true);
