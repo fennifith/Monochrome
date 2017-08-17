@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -14,12 +13,11 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.util.ArrayMap;
-import android.view.Gravity;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -64,6 +62,8 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
     private SceneryView scenery;
     private CharacterView character;
 
+    private TextView toastView;
+
     private SquareImageView soundView;
     private boolean isMuted;
     private boolean isEnabled = true;
@@ -89,15 +89,18 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
         monochrome.addListener(this);
         monochrome.setDialogListener(this);
 
-        root = (CoordinatorLayout) findViewById(R.id.root);
-        background = (BackgroundView) findViewById(R.id.background);
-        scenery = (SceneryView) findViewById(R.id.scenery);
-        character = (CharacterView) findViewById(R.id.character);
+        root = findViewById(R.id.root);
+        background = findViewById(R.id.background);
+        scenery = findViewById(R.id.scenery);
+        character = findViewById(R.id.character);
+        toastView = findViewById(R.id.toast);
 
-        SquareImageView pauseView = (SquareImageView) findViewById(R.id.pause);
-        soundView = (SquareImageView) findViewById(R.id.sound);
-        SquareImageView itemsView = (SquareImageView) findViewById(R.id.items);
-        SquareImageView mapView = (SquareImageView) findViewById(R.id.map);
+        SquareImageView pauseView = findViewById(R.id.pause);
+        soundView = findViewById(R.id.sound);
+        SquareImageView itemsView = findViewById(R.id.items);
+        SquareImageView mapView = findViewById(R.id.map);
+
+        toastView.setTypeface(StaticUtils.getTypeface(this));
 
         mapPositions = new ArrayMap<>();
         setMap(monochrome.getString(MapUtils.KEY_MAP, MapUtils.KEY_MAP_DEFAULT));
@@ -473,18 +476,18 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
 
     @Override
     public void makeToast(String message) {
-        TextView textView = new TextView(this);
-        textView.setText(message);
-        textView.setTextColor(Color.WHITE);
-        textView.setTypeface(StaticUtils.getTypeface(this));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
-            textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        else textView.setGravity(Gravity.CENTER);
+        toastView.setText(message);
 
-        Toast toast = new Toast(this);
-        toast.setDuration(message.length() > 20 ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT);
-        toast.setView(textView);
-        toast.show();
+        ValueAnimator animator = ValueAnimator.ofFloat(0, 1, 1, 0);
+        animator.setDuration(250 * message.length());
+        animator.setInterpolator(new DecelerateInterpolator());
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                toastView.setAlpha((float) valueAnimator.getAnimatedValue());
+            }
+        });
+        animator.start();
     }
 
     @Override
