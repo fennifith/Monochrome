@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.os.Handler;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
@@ -31,7 +30,6 @@ public class TitleView extends AppCompatImageView {
     };
 
     private Paint paint;
-    private Handler handler;
 
     public TitleView(Context context) {
         super(context);
@@ -52,17 +50,6 @@ public class TitleView extends AppCompatImageView {
         paint = new Paint();
         paint.setAntiAlias(true);
         paint.setColor(Color.BLACK);
-
-        handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (!isFinished()) {
-                    invalidate();
-                    handler.postDelayed(this, 10);
-                }
-            }
-        }, 250);
     }
 
     private boolean isFinished() {
@@ -100,5 +87,8 @@ public class TitleView extends AppCompatImageView {
                     canvas.drawRect(x, y, x + pixelWidth, y + pixelHeight, paint);
             }
         }
+
+        if (!isFinished())
+            postInvalidate();
     }
 }
