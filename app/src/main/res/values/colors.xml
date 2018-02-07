@@ -17,4 +17,28 @@
     <color name="eight">#212121</color>
     <color name="nine">#000000</color>
 
+    <color name="red">#B71C1C</color>
+    <color name="orange">#E64A19</color>
+    <color name="green">#1B5E20</color>
+    <color name="blue">#0D47A1</color>
+    <color name="yellow">#FFC107</color>
+
+    <integer-array name="colors">
+        <item>@color/zero</item>
+        <item>@color/one</item>
+        <item>@color/two</item>
+        <item>@color/three</item>
+        <item>@color/four</item>
+        <item>@color/five</item>
+        <item>@color/six</item>
+        <item>@color/seven</item>
+        <item>@color/eight</item>
+        <item>@color/nine</item>
+        <item>@color/red</item>
+        <item>@color/orange</item>
+        <item>@color/green</item>
+        <item>@color/blue</item>
+        <item>@color/yellow</item>
+    </integer-array>
+
 </resources>

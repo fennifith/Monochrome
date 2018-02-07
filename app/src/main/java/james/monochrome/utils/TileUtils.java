@@ -3,7 +3,6 @@ package james.monochrome.utils;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.support.v4.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,14 +72,14 @@ public class TileUtils {
                     new int[]{0, 0, 0, 0, 7, 6, 7, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 0, 9, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 0, 9, 0, 0, 0, 0}
-            },
+            }, 
             TILE_TREE = new int[][]{
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 6, 6, 6, 6, 0, 0, 0},
-                    new int[]{0, 0, 6, 6, 7, 7, 7, 6, 0, 0},
-                    new int[]{0, 0, 7, 7, 7, 7, 7, 7, 0, 0},
-                    new int[]{0, 4, 7, 7, 7, 7, 7, 7, 4, 0},
-                    new int[]{0, 0, 6, 7, 7, 7, 7, 6, 0, 0},
+                    new int[]{0, 0, 6, 6, 12, 12, 7, 6, 0, 0},
+                    new int[]{0, 0, 12, 12, 7, 12, 12, 7, 0, 0},
+                    new int[]{0, 4, 12, 7, 12, 12, 7, 12, 4, 0},
+                    new int[]{0, 0, 6, 7, 12, 7, 12, 6, 0, 0},
                     new int[]{0, 0, 0, 9, 0, 9, 9, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 9, 9, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 9, 9, 0, 0, 0, 0},
@@ -258,9 +257,9 @@ public class TileUtils {
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    new int[]{0, 5, 5, 5, 0, 0, 0, 0, 0, 0},
-                    new int[]{0, 5, 9, 5, 5, 5, 5, 5, 5, 5},
-                    new int[]{0, 5, 5, 5, 9, 9, 9, 5, 9, 5},
+                    new int[]{0, 14, 14, 14, 0, 0, 0, 0, 0, 0},
+                    new int[]{0, 14, 9, 14, 14, 14, 14, 14, 14, 14},
+                    new int[]{0, 14, 14, 14, 9, 9, 9, 14, 9, 14},
                     new int[]{0, 9, 9, 9, 0, 0, 0, 9, 0, 9},
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -272,8 +271,8 @@ public class TileUtils {
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 0, 8, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 9, 9, 9, 0, 0, 0},
-                    new int[]{0, 0, 0, 9, 6, 7, 7, 9, 0, 0},
-                    new int[]{0, 0, 0, 9, 6, 8, 7, 9, 0, 0},
+                    new int[]{0, 0, 0, 9, 10, 7, 10, 9, 0, 0},
+                    new int[]{0, 0, 0, 9, 6, 10, 10, 9, 0, 0},
                     new int[]{0, 0, 0, 0, 9, 9, 9, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
@@ -283,9 +282,9 @@ public class TileUtils {
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 0, 8, 0, 0, 0, 0},
                     new int[]{0, 0, 8, 9, 9, 9, 9, 8, 0, 0},
-                    new int[]{0, 8, 6, 6, 6, 6, 7, 7, 8, 0},
-                    new int[]{0, 9, 6, 6, 6, 7, 7, 7, 9, 0},
-                    new int[]{0, 8, 6, 6, 8, 7, 7, 7, 8, 0},
+                    new int[]{0, 8, 6, 11, 11, 6, 7, 11, 8, 0},
+                    new int[]{0, 9, 6, 11, 11, 11, 11, 7, 9, 0},
+                    new int[]{0, 8, 11, 11, 8, 7, 7, 7, 8, 0},
                     new int[]{0, 0, 8, 9, 9, 9, 9, 8, 0, 0},
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
@@ -376,42 +375,16 @@ public class TileUtils {
     }
 
     public static void drawTile(Context context, Canvas canvas, Paint paint, int pixelSize, List<List<Integer>> tile) {
+        int[] colors = context.getResources().getIntArray(R.array.colors);
+
         for (int row = 0; row < tile.size(); row++) {
             List<Integer> pixelRow = tile.get(row);
             for (int column = 0; column < pixelRow.size(); column++) {
                 int x = pixelSize * column, y = pixelSize * row;
-
-                switch (pixelRow.get(column)) {
-                    case 1:
-                        paint.setColor(ContextCompat.getColor(context, R.color.one));
-                        break;
-                    case 2:
-                        paint.setColor(ContextCompat.getColor(context, R.color.two));
-                        break;
-                    case 3:
-                        paint.setColor(ContextCompat.getColor(context, R.color.three));
-                        break;
-                    case 4:
-                        paint.setColor(ContextCompat.getColor(context, R.color.four));
-                        break;
-                    case 5:
-                        paint.setColor(ContextCompat.getColor(context, R.color.five));
-                        break;
-                    case 6:
-                        paint.setColor(ContextCompat.getColor(context, R.color.six));
-                        break;
-                    case 7:
-                        paint.setColor(ContextCompat.getColor(context, R.color.seven));
-                        break;
-                    case 8:
-                        paint.setColor(ContextCompat.getColor(context, R.color.eight));
-                        break;
-                    case 9:
-                        paint.setColor(ContextCompat.getColor(context, R.color.nine));
-                        break;
-                    default:
-                        continue;
-                }
+                int pixel = pixelRow.get(column);
+                if (pixel > 0)
+                    paint.setColor(colors[pixel]);
+                else continue;
 
                 canvas.drawRect(x, y, x + pixelSize, y + pixelSize, paint);
             }
