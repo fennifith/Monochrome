@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<about>
+
+    <me.jfenn.attribouter.wedges.AppWedge repo="TheAndroidMaster/Monochrome" />
+
+    <me.jfenn.attribouter.wedges.ContributorsWedge repo="TheAndroidMaster/Monochrome">
+
+        <me.jfenn.attribouter.wedges.ContributorWedge
+            name="James Fenn"
+            login="TheAndroidMaster"
+            task="^Developer">
+
+            <me.jfenn.attribouter.wedges.link.LinkWedge
+                name="Twitter"
+                icon="@drawable/ic_twitter"
+                url="https://jfenn.me/redirects/?t=twitter" />
+
+        </me.jfenn.attribouter.wedges.ContributorWedge>
+
+        <me.jfenn.attribouter.wedges.ContributorWedge
+            name="Vukašin Anđelković"
+            bio="I make things and stuff. I'm the creator of CandyCons, PixBit, Cubllow, and Wafer apps."
+            login="zavukodlak"
+            task="^Designer">
+
+            <me.jfenn.attribouter.wedges.link.LinkWedge
+                name="Google+"
+                icon="@drawable/ic_gplus"
+                url="https://plus.google.com/105188221378780419527" />
+
+            <me.jfenn.attribouter.wedges.link.LinkWedge
+                hidden="true"
+                id="website" />
+
+        </me.jfenn.attribouter.wedges.ContributorWedge>
+
+        <me.jfenn.attribouter.wedges.ContributorWedge
+            name="Richard Yanchev"
+            bio="Artist, pianist, photographer, car enthusiast, whatnot."
+            login="thegraywolf81"
+            task="^Noise Maker">
+
+            <me.jfenn.attribouter.wedges.link.LinkWedge
+                name="Instagram"
+                icon="@drawable/ic_instagram"
+                url="https://instagram.com/richardyanchev" />
+
+            <me.jfenn.attribouter.wedges.link.LinkWedge
+                name="YouTube"
+                icon="@drawable/ic_youtube"
+                url="https://www.youtube.com/user/TheGrayWolf81" />
+
+        </me.jfenn.attribouter.wedges.ContributorWedge>
+
+    </me.jfenn.attribouter.wedges.ContributorsWedge>
+
+    <me.jfenn.attribouter.wedges.LicensesWedge>
+
+        <me.jfenn.attribouter.wedges.LicenseWedge
+            name="Android 3D Touch - PeekView"
+            description="This library aims to create a simple and powerful API to enable 3D Touch style 'Peeking' on Android."
+            repo="klinker24/Android-3DTouch-PeekView" />
+
+        <me.jfenn.attribouter.wedges.LicenseWedge
+            name="Blurry"
+            description="Blurry is an easy blur library for Android."
+            repo="wasabeef/Blurry" />
+
+        <me.jfenn.attribouter.wedges.LicenseWedge
+            name="Material Dialogs"
+            description="A beautiful, fluid, and customizable dialogs API."
+            repo="afollestad/material-dialogs" />
+
+    </me.jfenn.attribouter.wedges.LicensesWedge>
+
+</about>

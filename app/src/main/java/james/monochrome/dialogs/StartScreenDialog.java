@@ -9,10 +9,10 @@ import android.view.View;
 import android.widget.ImageView;
 
 import james.monochrome.R;
-import james.monochrome.activities.AboutActivity;
 import james.monochrome.activities.MainActivity;
 import james.monochrome.activities.SettingsActivity;
 import jp.wasabeef.blurry.Blurry;
+import me.jfenn.attribouter.Attribouter;
 
 public class StartScreenDialog extends AppCompatDialog {
 
@@ -50,7 +50,7 @@ public class StartScreenDialog extends AppCompatDialog {
         findViewById(R.id.about).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getContext().startActivity(new Intent(getContext(), AboutActivity.class));
+                Attribouter.from(view.getContext()).show();
             }
         });
     }

@@ -69,42 +69,6 @@
     <string name="title_libs">Libraries</string>
     <string name="title_general">General</string>
 
-    <string-array name="contrib_names">
-        <item>James Fenn</item>
-        <item>Vukašin Anđelković</item>
-        <item>Richard Yanchev</item>
-    </string-array>
-
-    <string-array name="contrib_descs">
-        <item>Made the app :D</item>
-        <item>Helped design a lot of the graphics and user interface.</item>
-        <item>Made some weird noises.</item>
-    </string-array>
-
-    <string-array name="contrib_urls">
-        <item>https://theandroidmaster.github.io/</item>
-        <item>https://plus.google.com/105188221378780419527</item>
-        <item>https://www.youtube.com/user/TheGrayWolf81</item>
-    </string-array>
-
-    <string-array name="library_names">
-        <item>Android 3D Touch - PeekView</item>
-        <item>Blurry</item>
-        <item>Material Dialogs</item>
-    </string-array>
-
-    <string-array name="library_descs">
-        <item>This library aims to create a simple and powerful API to enable 3D Touch style "Peeking" on Android.</item>
-        <item>Blurry is an easy blur library for Android.</item>
-        <item>A beautiful, fluid, and customizable dialogs API.</item>
-    </string-array>
-
-    <string-array name="library_urls">
-        <item>https://github.com/klinker24/Android-3DTouch-PeekView</item>
-        <item>https://github.com/wasabeef/Blurry</item>
-        <item>https://github.com/afollestad/material-dialogs</item>
-    </string-array>
-
     <string name="pref_confirm">%1$s?</string>
 
     <string name="pref_reset">Reset Progress</string>
