@@ -27,7 +27,7 @@ public class TileUtils {
     },
             TILE_CHARACTER = new int[][]{
                     new int[]{0, 0, 0, 8, 7, 7, 8, 0, 0, 0},
-                    new int[]{0, 0, 0, 3, 6, 6, 3, 0, 0, 0},
+                    new int[]{0, 0, 0, 13, 6, 6, 13, 0, 0, 0},
                     new int[]{0, 0, 0, 8, 7, 7, 8, 0, 0, 0},
                     new int[]{0, 0, 0, 9, 8, 8, 9, 0, 0, 0},
                     new int[]{0, 0, 9, 8, 7, 7, 8, 9, 0, 0},
@@ -51,7 +51,7 @@ public class TileUtils {
             },
             TILE_CHARACTER_LEFT = new int[][]{
                     new int[]{0, 0, 0, 8, 8, 8, 0, 0, 0, 0},
-                    new int[]{0, 0, 0, 3, 6, 7, 0, 0, 0, 0},
+                    new int[]{0, 0, 0, 13, 6, 7, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 8, 7, 8, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 9, 8, 9, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 8, 9, 7, 0, 0, 0, 0},
@@ -63,7 +63,7 @@ public class TileUtils {
             },
             TILE_CHARACTER_RIGHT = new int[][]{
                     new int[]{0, 0, 0, 0, 8, 8, 8, 0, 0, 0},
-                    new int[]{0, 0, 0, 0, 7, 6, 3, 0, 0, 0},
+                    new int[]{0, 0, 0, 0, 7, 6, 13, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 8, 7, 8, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 9, 8, 9, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 7, 9, 8, 0, 0, 0},
@@ -72,7 +72,7 @@ public class TileUtils {
                     new int[]{0, 0, 0, 0, 7, 6, 7, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 0, 9, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 0, 0, 9, 0, 0, 0, 0}
-            }, 
+            },
             TILE_TREE = new int[][]{
                     new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     new int[]{0, 0, 0, 6, 6, 6, 6, 0, 0, 0},
