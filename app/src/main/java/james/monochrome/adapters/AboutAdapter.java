@@ -27,16 +27,13 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.ViewHolder> 
         this.items = items;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-
-        public View v;
-
-        public ViewHolder(View v) {
-            super(v);
-            this.v = v;
-        }
+    private static void launchCustomTabs(Context context, Uri uri) {
+        new CustomTabsIntent.Builder()
+                .setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
+                .setSecondaryToolbarColor(ContextCompat.getColor(context, R.color.colorAccent))
+                .build()
+                .launchUrl(context, uri);
     }
-
 
     @Override
     public int getItemViewType(int position) {
@@ -67,12 +64,14 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.ViewHolder> 
         return items.size();
     }
 
-    private static void launchCustomTabs(Context context, Uri uri) {
-        new CustomTabsIntent.Builder()
-                .setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
-                .setSecondaryToolbarColor(ContextCompat.getColor(context, R.color.colorAccent))
-                .build()
-                .launchUrl(context, uri);
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+        public View v;
+
+        public ViewHolder(View v) {
+            super(v);
+            this.v = v;
+        }
     }
 
     public static class HeaderItem extends Item {
@@ -93,14 +92,14 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.ViewHolder> 
         @Override
         public void bindView(ViewHolder holder) {
             if (name != null && name.length() > 0) {
-                TextView header = (TextView) holder.v.findViewById(R.id.header);
+                TextView header = holder.v.findViewById(R.id.header);
                 header.setVisibility(View.VISIBLE);
                 header.setText(name);
                 if (centered) header.setGravity(Gravity.CENTER_HORIZONTAL);
             } else holder.v.findViewById(R.id.header).setVisibility(View.GONE);
 
             if (content != null && content.length() > 0) {
-                TextView desc = (TextView) holder.v.findViewById(R.id.content);
+                TextView desc = holder.v.findViewById(R.id.content);
                 desc.setVisibility(View.VISIBLE);
                 desc.setText(content);
                 if (centered) desc.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -108,12 +107,7 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.ViewHolder> 
 
             if (url != null) {
                 holder.v.setClickable(true);
-                holder.v.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        launchCustomTabs(getContext(), Uri.parse(url));
-                    }
-                });
+                holder.v.setOnClickListener(v -> launchCustomTabs(getContext(), Uri.parse(url)));
             } else holder.v.setClickable(false);
         }
     }
@@ -135,13 +129,13 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.ViewHolder> 
         public void bindView(ViewHolder holder) {
 
             if (name != null && name.length() > 0) {
-                TextView header = (TextView) holder.v.findViewById(R.id.header);
+                TextView header = holder.v.findViewById(R.id.header);
                 header.setVisibility(View.VISIBLE);
                 header.setText(name);
             } else holder.v.findViewById(R.id.header).setVisibility(View.GONE);
 
             if (content != null && content.length() > 0) {
-                TextView desc = (TextView) holder.v.findViewById(R.id.content);
+                TextView desc = holder.v.findViewById(R.id.content);
                 desc.setVisibility(View.VISIBLE);
                 desc.setText(content);
             } else holder.v.findViewById(R.id.content).setVisibility(View.GONE);
@@ -149,12 +143,7 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.ViewHolder> 
             if (primary != null) {
                 View card = holder.v.findViewById(R.id.card);
                 card.setClickable(true);
-                card.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        launchCustomTabs(getContext(), Uri.parse(primary));
-                    }
-                });
+                card.setOnClickListener(v -> launchCustomTabs(getContext(), Uri.parse(primary)));
             } else holder.v.findViewById(R.id.card).setClickable(false);
         }
     }

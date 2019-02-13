@@ -25,11 +25,11 @@
         <activity
             android:name=".activities.SettingsActivity"
             android:label="@string/action_settings"
-            android:theme="@style/Theme.AppCompat.Light"
-            android:parentActivityName=".activities.MainActivity">
+            android:parentActivityName=".activities.MainActivity"
+            android:theme="@style/Theme.AppCompat.Light">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="james.monochrome.activities.MainActivity" />
+                android:value=".activities.MainActivity" />
         </activity>
     </application>
 

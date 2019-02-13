@@ -26,7 +26,7 @@ public class ItemUtils {
         List<ItemData> items = new ArrayList<>();
 
         for (ItemData item : getConstantItems(context)) {
-            if (!item.isUseless() && item.getPosition() != null && item.getPosition().getMapKey().equals(mapKey))
+            if (item.isUseful() && item.getPosition() != null && item.getPosition().getMapKey().equals(mapKey))
                 items.add(item);
         }
 
@@ -66,7 +66,7 @@ public class ItemUtils {
     private static List<ItemData> getConstantItems(Context context) {
         List<ItemData> items = new ArrayList<>();
         for (KeyItemData key : getKeys(context)) {
-            if (!key.isUseless()) {
+            if (key.isUseful()) {
                 items.add(key);
                 break;
             }
@@ -106,7 +106,7 @@ public class ItemUtils {
         items.addAll(getItemsOf(context, KEY_ITEM_PUMPKIN));
 
         for (ItemData item : getConstantItems(context)) {
-            if (item.hasPickedUp() && !item.isUseless()) items.add(item);
+            if (item.hasPickedUp() && item.isUseful()) items.add(item);
         }
 
         return items;
@@ -115,7 +115,7 @@ public class ItemUtils {
     public static int getFreeVolume(Context context) {
         int volume = 100;
         for (ItemData item : getHoldingItems(context)) {
-            if (!item.isUseless()) volume -= item.getVolume();
+            if (item.isUseful()) volume -= item.getVolume();
         }
 
         return volume;
@@ -141,7 +141,6 @@ public class ItemUtils {
     }
 
     public static void addToHolding(Context context, String itemKey) {
-        ;
         Monochrome monochrome = (Monochrome) context.getApplicationContext();
         monochrome.putInt(ItemData.KEY_PICKED_UP + itemKey, monochrome.getInt(ItemData.KEY_PICKED_UP + itemKey, 0) + 1);
         monochrome.putInt(ItemData.KEY_HOLDING + itemKey, monochrome.getInt(ItemData.KEY_HOLDING + itemKey, 0) + 1);

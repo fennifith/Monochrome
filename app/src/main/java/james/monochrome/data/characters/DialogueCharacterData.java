@@ -63,7 +63,12 @@ public class DialogueCharacterData extends CharacterData {
 
     @Override
     public void onPositionChange(PositionData position) {
-        if (position.getMapKey().equals(getPosition().getMapKey()) && position.getTileX() == getPosition().getTileX() && position.getTileY() == getPosition().getTileY() + 1 && !getBoolean(KEY_READ, false)) {
+        if (position.getMapKey().equals(getPosition().getMapKey())
+                && position.getTileX()
+                == getPosition().getTileX()
+                && position.getTileY()
+                == getPosition().getTileY() + 1
+                && !getBoolean(KEY_READ, false)) {
             putBoolean(KEY_READ, true);
 
             try {

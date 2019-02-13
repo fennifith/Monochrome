@@ -41,12 +41,9 @@ public class ChestDialog extends AppCompatDialog implements Monochrome.OnSomethi
         this.image = image;
 
         listeners = new ArrayList<>();
-        setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                for (OnDismissListener listener : listeners) {
-                    listener.onDismiss(dialogInterface);
-                }
+        setOnDismissListener(dialogInterface -> {
+            for (OnDismissListener listener : listeners) {
+                listener.onDismiss(dialogInterface);
             }
         });
     }
@@ -62,12 +59,9 @@ public class ChestDialog extends AppCompatDialog implements Monochrome.OnSomethi
 
         View overlay = findViewById(R.id.overlay);
         overlay.setBackgroundColor(Color.argb(100, 200, 200, 200));
-        overlay.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) dismiss();
-                return false;
-            }
+        overlay.setOnTouchListener((view, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) dismiss();
+            return false;
         });
 
         Typeface typeface = StaticUtils.getTypeface(getContext());
@@ -86,12 +80,7 @@ public class ChestDialog extends AppCompatDialog implements Monochrome.OnSomethi
         chestAdapter = new ItemAdapter(getContext(), ItemUtils.getChestItems(getContext()), true);
         chest.setAdapter(chestAdapter);
 
-        addOnDismissListener(new OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                monochrome.removeListener(ChestDialog.this);
-            }
-        });
+        addOnDismissListener(dialog -> monochrome.removeListener(ChestDialog.this));
 
         monochrome.addListener(this);
     }

@@ -37,13 +37,12 @@ public class MapUtils {
     public static final String KEY_MAP_DEFAULT = "default";
     public static final String KEY_MAP_HOUSE = "house";
     public static final String KEY_MAP_GRASSY = "grassy";
-
+    static final int TILE_GRASS_THICK = 7;
+    static final int TILE_TREE = 2;
     private static final int TILE_EMPTY = 0;
     private static final int TILE_GRASS = 6;
-    static final int TILE_GRASS_THICK = 7;
     private static final int TILE_WOOD = 22;
     private static final int TILE_BUSH = 1;
-    static final int TILE_TREE = 2;
     private static final int TILE_HOUSE = 3;
     private static final int TILE_SIGN = 5;
     private static final int TILE_CHECKPOINT = 8;

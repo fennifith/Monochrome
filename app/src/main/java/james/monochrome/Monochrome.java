@@ -24,12 +24,10 @@ import james.monochrome.utils.TileUtils;
 public class Monochrome extends Application {
 
     private static final String KEY_EXITS = "exits";
-
+    Map<String, Object> preferences;
     private Map<int[][], Bitmap> bitmaps;
     private List<OnSomethingHappenedListener> listeners;
     private DialogListener dialogListener;
-
-    Map<String, Object> preferences;
 
     @Override
     public void onCreate() {

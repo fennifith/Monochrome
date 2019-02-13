@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import james.monochrome.Monochrome;
@@ -35,12 +34,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         this.isChest = isChest;
         monochrome = (Monochrome) context.getApplicationContext();
 
-        Collections.sort(items, new Comparator<ItemData>() {
-            @Override
-            public int compare(ItemData o1, ItemData o2) {
-                return o1.getName().compareToIgnoreCase(o2.getName());
-            }
-        });
+        Collections.sort(items, (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
 
         itemTypes = new ArrayList<>();
         for (ItemData item : items) {
@@ -63,35 +57,29 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
         ((TileView) holder.v.findViewById(R.id.tile)).setTile(itemType.tile);
 
-        TextView title = (TextView) holder.v.findViewById(R.id.title);
+        TextView title = holder.v.findViewById(R.id.title);
         title.setTypeface(typeface);
         title.setText(itemType.name);
 
-        TextView number = (TextView) holder.v.findViewById(R.id.number);
+        TextView number = holder.v.findViewById(R.id.number);
         number.setTypeface(typeface);
         number.setText(String.format(monochrome.getString(R.string.item_number), itemType.items.size()));
 
-        holder.v.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ItemTypeData itemType = itemTypes.get(holder.getAdapterPosition());
+        holder.v.setOnClickListener(v -> {
+            ItemTypeData itemType1 = itemTypes.get(holder.getAdapterPosition());
 
-                if (isChest != null) {
-                    ItemData item = itemType.items.get(0);
-                    if (isChest) item.moveToHolding();
-                    else item.moveToChest();
-                } else itemType.items.get(0).onUse();
-            }
+            if (isChest != null) {
+                ItemData item = itemType1.items.get(0);
+                if (isChest) item.moveToHolding();
+                else item.moveToChest();
+            } else itemType1.items.get(0).onUse();
         });
 
-        holder.v.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                ItemTypeData itemType = itemTypes.get(holder.getAdapterPosition());
-                if (itemType.items.size() > 0)
-                    new ItemDialog(context, itemType.items.get(0)).show();
-                return false;
-            }
+        holder.v.setOnLongClickListener(view -> {
+            ItemTypeData itemType12 = itemTypes.get(holder.getAdapterPosition());
+            if (itemType12.items.size() > 0)
+                new ItemDialog(context, itemType12.items.get(0)).show();
+            return false;
         });
     }
 
@@ -126,7 +114,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         }
 
         void addItem(ItemData item) {
-            if (!item.isUseless()) items.add(item);
+            if (item.isUseful()) items.add(item);
         }
     }
 }

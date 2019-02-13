@@ -2,13 +2,11 @@ package james.monochrome.activities;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.graphics.drawable.VectorDrawableCompat;
@@ -19,7 +17,6 @@ import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.klinker.android.peekview.PeekViewActivity;
 
@@ -48,15 +45,14 @@ import james.monochrome.views.SceneryView;
 import james.monochrome.views.SquareImageView;
 import jp.wasabeef.blurry.Blurry;
 
-public class MainActivity extends PeekViewActivity implements View.OnTouchListener, Monochrome.OnSomethingHappenedListener, Monochrome.DialogListener {
+public class MainActivity extends PeekViewActivity
+        implements View.OnTouchListener, Monochrome.OnSomethingHappenedListener, Monochrome.DialogListener {
 
     public static final int REQUEST_SETTINGS = 12543;
 
     public static final String
             KEY_READ_TUTORIAL = "tutorialRead",
             KEY_SWIPED = "tutorialSwiped";
-
-    private CoordinatorLayout root;
 
     private BackgroundView background;
     private SceneryView scenery;
@@ -89,7 +85,7 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
         monochrome.addListener(this);
         monochrome.setDialogListener(this);
 
-        root = findViewById(R.id.root);
+        CoordinatorLayout root = findViewById(R.id.root);
         background = findViewById(R.id.background);
         scenery = findViewById(R.id.scenery);
         character = findViewById(R.id.character);
@@ -105,23 +101,15 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
         mapPositions = new ArrayMap<>();
         setMap(monochrome.getString(MapUtils.KEY_MAP, MapUtils.KEY_MAP_DEFAULT));
 
-        pauseView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new StartScreenDialog(MainActivity.this, getBlurryImage()).show();
-            }
-        });
+        pauseView.setOnClickListener(v -> new StartScreenDialog(MainActivity.this, getBlurryImage()).show());
 
-        soundView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isMuted) {
-                    isMuted = false;
-                    soundView.setImageDrawable(VectorDrawableCompat.create(getResources(), R.drawable.ic_sound_on, getTheme()));
-                } else {
-                    isMuted = true;
-                    soundView.setImageDrawable(VectorDrawableCompat.create(getResources(), R.drawable.ic_sound_off, getTheme()));
-                }
+        soundView.setOnClickListener(v -> {
+            if (isMuted) {
+                isMuted = false;
+                soundView.setImageDrawable(VectorDrawableCompat.create(getResources(), R.drawable.ic_sound_on, getTheme()));
+            } else {
+                isMuted = true;
+                soundView.setImageDrawable(VectorDrawableCompat.create(getResources(), R.drawable.ic_sound_off, getTheme()));
             }
         });
 
@@ -132,72 +120,38 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
             }
         });
 
-        mapView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new MapDialog(MainActivity.this, mapKey, character.getPosition(), getBlurryImage()).show();
-            }
-        });
+        mapView.setOnClickListener(v -> new MapDialog(MainActivity.this, mapKey, character.getPosition(), getBlurryImage()).show());
 
         if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("dpad", false))
             findViewById(R.id.buttonLayout).setVisibility(View.VISIBLE);
 
-        findViewById(R.id.up).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                moveUp();
-            }
-        });
+        findViewById(R.id.up).setOnClickListener(view -> moveUp());
 
-        findViewById(R.id.down).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                moveDown();
-            }
-        });
+        findViewById(R.id.down).setOnClickListener(view -> moveDown());
 
-        findViewById(R.id.left).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                moveLeft();
-            }
-        });
+        findViewById(R.id.left).setOnClickListener(view -> moveLeft());
 
-        findViewById(R.id.right).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                moveRight();
-            }
-        });
+        findViewById(R.id.right).setOnClickListener(view -> moveRight());
 
         root.setOnTouchListener(this);
 
-        findViewById(android.R.id.content).post(new Runnable() {
-            @Override
-            public void run() {
-                StartScreenDialog dialog = new StartScreenDialog(MainActivity.this, getBlurryImage());
-                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        if (!monochrome.getBoolean(KEY_READ_TUTORIAL, false)) {
-                            monochrome.makeDialog(
-                                    null,
-                                    getString(R.string.msg_tutorial),
-                                    getString(R.string.action_ok),
-                                    new MaterialDialog.SingleButtonCallback() {
-                                        @Override
-                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        }
-                                    },
-                                    null,
-                                    null
-                            );
-                            monochrome.putBoolean(KEY_READ_TUTORIAL, true);
-                        }
-                    }
-                });
-                dialog.show();
-            }
+        findViewById(android.R.id.content).post(() -> {
+            StartScreenDialog dialog = new StartScreenDialog(MainActivity.this, getBlurryImage());
+            dialog.setOnDismissListener(dialog1 -> {
+                if (!monochrome.getBoolean(KEY_READ_TUTORIAL, false)) {
+                    monochrome.makeDialog(
+                            null,
+                            getString(R.string.msg_tutorial),
+                            getString(R.string.action_ok),
+                            (dialog11, which) -> {
+                            },
+                            null,
+                            null
+                    );
+                    monochrome.putBoolean(KEY_READ_TUTORIAL, true);
+                }
+            });
+            dialog.show();
         });
     }
 
@@ -365,14 +319,11 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
     public void onRequestMapChange(final PositionData position) {
         ValueAnimator animator = ValueAnimator.ofFloat(1, 0);
         animator.setDuration(500);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                float alpha = (float) valueAnimator.getAnimatedValue();
-                background.setAlpha(alpha);
-                scenery.setAlpha(alpha);
-                character.setAlpha(alpha);
-            }
+        animator.addUpdateListener(valueAnimator -> {
+            float alpha = (float) valueAnimator.getAnimatedValue();
+            background.setAlpha(alpha);
+            scenery.setAlpha(alpha);
+            character.setAlpha(alpha);
         });
         animator.addListener(new Animator.AnimatorListener() {
             @Override
@@ -388,14 +339,11 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
                 ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1);
                 valueAnimator.setDuration(500);
                 valueAnimator.setStartDelay(100);
-                valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                        float alpha = (float) valueAnimator.getAnimatedValue();
-                        background.setAlpha(alpha);
-                        scenery.setAlpha(alpha);
-                        character.setAlpha(alpha);
-                    }
+                valueAnimator.addUpdateListener(valueAnimator1 -> {
+                    float alpha = (float) valueAnimator1.getAnimatedValue();
+                    background.setAlpha(alpha);
+                    scenery.setAlpha(alpha);
+                    character.setAlpha(alpha);
                 });
                 valueAnimator.addListener(new Animator.AnimatorListener() {
                     @Override
@@ -455,12 +403,7 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
     @Override
     public void onOpenChest() {
         ChestDialog dialog = new ChestDialog(this, getBlurryImage());
-        dialog.addOnDismissListener(new ChestDialog.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                monochrome.onCloseChest();
-            }
-        });
+        dialog.addOnDismissListener(dialog1 -> monochrome.onCloseChest());
         dialog.show();
     }
 
@@ -481,17 +424,15 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
         ValueAnimator animator = ValueAnimator.ofFloat(0, 1, 1, 0);
         animator.setDuration(250 * message.length());
         animator.setInterpolator(new DecelerateInterpolator());
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                toastView.setAlpha((float) valueAnimator.getAnimatedValue());
-            }
-        });
+        animator.addUpdateListener(valueAnimator -> toastView.setAlpha((float) valueAnimator.getAnimatedValue()));
         animator.start();
     }
 
     @Override
-    public void makeDialog(@Nullable String title, @Nullable String message, String primaryText, MaterialDialog.SingleButtonCallback primaryListener, @Nullable String secondaryText, @Nullable MaterialDialog.SingleButtonCallback secondaryListener) {
+    public void makeDialog(@Nullable String title,
+                           @Nullable String message, String primaryText, MaterialDialog.SingleButtonCallback primaryListener,
+                           @Nullable String secondaryText,
+                           @Nullable MaterialDialog.SingleButtonCallback secondaryListener) {
         Typeface typeface = StaticUtils.getTypeface(this);
 
         MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
@@ -515,11 +456,9 @@ public class MainActivity extends PeekViewActivity implements View.OnTouchListen
 
     @Override
     public void makeItemConfirmationDialog(ItemData item, String message, MaterialDialog.SingleButtonCallback confirmationListener) {
-        makeDialog(String.format(getString(R.string.action_use_item), item.getName()), message, getString(R.string.action_ok), confirmationListener, getString(R.string.action_cancel), new MaterialDialog.SingleButtonCallback() {
-            @Override
-            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                dialog.dismiss();
-            }
-        });
+        makeDialog(String.format(
+                getString(R.string.action_use_item), item.getName()), message,
+                getString(R.string.action_ok), confirmationListener,
+                getString(R.string.action_cancel), (dialog, which) -> dialog.dismiss());
     }
 }

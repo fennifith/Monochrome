@@ -24,9 +24,6 @@ public class ItemsDialog extends AppCompatDialog {
     private PeekViewActivity activity;
     private Blurry.ImageComposer image;
 
-    private RecyclerView holding;
-    private ItemAdapter holdingAdapter;
-
     public ItemsDialog(PeekViewActivity activity, Blurry.ImageComposer image) {
         super(activity, R.style.AppTheme_Dialog_FullScreen_Fading);
         this.activity = activity;
@@ -42,22 +39,19 @@ public class ItemsDialog extends AppCompatDialog {
 
         View overlay = findViewById(R.id.overlay);
         overlay.setBackgroundColor(Color.argb(100, 200, 200, 200));
-        overlay.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) dismiss();
-                return false;
-            }
+        overlay.setOnTouchListener((view, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) dismiss();
+            return false;
         });
 
         Typeface typeface = StaticUtils.getTypeface(getContext());
         ((TextView) findViewById(R.id.titleHolding)).setTypeface(typeface);
         ((TextView) findViewById(R.id.titleChest)).setTypeface(typeface);
 
-        holding = findViewById(R.id.holding);
+        RecyclerView holding = findViewById(R.id.holding);
         holding.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
-        holdingAdapter = new ItemAdapter(activity, ItemUtils.getHoldingItems(getContext()), null);
+        ItemAdapter holdingAdapter = new ItemAdapter(activity, ItemUtils.getHoldingItems(getContext()), null);
         holding.setAdapter(holdingAdapter);
 
         findViewById(R.id.chestLayout).setVisibility(View.GONE);

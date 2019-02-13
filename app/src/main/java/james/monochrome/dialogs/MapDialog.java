@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.ImageView;
 
 import james.monochrome.R;
@@ -37,12 +36,9 @@ public class MapDialog extends AppCompatDialog {
 
         ImageView background = findViewById(R.id.background);
         image.into(background);
-        background.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) dismiss();
-                return false;
-            }
+        background.setOnTouchListener((view, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) dismiss();
+            return false;
         });
 
         int[][][][] map = MapUtils.getMap(mapKey);

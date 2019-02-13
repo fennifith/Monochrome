@@ -7,7 +7,7 @@
 
         <me.jfenn.attribouter.wedges.ContributorWedge
             name="James Fenn"
-            login="TheAndroidMaster"
+            login="Fennifith"
             task="^Developer">
 
             <me.jfenn.attribouter.wedges.link.LinkWedge
@@ -19,7 +19,7 @@
 
         <me.jfenn.attribouter.wedges.ContributorWedge
             name="Vukašin Anđelković"
-            bio="I make things and stuff. I'm the creator of CandyCons, PixBit, Cubllow, and Wafer apps."
+            bio="I make things and stuff. I'm the creator of the CandyCons, PixBit, Cubllow, and Wafer apps."
             login="zavukodlak"
             task="^Designer">
 

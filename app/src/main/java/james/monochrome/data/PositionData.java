@@ -49,6 +49,6 @@ public class PositionData {
 
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj) || (obj != null && obj instanceof PositionData && MapUtils.getTileId(this).equals(MapUtils.getTileId((PositionData) obj)));
+        return super.equals(obj) || (obj instanceof PositionData && MapUtils.getTileId(this).equals(MapUtils.getTileId((PositionData) obj)));
     }
 }

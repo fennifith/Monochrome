@@ -57,7 +57,7 @@ public class SceneryView extends DrawingImageView {
         super.draw(canvas);
         if (scenery == null || items == null) return;
 
-        int tileSize = Math.min(canvas.getWidth(), canvas.getHeight()) / 10;
+        int tileSize = Math.min(getWidth(), getHeight()) / 10;
 
         List<List<TileData>> tiles = scenery.getTiles();
         for (int row = 0; row < tiles.size(); row++) {

@@ -47,7 +47,7 @@ public class BackgroundView extends DrawingImageView {
         super.draw(canvas);
         if (mapKey == null) return;
 
-        int tileSize = Math.min(canvas.getWidth(), canvas.getHeight()) / 10;
+        int tileSize = Math.min(getWidth(), getHeight()) / 10;
 
         for (int row = 0; row < 10; row++) {
             for (int column = 0; column < 10; column++) {

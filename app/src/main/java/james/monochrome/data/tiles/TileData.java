@@ -60,7 +60,7 @@ public abstract class TileData implements Monochrome.OnSomethingHappenedListener
 
     public abstract void onEnter();
 
-    public abstract  void onExit();
+    public abstract void onExit();
 
     public abstract boolean canEnter();
 

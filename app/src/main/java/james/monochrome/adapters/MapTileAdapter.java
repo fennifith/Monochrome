@@ -37,7 +37,7 @@ public class MapTileAdapter extends RecyclerView.Adapter<MapTileAdapter.ViewHold
             selected.setVisibility(View.VISIBLE);
         else selected.setVisibility(View.INVISIBLE);
 
-        TextView textView = (TextView) holder.v.findViewById(R.id.number);
+        TextView textView = holder.v.findViewById(R.id.number);
         textView.setTypeface(typeface);
         textView.setText(String.valueOf(position + 1));
     }

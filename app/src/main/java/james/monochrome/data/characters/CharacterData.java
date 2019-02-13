@@ -38,38 +38,27 @@ public abstract class CharacterData extends TileData {
                     getTitle(),
                     getMessage(),
                     getContext().getString(R.string.action_yes),
-                    new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            onAccept();
+                    (dialog, which) -> {
+                        onAccept();
 
-                            String message = getAcceptedMessage();
-                            if (message != null)
-                                getMonochrome().makeToast(message);
-                            dialog.dismiss();
-                        }
+                        String message = getAcceptedMessage();
+                        if (message != null)
+                            getMonochrome().makeToast(message);
+                        dialog.dismiss();
                     },
                     getContext().getString(R.string.action_no),
-                    new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            String message = getCancelledMessage();
-                            if (message != null)
-                                getMonochrome().makeToast(message);
-                            dialog.dismiss();
-                        }
+                    (dialog, which) -> {
+                        String message = getCancelledMessage();
+                        if (message != null)
+                            getMonochrome().makeToast(message);
+                        dialog.dismiss();
                     });
         } else {
             getMonochrome().makeDialog(
                     getTitle(),
                     getMessage(),
                     getContext().getString(R.string.action_ok),
-                    new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            dialog.dismiss();
-                        }
-                    },
+                    (dialog, which) -> dialog.dismiss(),
                     null,
                     null
             );
