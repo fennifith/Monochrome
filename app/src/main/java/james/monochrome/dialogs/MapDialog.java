@@ -2,12 +2,12 @@ package james.monochrome.dialogs;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatDialog;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.AppCompatDialog;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import james.monochrome.R;
 import james.monochrome.adapters.MapTileAdapter;
 import james.monochrome.data.PositionData;

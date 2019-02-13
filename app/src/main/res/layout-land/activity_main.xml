@@ -1,4 +1,4 @@
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root"
     android:layout_width="match_parent"
@@ -84,7 +84,7 @@
         android:padding="8dp"
         android:visibility="gone">
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/up"
             android:layout_width="36dp"
             android:layout_height="36dp"
@@ -95,7 +95,7 @@
             android:tint="@android:color/white"
             app:srcCompat="@drawable/ic_up" />
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/down"
             android:layout_width="36dp"
             android:layout_height="36dp"
@@ -106,7 +106,7 @@
             android:tint="@android:color/white"
             app:srcCompat="@drawable/ic_down" />
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/left"
             android:layout_width="36dp"
             android:layout_height="36dp"
@@ -118,7 +118,7 @@
             android:tint="@android:color/white"
             app:srcCompat="@drawable/ic_left" />
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/right"
             android:layout_width="36dp"
             android:layout_height="36dp"
@@ -148,4 +148,4 @@
         android:textColor="@android:color/white"
         android:textSize="14sp" />
 
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

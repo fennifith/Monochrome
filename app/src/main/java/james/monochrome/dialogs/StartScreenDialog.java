@@ -2,10 +2,10 @@ package james.monochrome.dialogs;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDialog;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDialog;
 import james.monochrome.R;
 import james.monochrome.activities.MainActivity;
 import james.monochrome.activities.SettingsActivity;

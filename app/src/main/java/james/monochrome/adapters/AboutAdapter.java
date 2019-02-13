@@ -2,11 +2,6 @@ package james.monochrome.adapters;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.annotation.Nullable;
-import android.support.customtabs.CustomTabsIntent;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +10,11 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 import james.monochrome.R;
 
 public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.ViewHolder> {

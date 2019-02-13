@@ -1,12 +1,8 @@
 package james.monochrome.data.characters;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
-
+import androidx.annotation.Nullable;
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
 import james.monochrome.data.tiles.TileData;

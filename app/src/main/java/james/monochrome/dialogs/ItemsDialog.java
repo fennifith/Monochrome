@@ -3,9 +3,6 @@ package james.monochrome.dialogs;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatDialog;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,6 +10,9 @@ import android.widget.TextView;
 
 import com.klinker.android.peekview.PeekViewActivity;
 
+import androidx.appcompat.app.AppCompatDialog;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import james.monochrome.R;
 import james.monochrome.adapters.ItemAdapter;
 import james.monochrome.utils.ItemUtils;
