@@ -3,18 +3,18 @@
 
     <scale
         android:duration="350"
-        android:interpolator="@android:anim/decelerate_interpolator"
         android:fromXScale="100%p"
         android:fromYScale="100%p"
-        android:toXScale="80%p"
-        android:toYScale="80%p"
+        android:interpolator="@android:anim/decelerate_interpolator"
         android:pivotX="50%p"
-        android:pivotY="50%p" />
+        android:pivotY="50%p"
+        android:toXScale="80%p"
+        android:toYScale="80%p" />
 
     <alpha
         android:duration="350"
-        android:interpolator="@android:anim/decelerate_interpolator"
         android:fromAlpha="1"
+        android:interpolator="@android:anim/decelerate_interpolator"
         android:toAlpha="0" />
 
 </set>

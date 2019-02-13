@@ -1,12 +1,7 @@
 package james.monochrome.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
-import android.support.annotation.Nullable;
-import android.support.customtabs.CustomTabsIntent;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,28 +10,30 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 import james.monochrome.R;
 
 public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.ViewHolder> {
 
-    private Activity activity;
+    private AppCompatActivity activity;
     private List<Item> items;
 
-    public AboutAdapter(Activity activity, List<Item> items) {
+    public AboutAdapter(AppCompatActivity activity, List<Item> items) {
         this.activity = activity;
         this.items = items;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-
-        public View v;
-
-        public ViewHolder(View v) {
-            super(v);
-            this.v = v;
-        }
+    private static void launchCustomTabs(Context context, Uri uri) {
+        new CustomTabsIntent.Builder()
+                .setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
+                .setSecondaryToolbarColor(ContextCompat.getColor(context, R.color.colorAccent))
+                .build()
+                .launchUrl(context, uri);
     }
-
 
     @Override
     public int getItemViewType(int position) {
@@ -67,12 +64,14 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.ViewHolder> 
         return items.size();
     }
 
-    private static void launchCustomTabs(Context context, Uri uri) {
-        new CustomTabsIntent.Builder()
-                .setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
-                .setSecondaryToolbarColor(ContextCompat.getColor(context, R.color.colorAccent))
-                .build()
-                .launchUrl(context, uri);
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+        public View v;
+
+        public ViewHolder(View v) {
+            super(v);
+            this.v = v;
+        }
     }
 
     public static class HeaderItem extends Item {
@@ -81,7 +80,7 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.ViewHolder> 
         @Nullable
         public String name, content, url;
 
-        public HeaderItem(Activity activity, @Nullable String name, @Nullable String content, boolean centered, @Nullable String url) {
+        public HeaderItem(AppCompatActivity activity, @Nullable String name, @Nullable String content, boolean centered, @Nullable String url) {
             super(activity);
 
             this.centered = centered;
@@ -93,14 +92,14 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.ViewHolder> 
         @Override
         public void bindView(ViewHolder holder) {
             if (name != null && name.length() > 0) {
-                TextView header = (TextView) holder.v.findViewById(R.id.header);
+                TextView header = holder.v.findViewById(R.id.header);
                 header.setVisibility(View.VISIBLE);
                 header.setText(name);
                 if (centered) header.setGravity(Gravity.CENTER_HORIZONTAL);
             } else holder.v.findViewById(R.id.header).setVisibility(View.GONE);
 
             if (content != null && content.length() > 0) {
-                TextView desc = (TextView) holder.v.findViewById(R.id.content);
+                TextView desc = holder.v.findViewById(R.id.content);
                 desc.setVisibility(View.VISIBLE);
                 desc.setText(content);
                 if (centered) desc.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -108,12 +107,7 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.ViewHolder> 
 
             if (url != null) {
                 holder.v.setClickable(true);
-                holder.v.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        launchCustomTabs(getContext(), Uri.parse(url));
-                    }
-                });
+                holder.v.setOnClickListener(v -> launchCustomTabs(getContext(), Uri.parse(url)));
             } else holder.v.setClickable(false);
         }
     }
@@ -123,7 +117,7 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.ViewHolder> 
         @Nullable
         public String name, content, primary;
 
-        public TextItem(Activity activity, @Nullable String name, @Nullable String content, @Nullable String primary) {
+        public TextItem(AppCompatActivity activity, @Nullable String name, @Nullable String content, @Nullable String primary) {
             super(activity);
 
             this.name = name;
@@ -135,13 +129,13 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.ViewHolder> 
         public void bindView(ViewHolder holder) {
 
             if (name != null && name.length() > 0) {
-                TextView header = (TextView) holder.v.findViewById(R.id.header);
+                TextView header = holder.v.findViewById(R.id.header);
                 header.setVisibility(View.VISIBLE);
                 header.setText(name);
             } else holder.v.findViewById(R.id.header).setVisibility(View.GONE);
 
             if (content != null && content.length() > 0) {
-                TextView desc = (TextView) holder.v.findViewById(R.id.content);
+                TextView desc = holder.v.findViewById(R.id.content);
                 desc.setVisibility(View.VISIBLE);
                 desc.setText(content);
             } else holder.v.findViewById(R.id.content).setVisibility(View.GONE);
@@ -149,25 +143,20 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.ViewHolder> 
             if (primary != null) {
                 View card = holder.v.findViewById(R.id.card);
                 card.setClickable(true);
-                card.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        launchCustomTabs(getContext(), Uri.parse(primary));
-                    }
-                });
+                card.setOnClickListener(v -> launchCustomTabs(getContext(), Uri.parse(primary)));
             } else holder.v.findViewById(R.id.card).setClickable(false);
         }
     }
 
     public static class Item {
 
-        private Activity context;
+        private AppCompatActivity context;
 
-        public Item(Activity context) {
+        public Item(AppCompatActivity context) {
             this.context = context;
         }
 
-        public Activity getContext() {
+        public AppCompatActivity getContext() {
             return context;
         }
 

@@ -30,7 +30,9 @@ public class CharacterView extends DrawingImageView {
 
     private Paint paint;
     private int[][] tile = TileUtils.TILE_CHARACTER;
-    private int characterX, characterY, tileSize, pixelSize, offsetY;
+    private int characterX;
+    private int characterY;
+    private int offsetY;
 
     private Handler handler;
     private Runnable runnable;
@@ -278,8 +280,8 @@ public class CharacterView extends DrawingImageView {
         super.draw(canvas);
         if (scenery == null || characters == null) return;
 
-        tileSize = Math.min(canvas.getWidth(), canvas.getHeight()) / 10;
-        pixelSize = tileSize / 10;
+        int tileSize = Math.min(getWidth(), getHeight()) / 10;
+        int pixelSize = tileSize / 10;
 
         for (CharacterData character : characters) {
             PositionData position = character.getPosition();

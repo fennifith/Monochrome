@@ -2,9 +2,9 @@ package james.monochrome.dialogs;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import james.monochrome.R;
 import james.monochrome.data.items.ItemData;
 import james.monochrome.views.TileView;

@@ -1,10 +1,6 @@
 package james.monochrome.data.tiles;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
@@ -38,32 +34,30 @@ public class DoorTileData extends TileData {
         }
     }
 
-    private void setLocked(boolean isLocked) {
-        putBoolean(KEY_LOCKED, isLocked);
-        this.isLocked = isLocked;
+    private void setLocked() {
+        putBoolean(KEY_LOCKED, false);
+        this.isLocked = false;
     }
 
     @Override
     public void onTouch() {
         if (isLocked && doorPosition != null) {
             for (ItemData item : ItemUtils.getHoldingItems(getContext())) {
-                if (item instanceof KeyItemData && !item.isUseless()) {
+                if (item instanceof KeyItemData && item.isUseful()) {
                     key = (KeyItemData) item;
                     break;
                 }
             }
 
             if (key != null) {
-                getMonochrome().makeItemConfirmationDialog(key, getContext().getString(R.string.msg_unlock), new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        if (key != null) {
-                            dialog.dismiss();
-                            key.setUseless();
-                            setLocked(false);
-                        }
-                    }
-                });
+                getMonochrome().makeItemConfirmationDialog(key, getContext().getString(R.string.msg_unlock),
+                        (dialog, which) -> {
+                            if (key != null) {
+                                dialog.dismiss();
+                                key.setUseless();
+                                setLocked();
+                            }
+                        });
             } else
                 getMonochrome().makeToast(getContext().getString(R.string.msg_locked));
         } else {
@@ -89,7 +83,6 @@ public class DoorTileData extends TileData {
     public boolean canEnter() {
         return false;
     }
-
 
     @Override
     public int getLight() {

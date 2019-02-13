@@ -64,7 +64,7 @@ public class KeyItemData extends ItemData {
     }
 
     @Override
-    public boolean isUseless() {
-        return id != null && getBoolean(id + KEY_USELESS, false);
+    public boolean isUseful() {
+        return id == null || !getBoolean(id + KEY_USELESS, false);
     }
 }

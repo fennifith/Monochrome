@@ -2,8 +2,8 @@
 
     <Preference
         android:key="reset"
-        android:title="@string/pref_reset"
-        android:summary="@string/pref_desc_reset" />
+        android:summary="@string/pref_desc_reset"
+        android:title="@string/pref_reset" />
 
     <SwitchPreference
         android:defaultValue="false"

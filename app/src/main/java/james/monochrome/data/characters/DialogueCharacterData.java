@@ -1,8 +1,8 @@
 package james.monochrome.data.characters;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 
+import androidx.annotation.Nullable;
 import james.monochrome.data.PositionData;
 import james.monochrome.utils.TileUtils;
 
@@ -63,7 +63,12 @@ public class DialogueCharacterData extends CharacterData {
 
     @Override
     public void onPositionChange(PositionData position) {
-        if (position.getMapKey().equals(getPosition().getMapKey()) && position.getTileX() == getPosition().getTileX() && position.getTileY() == getPosition().getTileY() + 1 && !getBoolean(KEY_READ, false)) {
+        if (position.getMapKey().equals(getPosition().getMapKey())
+                && position.getTileX()
+                == getPosition().getTileX()
+                && position.getTileY()
+                == getPosition().getTileY() + 1
+                && !getBoolean(KEY_READ, false)) {
             putBoolean(KEY_READ, true);
 
             try {

@@ -6,8 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
-import android.support.v4.util.ArrayMap;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
@@ -15,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.Nullable;
+import androidx.collection.ArrayMap;
 import james.monochrome.data.PositionData;
 import james.monochrome.data.items.ItemData;
 import james.monochrome.data.tiles.TileData;
@@ -24,12 +24,10 @@ import james.monochrome.utils.TileUtils;
 public class Monochrome extends Application {
 
     private static final String KEY_EXITS = "exits";
-
+    Map<String, Object> preferences;
     private Map<int[][], Bitmap> bitmaps;
     private List<OnSomethingHappenedListener> listeners;
     private DialogListener dialogListener;
-
-    Map<String, Object> preferences;
 
     @Override
     public void onCreate() {

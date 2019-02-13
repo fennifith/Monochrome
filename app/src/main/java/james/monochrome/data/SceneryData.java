@@ -1,10 +1,9 @@
 package james.monochrome.data;
 
-import android.support.annotation.Nullable;
-
 import java.io.Serializable;
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import james.monochrome.data.tiles.TileData;
 
 public class SceneryData implements Serializable {

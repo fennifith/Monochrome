@@ -1,9 +1,7 @@
 package james.monochrome.activities;
 
-
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -12,31 +10,29 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.view.MenuItem;
 
 import java.util.List;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog.Builder;
 import james.monochrome.Monochrome;
 import james.monochrome.R;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
-    private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object value) {
-            String stringValue = value.toString();
+    private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener
+            = (preference, value) -> {
+        String stringValue = value.toString();
 
-            if (preference instanceof ListPreference) {
-                ListPreference listPreference = (ListPreference) preference;
-                int index = listPreference.findIndexOfValue(stringValue);
+        if (preference instanceof ListPreference) {
+            ListPreference listPreference = (ListPreference) preference;
+            int index = listPreference.findIndexOfValue(stringValue);
 
-                preference.setSummary(index >= 0 ? listPreference.getEntries()[index] : null);
+            preference.setSummary(index >= 0 ? listPreference.getEntries()[index] : null);
 
-            } else preference.setSummary(stringValue);
-            return true;
-        }
+        } else preference.setSummary(stringValue);
+        return true;
     };
 
     private static boolean isXLargeTablet(Context context) {
@@ -45,7 +41,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
     private static void bindPreferenceSummaryToValue(Preference preference) {
         preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
-        sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, PreferenceManager.getDefaultSharedPreferences(preference.getContext()).getString(preference.getKey(), ""));
+        sBindPreferenceSummaryToValueListener.onPreferenceChange(
+                preference, PreferenceManager.getDefaultSharedPreferences(preference.getContext()).getString(preference.getKey(), ""));
     }
 
     @Override
@@ -92,23 +89,16 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
 
-            findPreference("reset").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    new AlertDialog.Builder(getActivity()).setTitle(String.format(getString(R.string.pref_confirm), getString(R.string.pref_reset))).setMessage(R.string.pref_confirm_reset).setPositiveButton(R.string.action_ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
+            findPreference("reset").setOnPreferenceClickListener(preference -> {
+                new Builder(getActivity())
+                        .setTitle(String.format(getString(R.string.pref_confirm), getString(R.string.pref_reset)))
+                        .setMessage(R.string.pref_confirm_reset)
+                        .setPositiveButton(R.string.action_ok, (dialogInterface, i) -> {
                             ((Monochrome) getActivity().getApplicationContext()).clearPreferences();
                             dialogInterface.dismiss();
-                        }
-                    }).setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                        }
-                    }).show();
-                    return false;
-                }
+                        })
+                        .setNegativeButton(R.string.action_cancel, (dialogInterface, i) -> dialogInterface.dismiss()).show();
+                return false;
             });
         }
 

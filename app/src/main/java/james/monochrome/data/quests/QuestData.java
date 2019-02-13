@@ -25,13 +25,13 @@ public abstract class QuestData {
         this.message = message;
     }
 
+    public ItemData getReward() {
+        return reward;
+    }
+
     public QuestData setReward(ItemData reward) {
         this.reward = reward;
         return this;
-    }
-
-    public ItemData getReward() {
-        return reward;
     }
 
     Context getContext() {

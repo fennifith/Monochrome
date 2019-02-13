@@ -2,12 +2,12 @@ package james.monochrome.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
 import james.monochrome.R;
 import james.monochrome.data.PositionData;
 import james.monochrome.utils.StaticUtils;
@@ -37,7 +37,7 @@ public class MapTileAdapter extends RecyclerView.Adapter<MapTileAdapter.ViewHold
             selected.setVisibility(View.VISIBLE);
         else selected.setVisibility(View.INVISIBLE);
 
-        TextView textView = (TextView) holder.v.findViewById(R.id.number);
+        TextView textView = holder.v.findViewById(R.id.number);
         textView.setTypeface(typeface);
         textView.setText(String.valueOf(position + 1));
     }

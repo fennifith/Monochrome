@@ -5,9 +5,6 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatDialog;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,6 +13,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatDialog;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import james.monochrome.Monochrome;
 import james.monochrome.R;
 import james.monochrome.adapters.ItemAdapter;
@@ -41,12 +41,9 @@ public class ChestDialog extends AppCompatDialog implements Monochrome.OnSomethi
         this.image = image;
 
         listeners = new ArrayList<>();
-        setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                for (OnDismissListener listener : listeners) {
-                    listener.onDismiss(dialogInterface);
-                }
+        setOnDismissListener(dialogInterface -> {
+            for (OnDismissListener listener : listeners) {
+                listener.onDismiss(dialogInterface);
             }
         });
     }
@@ -62,12 +59,9 @@ public class ChestDialog extends AppCompatDialog implements Monochrome.OnSomethi
 
         View overlay = findViewById(R.id.overlay);
         overlay.setBackgroundColor(Color.argb(100, 200, 200, 200));
-        overlay.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) dismiss();
-                return false;
-            }
+        overlay.setOnTouchListener((view, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) dismiss();
+            return false;
         });
 
         Typeface typeface = StaticUtils.getTypeface(getContext());
@@ -86,12 +80,7 @@ public class ChestDialog extends AppCompatDialog implements Monochrome.OnSomethi
         chestAdapter = new ItemAdapter(getContext(), ItemUtils.getChestItems(getContext()), true);
         chest.setAdapter(chestAdapter);
 
-        addOnDismissListener(new OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                monochrome.removeListener(ChestDialog.this);
-            }
-        });
+        addOnDismissListener(dialog -> monochrome.removeListener(ChestDialog.this));
 
         monochrome.addListener(this);
     }

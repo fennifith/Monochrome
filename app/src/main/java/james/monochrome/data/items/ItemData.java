@@ -36,13 +36,13 @@ public abstract class ItemData extends TileData {
         }
     }
 
-    public void setPosition(PositionData position) {
-        this.position = position;
-    }
-
     @Override
     public PositionData getPosition() {
         return position;
+    }
+
+    public void setPosition(PositionData position) {
+        this.position = position;
     }
 
     public abstract String getName();
@@ -68,8 +68,8 @@ public abstract class ItemData extends TileData {
         return isHolding;
     }
 
-    public boolean isUseless() {
-        return isUseless;
+    public boolean isUseful() {
+        return !isUseless;
     }
 
     @Override

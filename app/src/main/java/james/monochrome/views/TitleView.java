@@ -4,8 +4,9 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
+
+import androidx.appcompat.widget.AppCompatImageView;
 
 public class TitleView extends AppCompatImageView {
 
@@ -77,10 +78,10 @@ public class TitleView extends AppCompatImageView {
             }
         }
 
-        int pixelHeight = canvas.getHeight() / drawnTitle.length;
+        int pixelHeight = getHeight() / drawnTitle.length;
         for (int i = 0; i < drawnTitle.length; i++) {
             int[] row = drawnTitle[i];
-            int pixelWidth = canvas.getWidth() / row.length;
+            int pixelWidth = getWidth() / row.length;
             for (int i2 = 0; i2 < row.length; i2++) {
                 int x = i2 * pixelWidth, y = i * pixelHeight;
                 if (drawnTitle[i][i2] > 0)
