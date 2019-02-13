@@ -1,11 +1,10 @@
 package james.monochrome.dialogs;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDialog;
-import android.widget.ImageView;
 
 import james.monochrome.R;
 import james.monochrome.activities.MainActivity;
@@ -15,10 +14,10 @@ import me.jfenn.attribouter.Attribouter;
 
 public class StartScreenDialog extends AppCompatDialog {
 
-    private Activity activity;
+    private AppCompatActivity activity;
     private Blurry.ImageComposer image;
 
-    public StartScreenDialog(@NonNull Activity context, Blurry.ImageComposer image) {
+    public StartScreenDialog(@NonNull AppCompatActivity context, Blurry.ImageComposer image) {
         super(context, R.style.AppTheme_Dialog_FullScreen_Fading);
         activity = context;
         this.image = image;
@@ -30,7 +29,7 @@ public class StartScreenDialog extends AppCompatDialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_start);
 
-        image.into((ImageView) findViewById(R.id.background));
+        image.into(findViewById(R.id.background));
 
         findViewById(R.id.start).setOnClickListener(v -> dismiss());
 

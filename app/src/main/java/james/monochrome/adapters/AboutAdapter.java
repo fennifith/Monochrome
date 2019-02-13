@@ -1,11 +1,11 @@
 package james.monochrome.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -19,10 +19,10 @@ import james.monochrome.R;
 
 public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.ViewHolder> {
 
-    private Activity activity;
+    private AppCompatActivity activity;
     private List<Item> items;
 
-    public AboutAdapter(Activity activity, List<Item> items) {
+    public AboutAdapter(AppCompatActivity activity, List<Item> items) {
         this.activity = activity;
         this.items = items;
     }
@@ -80,7 +80,7 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.ViewHolder> 
         @Nullable
         public String name, content, url;
 
-        public HeaderItem(Activity activity, @Nullable String name, @Nullable String content, boolean centered, @Nullable String url) {
+        public HeaderItem(AppCompatActivity activity, @Nullable String name, @Nullable String content, boolean centered, @Nullable String url) {
             super(activity);
 
             this.centered = centered;
@@ -117,7 +117,7 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.ViewHolder> 
         @Nullable
         public String name, content, primary;
 
-        public TextItem(Activity activity, @Nullable String name, @Nullable String content, @Nullable String primary) {
+        public TextItem(AppCompatActivity activity, @Nullable String name, @Nullable String content, @Nullable String primary) {
             super(activity);
 
             this.name = name;
@@ -150,13 +150,13 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.ViewHolder> 
 
     public static class Item {
 
-        private Activity context;
+        private AppCompatActivity context;
 
-        public Item(Activity context) {
+        public Item(AppCompatActivity context) {
             this.context = context;
         }
 
-        public Activity getContext() {
+        public AppCompatActivity getContext() {
             return context;
         }
 
